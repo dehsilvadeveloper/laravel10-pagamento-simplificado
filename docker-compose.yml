@@ -20,6 +20,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+      redis:
+        condition: service_healthy
 
   nginx:
     container_name: "${APP_NAME}-nginx"
@@ -56,6 +58,21 @@ services:
       - laravel10-pagamento-simplificado-network
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+
+  redis:
+    container_name: "${APP_NAME}-redis"
+    build: .docker/redis
+    restart: unless-stopped
+    tty: true
+    ports:
+      - ${REDIS_PORT}:6379
+    networks:
+      - laravel10-pagamento-simplificado-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
       timeout: 10s
       retries: 5
 
