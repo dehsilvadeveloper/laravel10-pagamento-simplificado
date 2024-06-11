@@ -57,6 +57,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'external_port' => env('APP_PORT_EXTERNAL', 9000),
+
     'asset_url' => env('ASSET_URL'),
 
     /*
@@ -70,7 +72,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'America/Sao_Paulo'),
 
     /*
     |--------------------------------------------------------------------------
@@ -109,7 +111,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => env('APP_FAKER_LOCALE', 'pt_BR'),
 
     /*
     |--------------------------------------------------------------------------
@@ -168,6 +170,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        /*
+         * Custom Service Providers...
+         */
+        App\Infrastructure\Database\DatabaseServiceProvider::class,
     ])->toArray(),
 
     /*
