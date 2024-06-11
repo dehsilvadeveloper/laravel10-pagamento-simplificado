@@ -62,6 +62,17 @@ Ou até listar as tabelas que existem dentro de um database específico.
 USE database_name; SHOW TABLES;
 ```
 
+##### Conectando programas ao banco de dados dockerizado
+
+Para conectar programas como o **MySQL Workbench** ou o **DBeaver** ao banco de dados da aplicação, você pode utilizar as seguintes configurações:
+
+```
+hostname: mysql
+port: 3398
+username: root
+password: root
+```
+
 #### Acessando container "redis"
 
 Para acessar o container **redis** você pode utilizar o comando a seguir:

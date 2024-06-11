@@ -1,15 +1,15 @@
 # Defining base image
 FROM php:8.2-fpm-alpine
 
-# Setting arguments
+# Defining arguments
 ARG user=developer
 ARG uid=1000
 
 # Steps of this layer:
 # - Install system dependencies
 # - Install and enable PHP extensions
-# - Remove packages that are only needed for build, not for run-time
-# - Clear APK cache and temporary files
+# - Remove packages that are only needed for build, not for run-time (apk del ...)
+# - Clear APK cache and temporary files (rm -rf /var/cache/apk/* && rm -rf /tmp/pear)
 RUN apk update && apk --no-cache --virtual add \
         autoconf \
         bash \
@@ -55,7 +55,9 @@ WORKDIR /var/www
 # Copy custom.ini of PHP to the final directory
 COPY ./custom.ini /etc/php/conf.d/custom.ini
 
-# Remove possible unnecessary directory (to avoid errors with symbolic link) and create symbolic link
+# Steps of this layer:
+# - Remove possible unnecessary directory (to avoid errors with symbolic link)
+# - Create symbolic link for the public folder
 RUN rm -rf /var/www/html \
     && ln -s public html
 
