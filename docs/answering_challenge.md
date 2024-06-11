@@ -10,6 +10,14 @@ Com relação a arquitetura foi decidido efetuar uma distribuição do código e
 
 Além disso também foram adotados os padrões de projeto **service pattern** e **repository pattern** com o intuito de ter uma divisão entre as camadas de regra de negócio, de manipulação de dados e de apresentação de dados, permitindo uma maior separação de responsabilidades e facilitando a reutilização de trechos de códigos, respeitando, desta forma, a abordagem do DRY (Don’t Repeat Yourself).
 
+### Diagrama de fluxo
+
+Foi desenhado um diagrama de fluxo para a aplicação usando a ferramenta [Draw.io](https://app.diagrams.net/).
+
+<a href="./diagrams/pagamento_simplificado.drawio.png" target="_blank">
+    <img src="./diagrams/pagamento_simplificado.drawio.png" alt="Diagrama de Fluxo" width="150" />
+</a>
+
 ### Explicação da API
 
 Breve.
