@@ -3,6 +3,7 @@
 namespace App\Domain;
 
 use Illuminate\Support\ServiceProvider;
+use App\Domain\ApiUser\Providers\ApiUserServiceProvider;
 
 class DomainServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class DomainServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Register your providers here
+        $this->app->register(ApiUserServiceProvider::class);
     }
 
     /**
