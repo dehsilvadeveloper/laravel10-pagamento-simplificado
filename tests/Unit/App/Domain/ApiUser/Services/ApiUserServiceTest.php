@@ -10,7 +10,7 @@ use App\Domain\ApiUser\Models\ApiUser;
 use App\Domain\ApiUser\Repositories\ApiUserRepositoryInterface;
 use App\Domain\ApiUser\Services\ApiUserService;
 
-class UserServiceTest extends TestCase
+class ApiUserServiceTest extends TestCase
 {
     /** @var ApiUserService */
     private $service;

@@ -6,7 +6,7 @@ use Tests\ModelTestCase;
 use Tests\TestHelpers\DataTransferObjects\ModelConfigurationAssertionParamsDto;
 use App\Domain\ApiUser\Models\ApiUser;
 
-class UserModelTest extends ModelTestCase
+class ApiUserModelTest extends ModelTestCase
 {
     /**
      * @group api_user
