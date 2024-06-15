@@ -16,11 +16,11 @@ class ApiUserSeeder extends Seeder
      */
     public function run(): void
     {
-        $plans = collect(config('api_users.default'));
+        $apiUsers = collect(config('api_users.default'));
 
         DB::beginTransaction();
 
-        $plans->map(
+        $apiUsers->map(
             fn($value) => ApiUser::updateOrCreate(
                 ['id' => $value['id']],
                 $value
