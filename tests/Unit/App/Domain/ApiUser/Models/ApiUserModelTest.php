@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\App\Domain\User\Models;
+namespace Tests\Unit\App\Domain\ApiUser\Models;
 
 use Tests\ModelTestCase;
 use Tests\TestHelpers\DataTransferObjects\ModelConfigurationAssertionParamsDto;

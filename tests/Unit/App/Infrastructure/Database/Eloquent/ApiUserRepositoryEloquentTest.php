@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\App\Domain\ApiUser\Repositories;
+namespace Tests\Unit\App\Infrastructure\Database\Eloquent;
 
 use Tests\TestCase;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -35,7 +35,7 @@ class ApiUserRepositoryEloquentTest extends TestCase
         $createdRecord = $this->repository->create($data);
 
         $this->assertInstanceOf(ApiUser::class, $createdRecord);
-        $this->assertDatabaseHas('users', $data);
+        $this->assertDatabaseHas('api_users', $data);
         $this->assertTrue(Hash::check('password', $createdRecord->password));
     }
 
