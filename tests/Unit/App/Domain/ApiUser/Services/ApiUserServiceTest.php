@@ -5,6 +5,7 @@ namespace Tests\Unit\App\Domain\ApiUser\Services;
 use Tests\TestCase;
 use Exception;
 use Mockery;
+use Mockery\MockInterface;
 use Illuminate\Support\Facades\Log;
 use App\Domain\ApiUser\Models\ApiUser;
 use App\Domain\ApiUser\Repositories\ApiUserRepositoryInterface;
@@ -15,6 +16,7 @@ class ApiUserServiceTest extends TestCase
     /** @var ApiUserService */
     private $service;
 
+    /** @var MockInterface */
     private $repositoryMock;
 
     protected function setUp(): void
@@ -22,7 +24,7 @@ class ApiUserServiceTest extends TestCase
         parent::setUp();
 
         $this->repositoryMock = Mockery::mock(ApiUserRepositoryInterface::class);
-        $this->service = app(ApiUserService::class, ['userRepository' => $this->repositoryMock]);
+        $this->service = app(ApiUserService::class, ['apiUserRepository' => $this->repositoryMock]);
     }
 
     /**

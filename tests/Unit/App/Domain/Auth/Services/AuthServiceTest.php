@@ -5,6 +5,7 @@ namespace Tests\Unit\App\Domain\Auth\Services;
 use Tests\TestCase;
 use Exception;
 use Mockery;
+use Mockery\MockInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use App\Domain\Auth\DataTransferObjects\LoginDto;
@@ -20,6 +21,7 @@ class AuthServiceTest extends TestCase
     /** @var AuthService */
     private $service;
 
+    /** @var MockInterface */
     private $apiUserServiceMock;
 
     protected function setUp(): void

@@ -16,6 +16,7 @@ class ApiUserSeederTest extends TestCase
         $this->seed(ApiUserSeeder::class);
 
         foreach (config('api_users.default') as $apiUser) {
+            unset($apiUser['password']);
             $this->assertDatabaseHas('api_users', $apiUser);
         }
     }

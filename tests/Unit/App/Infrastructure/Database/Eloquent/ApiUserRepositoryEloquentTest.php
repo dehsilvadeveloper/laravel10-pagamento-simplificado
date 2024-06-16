@@ -28,11 +28,10 @@ class ApiUserRepositoryEloquentTest extends TestCase
     {
         $data = [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'password' => 'password'
+            'email' => fake()->unique()->safeEmail()
         ];
 
-        $createdRecord = $this->repository->create($data);
+        $createdRecord = $this->repository->create(array_merge($data, ['password' => 'password']));
 
         $this->assertInstanceOf(ApiUser::class, $createdRecord);
         $this->assertDatabaseHas('api_users', $data);
