@@ -1,0 +1,48 @@
+########################################
+#
+#  GLOBAL VARIABLES
+#
+########################################
+
+@baseUrl=http://localhost:{{$dotenv APP_PORT_EXTERNAL}}/api
+@accept=application/json
+@contentType=application/json
+
+########################################
+#
+#  AUTHORIZATION
+#
+########################################
+
+### Login / Access Token Generation
+# @name authLogin
+
+POST {{baseUrl}}/auth/login
+Accept: {{accept}}
+Content-Type: {{contentType}}
+
+{
+    "email": "default@app.com",
+    "password": "defaultpassword"
+}
+
+### Access Token Definition
+
+@accessToken={{authLogin.response.body.data.access_token}}
+
+# To delete tokens, you can use this code on Laravel Tinker: \App\Domain\User\Models\User::find(1)->tokens()->delete();
+
+### Get Authenticated User Data
+# @name authMe
+
+GET {{baseUrl}}/auth/me
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
+
+########################################
+#
+#  OTHER ROUTES...
+#
+########################################
+
