@@ -13,6 +13,7 @@ use App\Domain\Auth\Exceptions\InvalidApiUserException;
 use App\Domain\Auth\Services\Interfaces\AuthServiceInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApiLoginRequest;
+use App\Http\Resources\AuthenticatedApiUserResource;
 use App\Traits\Http\ApiResponse;
 
 /**
@@ -97,5 +98,42 @@ class AuthController extends Controller
                 code: $exception->getCode()
             );
         }
+    }
+
+    /**
+     * Authenticated user
+     *
+     * This endpoint lets you get information about the authenticated user.
+     *
+     * @responseField id integer The identifier of the user.
+     * @responseField name string The name of the user.
+     * @responseField email string The e-mail of the user.
+     * @responseField email_verified_at string The date and time in which the e-mail of the user was verified.
+     * @responseField created_at string The date and time in which the user was created.
+     * @responseField updated_at string The date and time in which the user was last updated.
+     *
+     * @response status=200 scenario=success {
+     *      "data": {
+     *          "id": 1,
+     *          "name": "Default App",
+     *          "email": "default@app.com",
+     *          "email_verified_at": null,
+     *          "created_at": "2024-04-02T20:06:26.000000Z",
+     *          "updated_at": "2024-04-02T20:06:26.000000Z"
+     *      }
+     * }
+     *
+     * @response status=500 scenario="unexpected error" {
+     *      "message": "Internal Server Error."
+     * }
+     *
+     * @authenticated
+     *
+     */
+    public function me(Request $request): JsonResponse
+    {
+        return (new AuthenticatedApiUserResource($request->user()))
+                ->response()
+                ->setStatusCode(Response::HTTP_OK);
     }
 }
