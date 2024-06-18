@@ -40,7 +40,7 @@ class AuthController extends Controller
      *
      * @response status=200 scenario=success {
      *      "data": {
-     *          "access_token": "1|laravel10_falemaisUI8A7aHrlN0XCyKApJCfO2uzK9Gc4X8DWZtFJbCY4d735783",
+     *          "access_token": "1|laravel10_pagamento_simplificadoUI8A7aHrlN0XCyKApJCfO2uzK9Gc4X8DWZtFJbCY4d735783",
      *          "token_type": "Bearer",
      *          "expires_at": "2024-02-01 12:27:37"
      *      }
