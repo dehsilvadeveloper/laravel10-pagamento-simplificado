@@ -6,9 +6,9 @@ use Tests\TestCase;
 use Spatie\LaravelData\Exceptions\CannotCreateData;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use App\Domain\Auth\DataTransferObjects\LoginDto;
+use App\Domain\Auth\DataTransferObjects\ApiLoginDto;
 
-class LoginDtoTest extends TestCase
+class ApiLoginDtoTest extends TestCase
 {
     /**
      * @group dtos
@@ -21,10 +21,10 @@ class LoginDtoTest extends TestCase
             'password' => 'defaultpassword'
         ];
 
-        $dto = LoginDto::from($data);
+        $dto = ApiLoginDto::from($data);
         $dtoAsArray = $dto->toArray();
 
-        $this->assertInstanceOf(LoginDto::class, $dto);
+        $this->assertInstanceOf(ApiLoginDto::class, $dto);
         $this->assertEquals($data['email'], $dtoAsArray['email']);
         $this->assertEquals($data['password'], $dtoAsArray['password']);
     }
@@ -40,10 +40,10 @@ class LoginDtoTest extends TestCase
             'password' => 'defaultpassword'
         ];
 
-        $dto = LoginDto::from($data);
+        $dto = ApiLoginDto::from($data);
         $dtoAsArray = $dto->toArray();
 
-        $this->assertInstanceOf(LoginDto::class, $dto);
+        $this->assertInstanceOf(ApiLoginDto::class, $dto);
         $this->assertEquals($data['email'], $dtoAsArray['email']);
         $this->assertEquals($data['password'], $dtoAsArray['password']);
     }
@@ -56,7 +56,7 @@ class LoginDtoTest extends TestCase
     {
         $this->expectException(CannotCreateData::class);
 
-        $dto = LoginDto::from([]);
+        $dto = ApiLoginDto::from([]);
     }
 
     /**
@@ -72,10 +72,10 @@ class LoginDtoTest extends TestCase
 
         $request = Request::create('/dummy', 'POST', $requestData);
 
-        $dto = LoginDto::from($request);
+        $dto = ApiLoginDto::from($request);
         $dtoAsArray = $dto->toArray();
 
-        $this->assertInstanceOf(LoginDto::class, $dto);
+        $this->assertInstanceOf(ApiLoginDto::class, $dto);
         $this->assertEquals($requestData['email'], $dtoAsArray['email']);
         $this->assertEquals($requestData['password'], $dtoAsArray['password']);
     }
@@ -90,7 +90,7 @@ class LoginDtoTest extends TestCase
 
         $request = Request::create('/dummy', 'POST', []);
 
-        $dto = LoginDto::from([]);
+        $dto = ApiLoginDto::from([]);
     }
 
     /**
@@ -108,6 +108,6 @@ class LoginDtoTest extends TestCase
 
         $request = Request::create('/dummy', 'POST', $requestData);
 
-        $dto = LoginDto::from($request);
+        $dto = ApiLoginDto::from($request);
     }
 }

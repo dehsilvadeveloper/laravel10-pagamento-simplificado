@@ -8,7 +8,7 @@ use Mockery;
 use Mockery\MockInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use App\Domain\Auth\DataTransferObjects\LoginDto;
+use App\Domain\Auth\DataTransferObjects\ApiLoginDto;
 use App\Domain\Auth\DataTransferObjects\SuccessfulAuthDto;
 use App\Domain\Auth\Exceptions\IncorrectPasswordException;
 use App\Domain\Auth\Exceptions\InvalidApiUserException;
@@ -59,7 +59,7 @@ class AuthServiceTest extends TestCase
             ->with($userData['password'], $user->password)
             ->andReturn(true);
 
-        $login = $this->service->login(LoginDto::from([
+        $login = $this->service->login(ApiLoginDto::from([
             'email' => $userData['email'],
             'password' => $userData['password']
         ]));
@@ -94,7 +94,7 @@ class AuthServiceTest extends TestCase
             ->with($userData['email'])
             ->andReturnNull();
 
-        $this->service->login(LoginDto::from([
+        $this->service->login(ApiLoginDto::from([
             'email' => $userData['email'],
             'password' => $userData['password']
         ]));
@@ -130,7 +130,7 @@ class AuthServiceTest extends TestCase
             ->with('wrong_password', $user->password)
             ->andReturn(false);
 
-        $this->service->login(LoginDto::from([
+        $this->service->login(ApiLoginDto::from([
             'email' => $userData['email'],
             'password' => 'wrong_password'
         ]));
@@ -162,7 +162,7 @@ class AuthServiceTest extends TestCase
             ->with($userData['email'])
             ->andThrows(new Exception('Houston, we have a problem.'));
 
-        $this->service->login(LoginDto::from([
+        $this->service->login(ApiLoginDto::from([
             'email' => $userData['email'],
             'password' => $userData['password']
         ]));

@@ -6,7 +6,7 @@ use Throwable;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use App\Domain\Auth\DataTransferObjects\LoginDto;
+use App\Domain\Auth\DataTransferObjects\ApiLoginDto;
 use App\Domain\Auth\DataTransferObjects\SuccessfulAuthDto;
 use App\Domain\Auth\Exceptions\IncorrectPasswordException;
 use App\Domain\Auth\Exceptions\InvalidApiUserException;
@@ -20,7 +20,7 @@ class AuthService implements AuthServiceInterface
     {
     }
 
-    public function login(LoginDto $dto): SuccessfulAuthDto
+    public function login(ApiLoginDto $dto): SuccessfulAuthDto
     {
         try {
             $validatedUser = $this->validateUser($dto->email, $dto->password);

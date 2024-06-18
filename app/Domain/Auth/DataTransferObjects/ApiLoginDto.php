@@ -8,7 +8,7 @@ use Spatie\LaravelData\Attributes\MapOutputName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapInputName(SnakeCaseMapper::class), MapOutputName(SnakeCaseMapper::class)]
-class LoginDto extends Data
+class ApiLoginDto extends Data
 {
     public function __construct(
         public string $email,
