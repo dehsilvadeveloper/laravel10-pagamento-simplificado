@@ -3,7 +3,7 @@
 namespace Tests;
 
 use Tests\TestCase;
-use Tests\TestsHelpers\DataTransferObjects\ModelConfigurationAssertionParamsDto;
+use Tests\TestHelpers\DataTransferObjects\ModelConfigurationAssertionParamsDto;
 
 abstract class ModelTestCase extends TestCase
 {

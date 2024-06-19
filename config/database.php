@@ -61,6 +61,7 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
+            'timeout' => env('DB_CONNECTION_TIMEOUT', 60),
         ],
 
         'pgsql' => [
