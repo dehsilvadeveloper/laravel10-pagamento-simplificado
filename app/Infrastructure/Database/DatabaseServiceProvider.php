@@ -3,6 +3,8 @@
 namespace App\Infrastructure\Database;
 
 use Illuminate\Support\ServiceProvider;
+use App\Infrastructure\Database\Eloquent\ApiUserRepositoryEloquent;
+use App\Domain\ApiUser\Repositories\ApiUserRepositoryInterface;
 use App\Infrastructure\Database\Eloquent\BaseRepositoryEloquent;
 use App\Infrastructure\Database\Eloquent\Interfaces\RepositoryEloquentInterface;
 
@@ -16,6 +18,7 @@ class DatabaseServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->bindBaseRepositoryClasses();
+        $this->bindApiUserRepositoryClasses();
     }
 
     /**
@@ -35,5 +38,15 @@ class DatabaseServiceProvider extends ServiceProvider
     private function bindBaseRepositoryClasses(): void
     {
         $this->app->bind(RepositoryEloquentInterface::class, BaseRepositoryEloquent::class);
+    }
+
+    /**
+     * Bind repository classes for domain ApiUser
+     *
+     * @return void
+     */
+    private function bindApiUserRepositoryClasses(): void
+    {
+        $this->app->bind(ApiUserRepositoryInterface::class, ApiUserRepositoryEloquent::class);
     }
 }
