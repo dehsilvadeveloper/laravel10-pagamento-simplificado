@@ -122,6 +122,10 @@ class AuthController extends Controller
      *          "updated_at": "2024-04-02T20:06:26.000000Z"
      *      }
      * }
+     * 
+     * @response status=401 scenario="unauthenticated" {
+     *      "message": "Unauthenticated."
+     * }
      *
      * @response status=500 scenario="unexpected error" {
      *      "message": "Internal Server Error."

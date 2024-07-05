@@ -78,7 +78,7 @@ class AuthControllerTest extends TestCase
      * @group controllers
      * @group auth
      */
-    public function test_generates_log_if_cannot_login(): void
+    public function test_cannot_login_if_exception_occurs(): void
     {
         Mail::fake();
         Event::fake();
