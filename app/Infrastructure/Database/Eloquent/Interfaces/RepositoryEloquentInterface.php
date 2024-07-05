@@ -4,12 +4,13 @@ namespace App\Infrastructure\Database\Eloquent\Interfaces;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use App\Domain\Common\DataTransferObjects\BaseDto;
 
 interface RepositoryEloquentInterface
 {
-    public function create(array $payload): ?Model;
+    public function create(BaseDto $dto): ?Model;
 
-    public function update(int $modelId, array $payload): Model;
+    public function update(int $modelId, BaseDto $dto): Model;
 
     public function deleteById(int $modelId): bool;
 
