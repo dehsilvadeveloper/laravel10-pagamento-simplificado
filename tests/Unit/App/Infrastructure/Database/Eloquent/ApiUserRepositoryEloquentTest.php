@@ -3,8 +3,12 @@
 namespace Tests\Unit\App\Infrastructure\Database\Eloquent;
 
 use Tests\TestCase;
+use InvalidArgumentException;
+use Mockery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
+use App\Domain\ApiUser\DataTransferObjects\CreateApiUserDto;
+use App\Domain\ApiUser\DataTransferObjects\UpdateApiUserDto;
 use App\Domain\ApiUser\Models\ApiUser;
 use App\Infrastructure\Database\Eloquent\ApiUserRepositoryEloquent;
 
@@ -20,6 +24,13 @@ class ApiUserRepositoryEloquentTest extends TestCase
         $this->repository = app(ApiUserRepositoryEloquent::class);
     }
 
+    protected function tearDown(): void
+    {
+        Mockery::close();
+
+        parent::tearDown();
+    }
+
     /**
      * @group repositories
      * @group api_user
@@ -30,12 +41,34 @@ class ApiUserRepositoryEloquentTest extends TestCase
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail()
         ];
+        $password = fake()->password(12);
 
-        $createdRecord = $this->repository->create(array_merge($data, ['password' => 'password']));
+        $createdRecord = $this->repository->create(
+            CreateApiUserDto::from([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => $password
+            ])
+        );
 
         $this->assertInstanceOf(ApiUser::class, $createdRecord);
         $this->assertDatabaseHas('api_users', $data);
-        $this->assertTrue(Hash::check('password', $createdRecord->password));
+        $this->assertTrue(Hash::check($password, $createdRecord->password));
+    }
+
+    /**
+     * @group repositories
+     * @group api_user
+     */
+    public function test_cannot_create_without_data(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('You did not provide any data to create the record.');
+
+        $dtoMock = Mockery::mock(CreateApiUserDto::class);
+        $dtoMock->shouldReceive('toArray')->andReturn([]);
+
+        $this->repository->create($dtoMock);
     }
 
     /**
@@ -47,7 +80,7 @@ class ApiUserRepositoryEloquentTest extends TestCase
         $existingRecord = ApiUser::factory()->create([
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => 'password'
+            'password' => fake()->password(12)
         ]);
 
         $dataForUpdate = [
@@ -55,7 +88,13 @@ class ApiUserRepositoryEloquentTest extends TestCase
             'email' => fake()->unique()->safeEmail(),
         ];
 
-        $updatedRecord = $this->repository->update($existingRecord->id, $dataForUpdate);
+        $updatedRecord = $this->repository->update(
+            $existingRecord->id,
+            UpdateApiUserDto::from([
+                'name' => $dataForUpdate['name'],
+                'email' => $dataForUpdate['email']
+            ])
+        );
 
         $this->assertInstanceOf(ApiUser::class, $updatedRecord);
         $this->assertEquals($existingRecord->id, $updatedRecord->id);
@@ -67,16 +106,38 @@ class ApiUserRepositoryEloquentTest extends TestCase
      * @group repositories
      * @group api_user
      */
+    public function test_cannot_update_without_data(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('You did not provide any data to update the record.');
+
+        $existingRecord = ApiUser::factory()->create([
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => fake()->password(12)
+        ]);
+
+        $dtoMock = Mockery::mock(UpdateApiUserDto::class);
+        $dtoMock->shouldReceive('toArray')->andReturn([]);
+
+        $this->repository->update($existingRecord->id, $dtoMock);
+    }
+
+    /**
+     * @group repositories
+     * @group api_user
+     */
     public function test_cannot_update_a_nonexistent_record(): void
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $dataForUpdate = [
-            'name' => 'Updated name',
-            'email' => fake()->unique()->safeEmail(),
-        ];
-
-        $this->repository->update(1, $dataForUpdate);
+        $this->repository->update(
+            1,
+            UpdateApiUserDto::from([
+                'name' => 'Updated name',
+                'email' => fake()->unique()->safeEmail()
+            ])
+        );
     }
 
     /**
@@ -88,14 +149,14 @@ class ApiUserRepositoryEloquentTest extends TestCase
         $existingRecordData = [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => 'password'
+            'password' => fake()->password(12)
         ];
         $existingRecord = ApiUser::factory()->create($existingRecordData);
 
         $deleteResult = $this->repository->deleteById($existingRecord->id);
 
         $this->assertTrue($deleteResult);
-        $this->assertDatabaseMissing('users', $existingRecordData);
+        $this->assertDatabaseMissing('api_users', $existingRecordData);
     }
 
     /**
