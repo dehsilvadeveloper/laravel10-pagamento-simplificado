@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            ApiUserSeeder::class
+            ApiUserSeeder::class,
+            DocumentTypeSeeder::class
         ]);
     }
 }
