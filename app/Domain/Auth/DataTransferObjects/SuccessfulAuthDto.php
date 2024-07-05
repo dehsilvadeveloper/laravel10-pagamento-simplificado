@@ -2,13 +2,9 @@
 
 namespace App\Domain\Auth\DataTransferObjects;
 
-use Spatie\LaravelData\Data;
-use Spatie\LaravelData\Attributes\MapInputName;
-use Spatie\LaravelData\Attributes\MapOutputName;
-use Spatie\LaravelData\Mappers\SnakeCaseMapper;
+use App\Domain\Common\DataTransferObjects\BaseDto;
 
-#[MapInputName(SnakeCaseMapper::class), MapOutputName(SnakeCaseMapper::class)]
-class SuccessfulAuthDto extends Data
+class SuccessfulAuthDto extends BaseDto
 {
     public function __construct(
         public string $accessToken,
