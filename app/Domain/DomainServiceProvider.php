@@ -5,6 +5,7 @@ namespace App\Domain;
 use Illuminate\Support\ServiceProvider;
 use App\Domain\ApiUser\Providers\ApiUserServiceProvider;
 use App\Domain\Auth\Providers\AuthServiceProvider;
+use App\Domain\DocumentType\Providers\DocumentTypeServiceProvider;
 
 class DomainServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,7 @@ class DomainServiceProvider extends ServiceProvider
     {
         $this->app->register(ApiUserServiceProvider::class);
         $this->app->register(AuthServiceProvider::class);
+        $this->app->register(DocumentTypeServiceProvider::class);
     }
 
     /**
