@@ -168,6 +168,15 @@ endpoints:
         description: success
         custom: []
       -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: unauthenticated
+        custom: []
+      -
         status: 500
         content: |-
           {
@@ -234,7 +243,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer cehdg31ZDaV6fb4E6Pak5v8'
+      - 'Bearer v3Zg48aV6Pde1Efb6ca5Dkh'
     controller: null
     method: null
     route: null
