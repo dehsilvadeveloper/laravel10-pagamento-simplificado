@@ -2,13 +2,11 @@
 
 namespace Tests\Unit\App\Domain\Auth\DataTransferObjects;
 
-use Tests\TestCase;
-use Spatie\LaravelData\Exceptions\CannotCreateData;
+use Tests\DtoTestCase;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use App\Domain\Auth\DataTransferObjects\ApiLoginDto;
 
-class ApiLoginDtoTest extends TestCase
+class ApiLoginDtoTest extends DtoTestCase
 {
     /**
      * @group dtos
@@ -16,17 +14,13 @@ class ApiLoginDtoTest extends TestCase
      */
     public function test_can_create_from_array_with_snakecase_keys(): void
     {
-        $data = [
-            'email' => 'default@app.com',
-            'password' => 'defaultpassword'
-        ];
-
-        $dto = ApiLoginDto::from($data);
-        $dtoAsArray = $dto->toArray();
-
-        $this->assertInstanceOf(ApiLoginDto::class, $dto);
-        $this->assertEquals($data['email'], $dtoAsArray['email']);
-        $this->assertEquals($data['password'], $dtoAsArray['password']);
+        $this->runCreationFromSnakecaseArrayAssertions(
+            ApiLoginDto::class,
+            [
+                'email' => 'default@app.com',
+                'password' => 'defaultpassword'
+            ]
+        );
     }
 
     /**
@@ -35,17 +29,13 @@ class ApiLoginDtoTest extends TestCase
      */
     public function test_can_create_from_array_with_camelcase_keys(): void
     {
-        $data = [
-            'email' => 'default@app.com',
-            'password' => 'defaultpassword'
-        ];
-
-        $dto = ApiLoginDto::from($data);
-        $dtoAsArray = $dto->toArray();
-
-        $this->assertInstanceOf(ApiLoginDto::class, $dto);
-        $this->assertEquals($data['email'], $dtoAsArray['email']);
-        $this->assertEquals($data['password'], $dtoAsArray['password']);
+        $this->runCreationFromCamelcaseArrayAssertions(
+            ApiLoginDto::class,
+            [
+                'email' => 'default@app.com',
+                'password' => 'defaultpassword'
+            ]
+        );
     }
 
     /**
@@ -54,9 +44,7 @@ class ApiLoginDtoTest extends TestCase
      */
     public function test_cannot_create_from_empty_array(): void
     {
-        $this->expectException(CannotCreateData::class);
-
-        $dto = ApiLoginDto::from([]);
+        $this->runCreationFromEmptyArrayAssertions(ApiLoginDto::class);
     }
 
     /**
@@ -65,19 +53,17 @@ class ApiLoginDtoTest extends TestCase
      */
     public function test_can_create_from_request(): void
     {
-        $requestData = [
-            'email' => 'default@app.com',
-            'password' => 'defaultpassword'
-        ];
-
-        $request = Request::create('/dummy', 'POST', $requestData);
-
-        $dto = ApiLoginDto::from($request);
-        $dtoAsArray = $dto->toArray();
-
-        $this->assertInstanceOf(ApiLoginDto::class, $dto);
-        $this->assertEquals($requestData['email'], $dtoAsArray['email']);
-        $this->assertEquals($requestData['password'], $dtoAsArray['password']);
+        $this->runCreationFromRequestAssertions(
+            ApiLoginDto::class,
+            Request::create(
+                '/dummy',
+                'POST',
+                [
+                    'email' => 'default@app.com',
+                    'password' => 'defaultpassword'
+                ]
+            )
+        );
     }
 
     /**
@@ -86,11 +72,7 @@ class ApiLoginDtoTest extends TestCase
      */
     public function test_cannot_create_from_empty_request(): void
     {
-        $this->expectException(CannotCreateData::class);
-
-        $request = Request::create('/dummy', 'POST', []);
-
-        $dto = ApiLoginDto::from([]);
+        $this->runCreationFromEmptyRequestAssertions(ApiLoginDto::class);
     }
 
     /**
@@ -99,15 +81,17 @@ class ApiLoginDtoTest extends TestCase
      */
     public function test_cannot_create_from_request_with_invalid_values(): void
     {
-        $this->expectException(ValidationException::class);
-
-        $requestData = [
-            'email' => 123.50,
-            'password' => 123.50
-        ];
-
-        $request = Request::create('/dummy', 'POST', $requestData);
-
-        $dto = ApiLoginDto::from($request);
+        $this->runCreationFromRequestWithInvalidValuesAssertions(
+            ApiLoginDto::class,
+            Request::create(
+                '/dummy',
+                'POST',
+                [
+                    'access_token' => 123.50,
+                    'token_type' => 123.50,
+                    'expires_at' => 123.50
+                ]
+            )
+        );
     }
 }
