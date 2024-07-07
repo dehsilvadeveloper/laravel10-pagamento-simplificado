@@ -90,7 +90,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer PZ4b165v8EfaVeack6hdDg3'
+      - 'Bearer 3a65c6fgkE8PZ1DVbahved4'
     controller: null
     method: null
     route: null
@@ -119,13 +119,13 @@ endpoints:
         name: id
         description: 'The ID of the document type.'
         required: true
-        example: numquam
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: numquam
+      id: et
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -193,7 +193,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer 6a5e3bZcVDP1g8kvhdE46fa'
+      - 'Bearer a3g6DbZvd8e4af61h5PcVkE'
     controller: null
     method: null
     route: null

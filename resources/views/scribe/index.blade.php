@@ -103,7 +103,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 5, 2024</li>
+        <li>Last updated: July 7, 2024</li>
     </ul>
 </div>
 
@@ -232,7 +232,7 @@ response.json()</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Could not found a valid user with the email: test@test.com.&quot;
+    &quot;message&quot;: &quot;Could not found a valid API user with the email: test@test.com.&quot;
 }</code>
  </pre>
             <blockquote>
@@ -827,7 +827,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/numquam" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/et" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -835,7 +835,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/numquam';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/et';
 $response = $client-&gt;get(
     $url,
     [
@@ -852,7 +852,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/numquam"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/et"
 );
 
 const headers = {
@@ -871,7 +871,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/numquam'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/et'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -1011,10 +1011,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-document-types--id-"
-               value="numquam"
+               value="et"
                data-component="url">
     <br>
-<p>The ID of the document type. Example: <code>numquam</code></p>
+<p>The ID of the document type. Example: <code>et</code></p>
             </div>
                     </form>
 
