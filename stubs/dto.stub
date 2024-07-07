@@ -2,13 +2,9 @@
 
 namespace {{namespace}};
 
-use Spatie\LaravelData\Data;
-use Spatie\LaravelData\Attributes\MapInputName;
-use Spatie\LaravelData\Attributes\MapOutputName;
-use Spatie\LaravelData\Mappers\SnakeCaseMapper;
+use App\Domain\Common\DataTransferObjects\BaseDto;
 
-#[MapInputName(SnakeCaseMapper::class), MapOutputName(SnakeCaseMapper::class)]
-class {{class}} extends Data
+class {{class}} extends BaseDto
 {
     public function __construct()
     {

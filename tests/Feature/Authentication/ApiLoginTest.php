@@ -13,14 +13,14 @@ class ApiLoginTest extends TestCase
      */
     public function test_can_login(): void
     {
-        $user = ApiUser::factory()->create([
+        $apiUser = ApiUser::factory()->create([
             'password' => 'defaultpassword'
         ]);
 
         $response = $this->postJson(
             route('auth.login'),
             [
-                'email' => $user->email,
+                'email' => $apiUser->email,
                 'password' => 'defaultpassword'
             ]
         );
@@ -54,7 +54,9 @@ class ApiLoginTest extends TestCase
         );
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
-        $response->assertExactJson(['message' => 'Could not found a valid user with the email: nonexistentemail@test.com.']);
+        $response->assertExactJson([
+            'message' => 'Could not found a valid API user with the email: nonexistentemail@test.com.'
+        ]);
     }
 
     /**
@@ -62,19 +64,19 @@ class ApiLoginTest extends TestCase
      */
     public function test_cannot_login_with_incorrect_password(): void
     {
-        $user = ApiUser::factory()->create([
+        $apiUser = ApiUser::factory()->create([
             'password' => 'defaultpassword'
         ]);
 
         $response = $this->postJson(
             route('auth.login'),
             [
-                'email' => $user->email,
+                'email' => $apiUser->email,
                 'password' => 'wrong_password'
             ]
         );
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
-        $response->assertExactJson(['message' => 'The password provided for this user is incorrect.']);
+        $response->assertExactJson(['message' => 'The password provided for this API user is incorrect.']);
     }
 }

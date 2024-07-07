@@ -42,6 +42,26 @@ Authorization: Bearer {{accessToken}}
 
 ########################################
 #
+#  DOCUMENT TYPES
+#
+########################################
+
+### Get List Of Document Types
+
+GET {{baseUrl}}/document-types
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
+
+### Show Specific Document Type
+
+GET {{baseUrl}}/document-types/2
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
+
+########################################
+#
 #  OTHER ROUTES...
 #
 ########################################

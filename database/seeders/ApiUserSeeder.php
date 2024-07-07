@@ -28,12 +28,12 @@ class ApiUserSeeder extends Seeder
         DB::beginTransaction();
 
         try {
-            $apiUsers->map(
-                fn($value) => ApiUser::updateOrCreate(
-                    ['id' => $value['id']],
-                    $value
-                )
-            );
+            foreach ($apiUsers as $apiUser) {
+                ApiUser::updateOrCreate(
+                    ['id' => $apiUser['id']],
+                    $apiUser
+                );
+            }
     
             DB::commit();
 
@@ -50,6 +50,8 @@ class ApiUserSeeder extends Seeder
                     'stack_trace' => $exception->getTrace()
                 ]
             );
+
+            $this->command->error('Table api_users seeding failed.');
         }
     }
 }

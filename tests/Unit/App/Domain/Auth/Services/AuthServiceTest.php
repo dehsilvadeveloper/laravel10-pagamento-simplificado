@@ -87,7 +87,7 @@ class AuthServiceTest extends TestCase
         ];
 
         $this->expectException(InvalidApiUserException::class);
-        $this->expectExceptionMessage("Could not found a valid user with the email: {$userData['email']}.");
+        $this->expectExceptionMessage("Could not found a valid API user with the email: {$userData['email']}.");
 
         $this->apiUserServiceMock
             ->shouldReceive('firstByEmail')
@@ -107,7 +107,7 @@ class AuthServiceTest extends TestCase
     public function test_cannot_login_with_incorrect_password(): void
     {
         $this->expectException(IncorrectPasswordException::class);
-        $this->expectExceptionMessage('The password provided for this user is incorrect.');
+        $this->expectExceptionMessage('The password provided for this API user is incorrect.');
 
         $userData = [
             'name' => fake()->name(),
