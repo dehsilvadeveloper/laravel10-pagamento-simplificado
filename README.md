@@ -19,7 +19,7 @@ A API desenvolvida deve respeitar as regras de negócio a seguir:
 
 - Este serviço deve ser RESTFul;
 
-- Para ambos tipos de usuário, precisamos do `Nome Completo`, `CPF`, `e-mail` e `Senha`. CPF/CNPJ e e-mail devem ser únicos no sistema. Sendo assim, seu sistema deve permitir apenas um cadastro com o mesmo CPF ou endereço de e-mail;
+- Para ambos tipos de usuário, precisamos do `Nome Completo`, `CPF/CNPJ`, `e-mail` e `Senha`. CPF/CNPJ e e-mail devem ser únicos no sistema. Sendo assim, seu sistema deve permitir apenas um cadastro com o mesmo CPF ou endereço de e-mail;
 
 - Usuários comuns podem enviar dinheiro (efetuar transferência) para lojistas e entre usuários comuns;
 
