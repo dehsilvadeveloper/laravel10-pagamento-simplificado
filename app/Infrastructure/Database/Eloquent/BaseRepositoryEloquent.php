@@ -2,26 +2,53 @@
 
 namespace App\Infrastructure\Database\Eloquent;
 
+use InvalidArgumentException;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Http\Response;
+use App\Domain\Common\DataTransferObjects\BaseDto;
 use App\Infrastructure\Database\Eloquent\Interfaces\RepositoryEloquentInterface;
 
 class BaseRepositoryEloquent implements RepositoryEloquentInterface
 {
-    public function __construct(
-        protected Model $model
-    ) {
+    /** @var Model|EloquentBuilder|QueryBuilder|SoftDeletes */
+    protected Model $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
     }
 
-    public function create(array $payload): ?Model
+    public function create(BaseDto $dto): ?Model
     {
-        return $this->model->create($payload);
+        $data = $dto->toArray();
+
+        if (empty($data)) {
+            throw new InvalidArgumentException(
+                'You did not provide any data to create the record.',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        return $this->model->create($data);
     }
 
-    public function update(int $modelId, array $payload): Model
+    public function update(int $modelId, BaseDto $dto): Model
     {
+        $data = $dto->toArray();
+
+        if (empty($data)) {
+            throw new InvalidArgumentException(
+                'You did not provide any data to update the record.',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
         $item = $this->model->findOrFail($modelId);
-        $item->update($payload);
+        $item->update($data);
         $item->refresh();
 
         return $item;

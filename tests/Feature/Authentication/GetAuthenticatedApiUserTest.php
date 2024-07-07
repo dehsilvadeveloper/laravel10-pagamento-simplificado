@@ -14,11 +14,11 @@ class GetAuthenticatedApiUserTest extends TestCase
      */
     public function test_can_get_authenticated_user_data(): void
     {
-        $user = ApiUser::factory()->create([
+        $apiUser = ApiUser::factory()->create([
             'password' => 'defaultpassword'
         ]);
 
-        Sanctum::actingAs($user, ['*']);
+        Sanctum::actingAs($apiUser, ['*']);
 
         $response = $this->getJson(route('auth.me'));
 
@@ -38,9 +38,9 @@ class GetAuthenticatedApiUserTest extends TestCase
         $this->assertNotEmpty($response['data']['id']);
         $this->assertNotEmpty($response['data']['name']);
         $this->assertNotEmpty($response['data']['email']);
-        $this->assertEquals($user->id, $response['data']['id']);
-        $this->assertEquals($user->name, $response['data']['name']);
-        $this->assertEquals($user->email, $response['data']['email']);
+        $this->assertEquals($apiUser->id, $response['data']['id']);
+        $this->assertEquals($apiUser->name, $response['data']['name']);
+        $this->assertEquals($apiUser->email, $response['data']['email']);
     }
 
     /**

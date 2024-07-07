@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DocumentTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +20,10 @@ Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login')
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/auth')->group(function () {
         Route::get('/me', [AuthController::class, 'me'])->name('auth.me');
+    });
+
+    Route::prefix('/document-types')->group(function () {
+        Route::get('/', [DocumentTypeController::class, 'index'])->name('document-type.index');
+        Route::get('/{id}', [DocumentTypeController::class, 'show'])->name('document-type.show');
     });
 });

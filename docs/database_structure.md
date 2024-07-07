@@ -4,44 +4,20 @@ Neste documento você pode conferir a estrutura proposta de tabelas do banco de 
 
 #### Tabela: api_users
 
-Tabela com informações de usuários da API (serviços externos, etc).
+Tabela com informações de usuários da API (utilizadores externos, etc).
 
 | Campo | Tipo | Nullable | Descrição |
 |-|-|-|-|  
 | id | integer | não | Chave primária | 
-| name | varchar(70) | sim | Nome do usuário |
-| email | varchar(70) | não | Endereço de e-mail do usuário |
-| password | varchar(255) | Não | Senha encriptada do usuário |
-| created_at | datetime | não | Data e hora da criação do usuário |
-| updated_at | datetime | sim | Data e hora da última atualização do usuário |
-
-#### Tabela: customers
-
-Tabela com informações dos clientes.
-
-| Campo | Tipo | Nullable | Descrição |
-|-|-|-|-|  
-| id | integer | não | Chave primária |
-| user_id | integer | não | ID de usuário do cliente |
-| customer_type_id | integer | não | ID do tipo de cliente |
-| name | varchar(70) | não | Nome completo do cliente |
-| document_number | varchar(14) | não | Número de documento do cliente |
-| document_type_id | integer | não | ID do tipo de documento do cliente |
-| created_at | datetime | não | Data e hora da criação do cliente |
-| updated_at | datetime | sim | Data e hora da última atualização do cliente |
-
-#### Tabela: customer_types
-
-Tabela com os tipos de clientes possíveis (comum, lojista).
-
-| Campo | Tipo | Nullable | Descrição |
-|-|-|-|-|  
-| id | integer | não | Chave primária | 
-| name | varchar(50) | não | Nome do tipo de cliente |
+| name | varchar(70) | sim | Nome do usuário de API |
+| email | varchar(70) | não | Endereço de e-mail do usuário de API |
+| password | varchar(255) | Não | Senha encriptada do usuário de API |
+| created_at | datetime | não | Data e hora da criação do usuário de API |
+| updated_at | datetime | sim | Data e hora da última atualização do usuário de API |
 
 #### Tabela: document_types
 
-Tabela com os tipos de documentos possíveis para os clientes (cpf, cnpj).
+Tabela com os tipos de documentos possíveis para os usuários (cpf, cnpj).
 
 | Campo | Tipo | Nullable | Descrição |
 |-|-|-|-|  
@@ -82,8 +58,8 @@ Tabela com as notificações disparadas pela aplicação.
 | recipient_id | integer | não | ID de usuário de quem deve receber a notificação |
 | notification_type_id | integer | não | ID do tipo de notificação |
 | notification_status_id | integer | não | ID do status da notificação |
-| created_at | datetime | não | Data e hora da criação do cliente |
-| updated_at | datetime | sim | Data e hora da última atualização do cliente |
+| created_at | datetime | não | Data e hora da criação da notificação |
+| updated_at | datetime | sim | Data e hora da última atualização da notificação |
 
 #### Tabela: notification_status_histories
 
@@ -150,23 +126,35 @@ Tabela com os statuses possíveis para as transferências (pendente, autorizado,
 
 #### Tabela: users
 
-Tabela com informações das contas de usuário dos clientes.
+Tabela com informações dos usuários.
 
 | Campo | Tipo | Nullable | Descrição |
 |-|-|-|-|  
 | id | integer | não | Chave primária | 
-| name | varchar(70) | sim | Nome do usuário |
+| name | varchar(70) | não | Nome completo do usuário |
+| customer_type_id | integer | não | ID do tipo de usuário |
+| document_number | varchar(14) | não | Número de documento do usuário |
+| document_type_id | integer | não | ID do tipo de documento do usuário |
 | email | varchar(70) | não | Endereço de e-mail do usuário |
 | password | varchar(255) | Não | Senha encriptada do usuário |
 | created_at | datetime | não | Data e hora da criação do usuário |
 | updated_at | datetime | sim | Data e hora da última atualização do usuário |
 
-#### Tabela: wallets
+#### Tabela: user_types
 
-Tabela com informações das carteiras dos clientes.
+Tabela com os tipos de usuários possíveis (comum, lojista).
 
 | Campo | Tipo | Nullable | Descrição |
 |-|-|-|-|  
 | id | integer | não | Chave primária | 
-| user_id | integer | não | ID do usuário |
+| name | varchar(50) | não | Nome do tipo de usuário |
+
+#### Tabela: wallets
+
+Tabela com informações das carteiras dos usuários.
+
+| Campo | Tipo | Nullable | Descrição |
+|-|-|-|-|  
+| id | integer | não | Chave primária | 
+| user_id | integer | não | ID do usuário a quem pertence a carteira |
 | balance | decimal(12,2) | não | Saldo atual da carteira |
