@@ -14,11 +14,11 @@ class RoutesProtectionTest extends TestCase
      */
     public function test_can_access_protected_route_if_authenticated(): void
     {
-        $user = ApiUser::factory()->create([
+        $apiUser = ApiUser::factory()->create([
             'password' => 'defaultpassword'
         ]);
 
-        Sanctum::actingAs($user, ['*']);
+        Sanctum::actingAs($apiUser, ['*']);
 
         $response = $this->getJson(route('auth.me'));
 

@@ -47,7 +47,7 @@ class AuthController extends Controller
      * }
      *
      * @response status=400 scenario="user with email provided not found" {
-     *      "message": "Could not found a valid user with the email: test@test.com."
+     *      "message": "Could not found a valid API user with the email: test@test.com."
      * }
      *
      * @response status=400 scenario="password incorrect" {
