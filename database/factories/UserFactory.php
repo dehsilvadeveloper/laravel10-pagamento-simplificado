@@ -4,13 +4,14 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use App\Domain\DocumentType\Enums\DocumentTypeEnum;
+use App\Domain\User\Enums\UserTypeEnum;
+use App\Domain\User\Models\User;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
+    protected $model = User::class;
+
     /**
      * The current password being used by the factory.
      */
@@ -23,22 +24,73 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $userType = fake()->randomElement([UserTypeEnum::COMMON, UserTypeEnum::SHOPKEEPER]);
+        $documentType = $this->generateDocumentType($userType);
+
         return [
-            'name' => fake()->name(),
+            'user_type_id' => $userType->value,
+            'name' => $this->generateName($userType),
+            'document_type_id' => $documentType->value,
+            'document_number' => $this->generateDocumentNumber($documentType),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'password' => static::$password ??= Hash::make('password')
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indicate that the user is deleted.
      */
-    public function unverified(): static
+    public function deleted(): Factory
     {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
+        return $this->state(function (array $attributes) {
+            return [
+                'deleted_at' => now()
+            ];
+        });
+    }
+
+    /**
+     * Generate a document number based on the document type.
+     *
+     * @param DocumentTypeEnum $documentType
+     * @return string
+     */
+    private function generateDocumentNumber(DocumentTypeEnum $documentType): string
+    {
+        return match($documentType) {
+            DocumentTypeEnum::CPF => fake()->cpf(false),
+            DocumentTypeEnum::CNPJ => fake()->cnpj(false),
+            default => fake()->unique()->numerify('##############')
+        };
+    }
+
+    /**
+     * Generate a document type based on the user type.
+     *
+     * @param UserTypeEnum $userType
+     * @return DocumentTypeEnum
+     */
+    private function generateDocumentType(UserTypeEnum $userType): DocumentTypeEnum
+    {
+        return match($userType) {
+            UserTypeEnum::COMMON => fake()->randomElement([DocumentTypeEnum::CPF]),
+            UserTypeEnum::SHOPKEEPER => fake()->randomElement([DocumentTypeEnum::CNPJ]),
+            default => fake()->randomElement([DocumentTypeEnum::CPF, DocumentTypeEnum::CNPJ])
+        };
+    }
+
+    /**
+     * Generate a name based on the user type.
+     *
+     * @param UserTypeEnum $userType
+     * @return string
+     */
+    private function generateName(UserTypeEnum $userType): string
+    {
+        return match($userType) {
+            UserTypeEnum::COMMON => fake()->name(),
+            UserTypeEnum::SHOPKEEPER => fake()->company(),
+            default => fake()->name()
+        };
     }
 }
