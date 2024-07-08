@@ -1,17 +1,17 @@
 <?php
 
-namespace Tests\Feature\DocumentType;
+namespace Tests\Feature\User;
 
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Http\Response;
 use App\Domain\ApiUser\Models\ApiUser;
-use App\Domain\DocumentType\Models\DocumentType;
+use App\Domain\User\Models\UserType;
 
-class GetDocumentTypeTest extends TestCase
+class GetUserTypeTest extends TestCase
 {
     /**
-     * @group document_type
+     * @group user
      */
     public function test_can_get_list_of_records(): void
     {
@@ -20,9 +20,9 @@ class GetDocumentTypeTest extends TestCase
         Sanctum::actingAs($apiUser, ['*']);
 
         $recordsCount = 3;
-        DocumentType::factory()->count($recordsCount)->create();
+        UserType::factory()->count($recordsCount)->create();
 
-        $response = $this->getJson(route('document-type.index'));
+        $response = $this->getJson(route('user-type.index'));
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonStructure([
@@ -37,7 +37,7 @@ class GetDocumentTypeTest extends TestCase
     }
 
     /**
-     * @group document_type
+     * @group user
      */
     public function test_can_get_empty_list_of_records(): void
     {
@@ -45,7 +45,7 @@ class GetDocumentTypeTest extends TestCase
 
         Sanctum::actingAs($apiUser, ['*']);
 
-        $response = $this->getJson(route('document-type.index'));
+        $response = $this->getJson(route('user-type.index'));
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonStructure([
@@ -55,7 +55,7 @@ class GetDocumentTypeTest extends TestCase
     }
 
     /**
-     * @group document_type
+     * @group user
      */
     public function test_can_find_by_id(): void
     {
@@ -63,9 +63,9 @@ class GetDocumentTypeTest extends TestCase
 
         Sanctum::actingAs($apiUser, ['*']);
 
-        $existingRecord = DocumentType::factory()->create();
+        $existingRecord = UserType::factory()->create();
 
-        $response = $this->getJson(route('document-type.show', ['id' => $existingRecord->id]));
+        $response = $this->getJson(route('user-type.show', ['id' => $existingRecord->id]));
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonStructure([

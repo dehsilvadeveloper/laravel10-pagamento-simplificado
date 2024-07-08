@@ -3,11 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Domain\DocumentType\Models\DocumentType;
+use App\Domain\User\Models\UserType;
 
-class DocumentTypeFactory extends Factory
+class UserTypeFactory extends Factory
 {
-    protected $model = DocumentType::class;
+    protected $model = UserType::class;
 
     /**
      * Define the model's default state.

@@ -1,4 +1,4 @@
-name: 'Document Type'
+name: 'Document Types'
 description: |-
 
   Endpoints for managing document types
@@ -8,7 +8,7 @@ endpoints:
       - GET
     uri: api/document-types
     metadata:
-      groupName: 'Document Type'
+      groupName: 'Document Types'
       groupDescription: |-
 
         Endpoints for managing document types
@@ -88,7 +88,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer 3a65c6fgkE8PZ1DVbahved4'
+      - 'Bearer fb34c8vaDdPEkh65gV61aeZ'
     controller: null
     method: null
     route: null
@@ -98,7 +98,7 @@ endpoints:
       - GET
     uri: 'api/document-types/{id}'
     metadata:
-      groupName: 'Document Type'
+      groupName: 'Document Types'
       groupDescription: |-
 
         Endpoints for managing document types
@@ -117,13 +117,13 @@ endpoints:
         name: id
         description: 'The ID of the document type.'
         required: true
-        example: et
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -191,7 +191,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer a3g6DbZvd8e4af61h5PcVkE'
+      - 'Bearer Pba1Z68k6d43ahve5fcEVDg'
     controller: null
     method: null
     route: null

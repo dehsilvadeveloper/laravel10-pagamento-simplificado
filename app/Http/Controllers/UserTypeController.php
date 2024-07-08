@@ -6,43 +6,43 @@ use Throwable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-use App\Domain\DocumentType\Exceptions\DocumentTypeNotFoundException;
-use App\Domain\DocumentType\Services\Interfaces\DocumentTypeServiceInterface;
+use App\Domain\User\Exceptions\UserTypeNotFoundException;
+use App\Domain\User\Services\Interfaces\UserTypeServiceInterface;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\DocumentTypeCollection;
-use App\Http\Resources\DocumentTypeResource;
+use App\Http\Resources\UserTypeCollection;
+use App\Http\Resources\UserTypeResource;
 use App\Traits\Http\ApiResponse;
 
 /**
- * @group Document Types
+ * @group User Types
  *
- * Endpoints for managing document types
+ * Endpoints for managing user types
  */
-class DocumentTypeController extends Controller
+class UserTypeController extends Controller
 {
     use ApiResponse;
 
-    public function __construct(private DocumentTypeServiceInterface $documentTypeService)
+    public function __construct(private UserTypeServiceInterface $userTypeService)
     {
     }
 
     /**
-     * List document types
+     * List user types
      *
-     * This endpoint lets you get a list of document types.
+     * This endpoint lets you get a list of user types.
      *
-     * @responseField id integer The identifier of the document type.
-     * @responseField name string The name of the document type.
+     * @responseField id integer The identifier of the user type.
+     * @responseField name string The name of the user type.
      *
      * @response status=200 scenario=success {
      *      "data": [
      *          {
      *              "id": 1,
-     *              "name": "cnpj"
+     *              "name": "comum"
      *          },
      *          {
      *              "id": 2,
-     *              "name": "cpf"
+     *              "name": "lojista"
      *          }
      *      ]
      * }
@@ -60,14 +60,14 @@ class DocumentTypeController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $documentTypes = $this->documentTypeService->getAll();
+            $userTypes = $this->userTypeService->getAll();
 
-            return (new DocumentTypeCollection($documentTypes))
+            return (new UserTypeCollection($userTypes))
                 ->response()
                 ->setStatusCode(Response::HTTP_OK);
         } catch (Throwable $exception) {
             Log::error(
-                '[DocumentTypeController] Failed to get list of document types.',
+                '[UserTypeController] Failed to get list of user types.',
                 [
                     'error_message' => $exception->getMessage(),
                     'file' => $exception->getFile(),
@@ -77,24 +77,24 @@ class DocumentTypeController extends Controller
             );
 
             return $this->sendErrorResponse(
-                message: 'An error has occurred. Could not get the document types list as requested.',
+                message: 'An error has occurred. Could not get the user types list as requested.',
                 code: $exception->getCode()
             );
         }
     }
 
     /**
-     * Get a single document type
+     * Get a single user type
      * 
-     * This endpoint is used to return a single document type from the database.
+     * This endpoint is used to return a single user type from the database.
      * 
-     * @responseField id integer The identifier of the document type.
-     * @responseField name string The name of the document type.
+     * @responseField id integer The identifier of the user type.
+     * @responseField name string The name of the user type.
      * 
      * @response status=200 scenario=success {
      *      "data": {
      *          "id": 2,
-     *          "name": "cpf"
+     *          "name": "comum"
      *      }
      * }
      * 
@@ -102,8 +102,8 @@ class DocumentTypeController extends Controller
      *      "message": "Unauthenticated."
      * }
      * 
-     * @response status=404 scenario="Document type not found" {
-     *      "message": "The document type could not be found."
+     * @response status=404 scenario="User type not found" {
+     *      "message": "The user type could not be found."
      * }
      * 
      * @response status=500 scenario="unexpected error" {
@@ -116,26 +116,26 @@ class DocumentTypeController extends Controller
     public function show(string $id): JsonResponse
     {
         try {
-            $documentType = $this->documentTypeService->firstById((int) $id);
+            $userType = $this->userTypeService->firstById((int) $id);
 
-            if (!$documentType) {
-                throw new DocumentTypeNotFoundException(
-                    'The document type could not be found.',
+            if (!$userType) {
+                throw new UserTypeNotFoundException(
+                    'The user type could not be found.',
                     Response::HTTP_NOT_FOUND
                 );
             }
 
-            return (new DocumentTypeResource($documentType))
+            return (new UserTypeResource($userType))
                 ->response()
                 ->setStatusCode(Response::HTTP_OK);
-        } catch (DocumentTypeNotFoundException $exception) {
+        } catch (UserTypeNotFoundException $exception) {
             return $this->sendErrorResponse(
                 message: $exception->getMessage(),
                 code: $exception->getCode()
             );
         } catch (Throwable $exception) {
             Log::error(
-                '[DocumentTypeController] Failed to find the requested document type.',
+                '[UserTypeController] Failed to find the requested user type.',
                 [
                     'error_message' => $exception->getMessage(),
                     'file' => $exception->getFile(),
@@ -148,7 +148,7 @@ class DocumentTypeController extends Controller
             );
 
             return $this->sendErrorResponse(
-                message: 'An error has occurred. Could not find the document type as requested.',
+                message: 'An error has occurred. Could not find the user type as requested.',
                 code: $exception->getCode()
             );
         }

@@ -23,6 +23,8 @@ Tabela com os tipos de documentos possíveis para os usuários (cpf, cnpj).
 |-|-|-|-|  
 | id | integer | não | Chave primária | 
 | name | varchar(50) | não | Nome do tipo de documento |
+| created_at | datetime | não | Data e hora da criação do tipo de documento |
+| updated_at | datetime | sim | Data e hora da última atualização do tipo de documento |
 
 #### Tabela: external_authorization_responses
 
@@ -132,13 +134,14 @@ Tabela com informações dos usuários.
 |-|-|-|-|  
 | id | integer | não | Chave primária | 
 | name | varchar(70) | não | Nome completo do usuário |
-| customer_type_id | integer | não | ID do tipo de usuário |
+| user_type_id | integer | não | ID do tipo de usuário |
 | document_number | varchar(14) | não | Número de documento do usuário |
 | document_type_id | integer | não | ID do tipo de documento do usuário |
 | email | varchar(70) | não | Endereço de e-mail do usuário |
 | password | varchar(255) | Não | Senha encriptada do usuário |
 | created_at | datetime | não | Data e hora da criação do usuário |
 | updated_at | datetime | sim | Data e hora da última atualização do usuário |
+| deleted_at | datetime | sim | Data e hora em que o usuário foi removido (soft delete) |
 
 #### Tabela: user_types
 
@@ -148,6 +151,8 @@ Tabela com os tipos de usuários possíveis (comum, lojista).
 |-|-|-|-|  
 | id | integer | não | Chave primária | 
 | name | varchar(50) | não | Nome do tipo de usuário |
+| created_at | datetime | não | Data e hora da criação do tipo de usuário |
+| updated_at | datetime | sim | Data e hora da última atualização do tipo de usuário |
 
 #### Tabela: wallets
 

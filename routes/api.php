@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentTypeController;
+use App\Http\Controllers\UserTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [AuthController::class, 'me'])->name('auth.me');
     });
 
-    Route::prefix('/document-types')->group(function () {
-        Route::get('/', [DocumentTypeController::class, 'index'])->name('document-type.index');
-        Route::get('/{id}', [DocumentTypeController::class, 'show'])->name('document-type.show');
+    Route::prefix('/document-types')->name('document-type.')->group(function () {
+        Route::get('/', [DocumentTypeController::class, 'index'])->name('index');
+        Route::get('/{id}', [DocumentTypeController::class, 'show'])->name('show');
+    });
+
+    Route::prefix('/user-types')->name('user-type.')->group(function () {
+        Route::get('/', [UserTypeController::class, 'index'])->name('index');
+        Route::get('/{id}', [UserTypeController::class, 'show'])->name('show');
     });
 });
