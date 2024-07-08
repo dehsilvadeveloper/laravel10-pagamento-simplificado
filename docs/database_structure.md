@@ -134,7 +134,7 @@ Tabela com informações dos usuários.
 |-|-|-|-|  
 | id | integer | não | Chave primária | 
 | name | varchar(70) | não | Nome completo do usuário |
-| customer_type_id | integer | não | ID do tipo de usuário |
+| user_type_id | integer | não | ID do tipo de usuário |
 | document_number | varchar(14) | não | Número de documento do usuário |
 | document_type_id | integer | não | ID do tipo de documento do usuário |
 | email | varchar(70) | não | Endereço de e-mail do usuário |
