@@ -62,7 +62,20 @@ Authorization: Bearer {{accessToken}}
 
 ########################################
 #
-#  OTHER ROUTES...
+#  USER TYPES
 #
 ########################################
 
+### Get List Of User Types
+
+GET {{baseUrl}}/user-types
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
+
+### Show Specific User Type
+
+GET {{baseUrl}}/user-types/1
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
