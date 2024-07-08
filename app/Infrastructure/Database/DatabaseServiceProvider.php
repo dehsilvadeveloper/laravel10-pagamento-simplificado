@@ -9,6 +9,8 @@ use App\Infrastructure\Database\Eloquent\ApiUserRepositoryEloquent;
 use App\Domain\ApiUser\Repositories\ApiUserRepositoryInterface;
 use App\Infrastructure\Database\Eloquent\DocumentTypeRepositoryEloquent;
 use App\Domain\DocumentType\Repositories\DocumentTypeRepositoryInterface;
+use App\Infrastructure\Database\Eloquent\UserTypeRepositoryEloquent;
+use App\Domain\User\Repositories\UserTypeRepositoryInterface;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,7 @@ class DatabaseServiceProvider extends ServiceProvider
         $this->bindBaseRepositoryClasses();
         $this->bindApiUserRepositoryClasses();
         $this->bindDocumentTypeRepositoryClasses();
+        $this->bindUserRepositoryClasses();
     }
 
     /**
@@ -61,5 +64,15 @@ class DatabaseServiceProvider extends ServiceProvider
     private function bindDocumentTypeRepositoryClasses(): void
     {
         $this->app->bind(DocumentTypeRepositoryInterface::class, DocumentTypeRepositoryEloquent::class);
+    }
+
+    /**
+     * Bind repository classes for domain User
+     *
+     * @return void
+     */
+    private function bindUserRepositoryClasses(): void
+    {
+        $this->app->bind(UserTypeRepositoryInterface::class, UserTypeRepositoryEloquent::class);
     }
 }
