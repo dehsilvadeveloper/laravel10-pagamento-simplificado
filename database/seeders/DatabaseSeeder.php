@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ApiUserSeeder::class,
             DocumentTypeSeeder::class,
-            UserTypeSeeder::class
+            UserTypeSeeder::class,
+            UserSeeder::class
         ]);
     }
 }
