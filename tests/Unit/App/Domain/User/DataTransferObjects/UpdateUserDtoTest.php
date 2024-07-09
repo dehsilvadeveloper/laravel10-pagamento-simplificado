@@ -21,10 +21,10 @@ class UpdateUserDtoTest extends DtoTestCase
             [
                 'user_type_id' => UserTypeEnum::COMMON->value,
                 'name' => fake()->name(),
-                'document_number' => fake()->cpf(false),
                 'document_type_id' => DocumentTypeEnum::CPF->value,
+                'document_number' => fake()->cpf(false),
                 'email' => fake()->unique()->safeEmail(),
-                'password' => 'defaultpassword'
+                'password' => fake()->password(12)
             ]
         );
     }
@@ -40,10 +40,10 @@ class UpdateUserDtoTest extends DtoTestCase
             [
                 'userTypeId' => UserTypeEnum::COMMON->value,
                 'name' => fake()->name(),
-                'documentNumber' => fake()->cpf(false),
                 'documentTypeId' => DocumentTypeEnum::CPF->value,
+                'documentNumber' => fake()->cpf(false),
                 'email' => fake()->unique()->safeEmail(),
-                'password' => 'defaultpassword'
+                'password' => fake()->password(12)
             ]
         );
     }
@@ -59,10 +59,10 @@ class UpdateUserDtoTest extends DtoTestCase
             [
                 'user_type_id' => 99,
                 'name' => fake()->name(),
-                'document_number' => fake()->cpf(false),
                 'document_type_id' => 88,
+                'document_number' => fake()->cpf(false),
                 'email' => fake()->unique()->safeEmail(),
-                'password' => 'defaultpassword'
+                'password' => fake()->password(12)
             ]
         );
     }
@@ -81,10 +81,10 @@ class UpdateUserDtoTest extends DtoTestCase
                 [
                     'user_type_id' => UserTypeEnum::COMMON->value,
                     'name' => fake()->name(),
-                    'document_number' => fake()->cpf(false),
                     'document_type_id' => DocumentTypeEnum::CPF->value,
+                    'document_number' => fake()->cpf(false),
                     'email' => fake()->unique()->safeEmail(),
-                    'password' => 'defaultpassword'
+                    'password' => fake()->password(12)
                 ]
             )
         );
@@ -104,10 +104,10 @@ class UpdateUserDtoTest extends DtoTestCase
                 [
                     'user_type_id' => 99,
                     'name' => fake()->name(),
-                    'document_number' => fake()->cpf(false),
                     'document_type_id' => 88,
+                    'document_number' => fake()->cpf(false),
                     'email' => fake()->unique()->safeEmail(),
-                    'password' => 'defaultpassword'
+                    'password' => fake()->password(12)
                 ]
             )
         );
