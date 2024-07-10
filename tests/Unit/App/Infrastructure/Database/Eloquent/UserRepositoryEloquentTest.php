@@ -8,6 +8,7 @@ use Mockery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Spatie\LaravelData\Exceptions\CannotCastEnum;
 use App\Domain\DocumentType\Enums\DocumentTypeEnum;
 use App\Domain\User\DataTransferObjects\CreateUserDto;
 use App\Domain\User\DataTransferObjects\UpdateUserDto;
@@ -82,6 +83,26 @@ class UserRepositoryEloquentTest extends TestCase
      * @group repositories
      * @group user
      */
+    public function test_cannot_create_with_invalid_data(): void
+    {
+        $this->expectException(CannotCastEnum::class);
+
+        $data = [
+            'user_type_id' => 9999,
+            'document_type_id' => 8888,
+            'document_number' => fake()->cpf(false),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => fake()->password(12)
+        ];
+
+        $this->repository->create(CreateUserDto::from($data));
+    }
+
+    /**
+     * @group repositories
+     * @group user
+     */
     public function test_can_update(): void
     {
         $existingRecord = User::factory()->create();
@@ -117,6 +138,25 @@ class UserRepositoryEloquentTest extends TestCase
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 
         $this->repository->update($existingRecord->id, $dtoMock);
+    }
+
+    /**
+     * @group repositories
+     * @group user
+     */
+    public function test_cannot_update_with_invalid_data(): void
+    {
+        $this->expectException(CannotCastEnum::class);
+
+        $existingRecord = User::factory()->create();
+
+        $dataForUpdate = [
+            'user_type_id' => 9999,
+            'document_type_id' => 8888,
+            'document_number' => fake()->cpf(false)
+        ];
+
+        $this->repository->update($existingRecord->id, UpdateUserDto::from($dataForUpdate));
     }
 
     /**
@@ -261,6 +301,7 @@ class UserRepositoryEloquentTest extends TestCase
         $this->assertEquals($existingRecord->document_type_id, $foundRecord->document_type_id);
         $this->assertEquals($existingRecord->document_number, $foundRecord->document_number);
         $this->assertEquals($existingRecord->email, $foundRecord->email);
+        $this->assertEquals($existingRecord->password, $foundRecord->password);
     }
 
     /**
@@ -293,6 +334,7 @@ class UserRepositoryEloquentTest extends TestCase
         $this->assertEquals($existingRecord->document_type_id, $foundRecord->document_type_id);
         $this->assertEquals($existingRecord->document_number, $foundRecord->document_number);
         $this->assertEquals($existingRecord->email, $foundRecord->email);
+        $this->assertEquals($existingRecord->password, $foundRecord->password);
     }
 
     /**
@@ -330,6 +372,7 @@ class UserRepositoryEloquentTest extends TestCase
         $this->assertEquals($existingRecord->document_type_id, $foundRecord->document_type_id);
         $this->assertEquals($existingRecord->document_number, $foundRecord->document_number);
         $this->assertEquals($existingRecord->email, $foundRecord->email);
+        $this->assertEquals($existingRecord->password, $foundRecord->password);
     }
 
     /**
