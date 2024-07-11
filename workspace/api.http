@@ -79,3 +79,66 @@ GET {{baseUrl}}/user-types/1
 Accept: {{accept}}
 Content-Type: {{contentType}}
 Authorization: Bearer {{accessToken}}
+
+########################################
+#
+#  USERS
+#
+########################################
+
+### Create New User (of the user type COMMON)
+
+POST {{baseUrl}}/users
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
+
+{
+    "user_type_id": 1,
+    "name": "Peter Parker",
+    "document_type_id": 2,
+    "document_number": "06633022000",
+    "email": "peter.parker@marvel.com",
+    "password": "UKyEuc2Bh0ZDKjQ"
+}
+
+### Create New User (of the user type SHOPKEEPER)
+
+POST {{baseUrl}}/users
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
+
+{
+    "user_type_id": 2,
+    "name": "Wayne Tech",
+    "document_type_id": 1,
+    "document_number": "09625891000146",
+    "email": "wayne.tech@dccomics.com",
+    "password": "UKyEuc2Bh0ZDKjQ"
+}
+
+### Update User (of the user type COMMON)
+
+PATCH {{baseUrl}}/users/1
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
+
+{
+    "name": "John Alexander Doe",
+    "document_number": "70349142068",
+    "email": "john.alex.doe@test.com"
+}
+
+### Update User (of the user type SHOPKEEPER)
+
+PATCH {{baseUrl}}/users/3
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
+
+{
+    "name": "Pokemon Adventurer Company",
+    "document_number": "10100518000150"
+}

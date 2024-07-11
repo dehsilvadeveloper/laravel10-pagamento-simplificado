@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Domain\User\DataTransferObjects\CreateUserDto;
 use App\Domain\User\DataTransferObjects\UpdateUserDto;
+use App\Domain\User\Exceptions\UserNotFoundException;
 use App\Domain\User\Models\User;
 use App\Domain\User\Services\Interfaces\UserServiceInterface;
 use App\Domain\User\Repositories\UserRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserService implements UserServiceInterface
 {
@@ -53,6 +55,22 @@ class UserService implements UserServiceInterface
     {
         try {
             return $this->userRepository->update($id, $dto);
+        } catch (ModelNotFoundException $exception) {
+            Log::error(
+                '[UserService] Cannot update. The user could not be found.',
+                [
+                    'error_message' => $exception->getMessage(),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                    'data' => [
+                        'id' => $id ?? null,
+                        'received_dto' => $dto->toArray() ?? null
+                    ],
+                    'stack_trace' => $exception->getTrace()
+                ]
+            );
+
+            throw new UserNotFoundException();
         } catch (Throwable $exception) {
             Log::error(
                 '[UserService] Failed to update user with the data provided.',

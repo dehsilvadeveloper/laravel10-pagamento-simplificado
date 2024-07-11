@@ -27,7 +27,9 @@ class AuthService implements AuthServiceInterface
 
             $validatedUser->tokens()->delete();
 
-            $expiresAt = now()->addMinutes(5);
+            $expiresAt = now()->addMinutes(
+                env('SANCTUM_TOKEN_EXPIRATION_MINUTES', 5)
+            );
 
             $token = $validatedUser->createToken(
                 $dto->email,

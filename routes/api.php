@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentTypeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
 
 /*
@@ -31,5 +32,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/user-types')->name('user-type.')->group(function () {
         Route::get('/', [UserTypeController::class, 'index'])->name('index');
         Route::get('/{id}', [UserTypeController::class, 'show'])->name('show');
+    });
+
+    Route::prefix('/users')->name('user.')->group(function () {
+        Route::post('/', [UserController::class, 'create'])->name('create');
+        Route::patch('/{id}', [UserController::class, 'update'])->name('update');
     });
 });
