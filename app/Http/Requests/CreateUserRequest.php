@@ -25,7 +25,7 @@ class CreateUserRequest extends FormRequest
             'user_type_id' => ['required', 'integer', 'exists:user_types,id'],
             'name' => ['required', 'string', 'max:70'],
             'document_type_id' => ['required', 'integer', 'exists:document_types,id'],
-            'document_number' => ['required', 'string', 'unique:users,document_number'],
+            'document_number' => ['required', 'string', 'regex:/^[0-9]+$/', 'unique:users,document_number'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8']
         ];
@@ -50,7 +50,7 @@ class CreateUserRequest extends FormRequest
                 'example' => 2
             ],
             'document_number' => [
-                'description' => 'The number of the document that the user has.',
+                'description' => 'The number of the document that the user has. It can only have numbers.',
                 'example' => '60796747008'
             ],
             'email' => [

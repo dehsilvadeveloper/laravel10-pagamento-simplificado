@@ -148,6 +148,41 @@ class CreateUserRequestTest extends TestCase
      * @group requests
      * @group user
      */
+    public function test_fail_with_invalid_format_document_number(): void
+    {
+        $documentNumber = '800.153.990-36';
+
+        User::factory()->create([
+            'document_number' => $documentNumber
+        ]);
+
+        $data = [
+            'user_type_id' => UserTypeEnum::COMMON->value,
+            'document_type_id' => DocumentTypeEnum::CPF->value,
+            'document_number' => $documentNumber,
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => fake()->password(12)
+        ];
+
+        $request = (new CreateUserRequest())->replace($data);
+        $validator = Validator::make($data, $request->rules(), $request->messages());
+
+        $this->assertTrue($validator->fails());
+        $this->assertCount(1, $validator->errors());
+        $this->assertTrue($validator->errors()->has('document_number'));
+        $this->assertEquals(
+            [
+                'The document number field format is invalid.'
+            ],
+            $validator->errors()->get('document_number')
+        );
+    }
+
+    /**
+     * @group requests
+     * @group user
+     */
     public function test_fail_with_non_unique_document_number(): void
     {
         $documentNumber = fake()->cpf(false);
