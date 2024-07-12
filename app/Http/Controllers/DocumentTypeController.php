@@ -89,6 +89,8 @@ class DocumentTypeController extends Controller
      * 
      * This endpoint is used to return a single document type from the database.
      * 
+     * @urlParam id integer required The identifier of the document type.
+     * 
      * @responseField id integer The identifier of the document type.
      * @responseField name string The name of the document type.
      * 

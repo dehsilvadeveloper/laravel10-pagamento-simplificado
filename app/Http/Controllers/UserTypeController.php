@@ -89,6 +89,8 @@ class UserTypeController extends Controller
      * 
      * This endpoint is used to return a single user type from the database.
      * 
+     * @urlParam id integer required The identifier of the user type.
+     * 
      * @responseField id integer The identifier of the user type.
      * @responseField name string The name of the user type.
      * 

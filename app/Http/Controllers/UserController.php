@@ -20,7 +20,7 @@ use App\Http\Resources\UserResource;
 use App\Traits\Http\ApiResponse;
 
 /**
- * @group User
+ * @group Users
  *
  * Endpoints for managing users
  */
@@ -32,6 +32,77 @@ class UserController extends Controller
     {
     }
 
+    /**
+     * Create user
+     *
+     * This endpoint lets you create a new user.
+     * 
+     * @responseField id integer The identifier of the user.
+     * @responseField name string The name of the user.
+     * @responseField user_type.id integer The identifier of the type of user.
+     * @responseField user_type.name string The type of user.
+     * @responseField document_type.id integer The identifier of the type of document.
+     * @responseField document_type.name string The type of document.
+     * @responseField document_number string The number of document.
+     * @responseField email string The e-mail of the user.
+     * @responseField created_at string The date and time in which the user was created.
+     * @responseField updated_at string The date and time in which the user was last updated.
+     * 
+     * @response status=200 scenario=success {
+     *      "message": "User created with success.",
+     *      "data": {
+     *          "id": 17,
+     *          "name": "Peter Parker",
+     *          "user_type": {
+     *              "id": 1,
+     *              "name": "comum"
+     *          },
+     *          "document_type": {
+     *              "id": 2,
+     *              "name": "cpf"
+     *          },
+     *          "document_number": "06633022000",
+     *          "email": "peter.parker@marvel.com",
+     *          "created_at": "2024-07-12 15:42:18",
+     *          "updated_at": "2024-07-12 15:42:18"
+     *      }
+     * }
+     *
+     * @response status=401 scenario="unauthenticated" {
+     *      "message": "Unauthenticated."
+     * }
+     * 
+     * @response status=422 scenario="validation error" {
+     *      "message": "The user type id field is required. (and 5 more errors)",
+     *      "errors": {
+     *          "user_type_id": [
+     *              "The user type id field is required."
+     *          ],
+     *          "name": [
+     *              "The name field is required."
+     *          ],
+     *          "document_type_id": [
+     *              "The document type id field is required."
+     *          ],
+     *          "document_number": [
+     *              "The document number field is required."
+     *          ],
+     *          "email": [
+     *              "The email field is required."
+     *          ],
+     *          "password": [
+     *              "The password field is required."
+     *          ]
+     *      }
+     * }
+     *
+     * @response status=500 scenario="unexpected error" {
+     *      "message": "Internal Server Error."
+     * }
+     *
+     * @authenticated
+     * 
+     */
     public function create(CreateUserRequest $request): JsonResponse
     {
         try {
@@ -64,6 +135,72 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Update user
+     *
+     * This endpoint lets you update a user.
+     * 
+     * @urlParam id integer required The identifier of the user.
+     * 
+     * @responseField id integer The identifier of the user.
+     * @responseField name string The name of the user.
+     * @responseField user_type.id integer The identifier of the type of user.
+     * @responseField user_type.name string The type of user.
+     * @responseField document_type.id integer The identifier of the type of document.
+     * @responseField document_type.name string The type of document.
+     * @responseField document_number string The number of document.
+     * @responseField email string The e-mail of the user.
+     * @responseField created_at string The date and time in which the user was created.
+     * @responseField updated_at string The date and time in which the user was last updated.
+     * 
+     * @response status=200 scenario=success {
+     *      "message": "User updated with success.",
+     *      "data": {
+     *          "id": 17,
+     *          "name": "Peter Parker",
+     *          "user_type": {
+     *              "id": 1,
+     *              "name": "comum"
+     *          },
+     *          "document_type": {
+     *              "id": 2,
+     *              "name": "cpf"
+     *          },
+     *          "document_number": "06633022000",
+     *          "email": "peter.parker@marvel.com",
+     *          "created_at": "2024-07-12 15:42:18",
+     *          "updated_at": "2024-07-12 15:42:18"
+     *      }
+     * }
+     *
+     * @response status=401 scenario="unauthenticated" {
+     *      "message": "Unauthenticated."
+     * }
+     * 
+     * @response status=404 scenario="User not found" {
+     *      "message": "The user could not be found."
+     * }
+     * 
+     * @response status=422 scenario="validation error" {
+     *      "message": "You cannot update a resource without provide data."
+     * }
+     * 
+     * @response status=422 scenario="validation error" {
+     *      "message": "The email field must be a valid email address.",
+     *      "errors": {
+     *          "email": [
+     *              "The email field must be a valid email address."
+     *          ]
+     *      }
+     * }
+     *
+     * @response status=500 scenario="unexpected error" {
+     *      "message": "Internal Server Error."
+     * }
+     *
+     * @authenticated
+     * 
+     */
     public function update(string $id, UpdateUserRequest $request): JsonResponse
     {
         try {

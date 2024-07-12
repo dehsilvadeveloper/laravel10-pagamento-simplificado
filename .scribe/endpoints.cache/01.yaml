@@ -90,7 +90,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer fb34c8vaDdPEkh65gV61aeZ'
+      - 'Bearer 8avhd5VcPD6a1b6g4kZfEe3'
     controller: null
     method: null
     route: null
@@ -117,15 +117,15 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The ID of the document type.'
+        description: 'The identifier of the document type.'
         required: true
-        example: architecto
-        type: string
+        example: 15
+        type: integer
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: architecto
+      id: 15
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -193,7 +193,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer Pba1Z68k6d43ahve5fcEVDg'
+      - 'Bearer d65DfPg8e3bZvVk41c6ahEa'
     controller: null
     method: null
     route: null

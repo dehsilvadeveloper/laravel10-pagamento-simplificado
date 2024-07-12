@@ -38,7 +38,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'user_type_id' => [
-                'description' => 'The type of user.',
+                'description' => 'The type of user. This value can be obtained on the entity user_types.',
                 'example' => 1
             ],
             'name' => [
@@ -46,7 +46,7 @@ class UpdateUserRequest extends FormRequest
                 'example' => 'John Doe'
             ],
             'document_type_id' => [
-                'description' => 'The type of document that the user has.',
+                'description' => 'The type of document that the user has. This value can be obtained on the entity document_types.',
                 'example' => 2
             ],
             'document_number' => [
