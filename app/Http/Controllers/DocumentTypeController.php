@@ -120,10 +120,7 @@ class DocumentTypeController extends Controller
             $documentType = $this->documentTypeService->firstById((int) $id);
 
             if (!$documentType) {
-                throw new DocumentTypeNotFoundException(
-                    'The document type could not be found.',
-                    Response::HTTP_NOT_FOUND
-                );
+                throw new DocumentTypeNotFoundException();
             }
 
             return $this->sendSuccessResponse(

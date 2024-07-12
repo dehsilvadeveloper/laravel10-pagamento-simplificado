@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use App\Domain\Auth\DataTransferObjects\ApiLoginDto;
 use App\Domain\Auth\Exceptions\IncorrectPasswordException;
-use App\Domain\Auth\Exceptions\InvalidApiUserException;
+use App\Domain\Auth\Exceptions\IncorrectEmailException;
 use App\Domain\Auth\Services\Interfaces\AuthServiceInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApiLoginRequest;
@@ -87,7 +87,7 @@ class AuthController extends Controller
                 ]
             );
 
-            $exceptionTypes = [InvalidApiUserException::class, IncorrectPasswordException::class];
+            $exceptionTypes = [IncorrectEmailException::class, IncorrectPasswordException::class];
 
             $errorMessage = in_array(get_class($exception), $exceptionTypes)
                 ? $exception->getMessage()

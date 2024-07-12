@@ -70,10 +70,7 @@ class UserController extends Controller
             $validatedRequest = $request->safe()->all();
 
             if (empty($validatedRequest)) {
-                throw new EmptyRequestException(
-                    'You cannot update a resource without provide data.',
-                    Response::HTTP_UNPROCESSABLE_ENTITY
-                );
+                throw new EmptyRequestException();
             }
 
             $updatedUser = $this->userService->update((int) $id, UpdateUserDto::from($validatedRequest));

@@ -120,10 +120,7 @@ class UserTypeController extends Controller
             $userType = $this->userTypeService->firstById((int) $id);
 
             if (!$userType) {
-                throw new UserTypeNotFoundException(
-                    'The user type could not be found.',
-                    Response::HTTP_NOT_FOUND
-                );
+                throw new UserTypeNotFoundException();
             }
 
             return $this->sendSuccessResponse(
