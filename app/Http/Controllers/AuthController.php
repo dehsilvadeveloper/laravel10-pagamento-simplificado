@@ -136,8 +136,9 @@ class AuthController extends Controller
      */
     public function me(Request $request): JsonResponse
     {
-        return (new AuthenticatedApiUserResource($request->user()))
-                ->response()
-                ->setStatusCode(Response::HTTP_OK);
+        return $this->sendSuccessResponse(
+            data: new AuthenticatedApiUserResource($request->user()),
+            code: Response::HTTP_OK
+        );
     }
 }

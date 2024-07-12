@@ -62,9 +62,10 @@ class DocumentTypeController extends Controller
         try {
             $documentTypes = $this->documentTypeService->getAll();
 
-            return (new DocumentTypeCollection($documentTypes))
-                ->response()
-                ->setStatusCode(Response::HTTP_OK);
+            return $this->sendSuccessResponse(
+                data: new DocumentTypeCollection($documentTypes),
+                code: Response::HTTP_OK
+            );
         } catch (Throwable $exception) {
             Log::error(
                 '[DocumentTypeController] Failed to get list of document types.',
@@ -125,13 +126,9 @@ class DocumentTypeController extends Controller
                 );
             }
 
-            return (new DocumentTypeResource($documentType))
-                ->response()
-                ->setStatusCode(Response::HTTP_OK);
-        } catch (DocumentTypeNotFoundException $exception) {
-            return $this->sendErrorResponse(
-                message: $exception->getMessage(),
-                code: $exception->getCode()
+            return $this->sendSuccessResponse(
+                data: new DocumentTypeResource($documentType),
+                code: Response::HTTP_OK
             );
         } catch (Throwable $exception) {
             Log::error(
@@ -147,8 +144,14 @@ class DocumentTypeController extends Controller
                 ]
             );
 
+            $exceptionTypes = [DocumentTypeNotFoundException::class];
+
+            $errorMessage = in_array(get_class($exception), $exceptionTypes)
+                ? $exception->getMessage()
+                : 'An error has occurred. Could not find the document type as requested.';
+
             return $this->sendErrorResponse(
-                message: 'An error has occurred. Could not find the document type as requested.',
+                message: $errorMessage,
                 code: $exception->getCode()
             );
         }

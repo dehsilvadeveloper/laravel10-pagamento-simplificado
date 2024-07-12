@@ -62,9 +62,10 @@ class UserTypeController extends Controller
         try {
             $userTypes = $this->userTypeService->getAll();
 
-            return (new UserTypeCollection($userTypes))
-                ->response()
-                ->setStatusCode(Response::HTTP_OK);
+            return $this->sendSuccessResponse(
+                data: new UserTypeCollection($userTypes),
+                code: Response::HTTP_OK
+            );
         } catch (Throwable $exception) {
             Log::error(
                 '[UserTypeController] Failed to get list of user types.',
@@ -125,13 +126,9 @@ class UserTypeController extends Controller
                 );
             }
 
-            return (new UserTypeResource($userType))
-                ->response()
-                ->setStatusCode(Response::HTTP_OK);
-        } catch (UserTypeNotFoundException $exception) {
-            return $this->sendErrorResponse(
-                message: $exception->getMessage(),
-                code: $exception->getCode()
+            return $this->sendSuccessResponse(
+                data: new UserTypeResource($userType),
+                code: Response::HTTP_OK
             );
         } catch (Throwable $exception) {
             Log::error(
@@ -147,8 +144,14 @@ class UserTypeController extends Controller
                 ]
             );
 
+            $exceptionTypes = [UserTypeNotFoundException::class];
+
+            $errorMessage = in_array(get_class($exception), $exceptionTypes)
+                ? $exception->getMessage()
+                : 'An error has occurred. Could not find the user type as requested.';
+
             return $this->sendErrorResponse(
-                message: 'An error has occurred. Could not find the user type as requested.',
+                message: $errorMessage,
                 code: $exception->getCode()
             );
         }
