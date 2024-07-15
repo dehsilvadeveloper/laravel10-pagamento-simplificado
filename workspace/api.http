@@ -149,3 +149,10 @@ DELETE {{baseUrl}}/users/5
 Accept: {{accept}}
 Content-Type: {{contentType}}
 Authorization: Bearer {{accessToken}}
+
+### Show Specific User
+
+GET {{baseUrl}}/users/1
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}

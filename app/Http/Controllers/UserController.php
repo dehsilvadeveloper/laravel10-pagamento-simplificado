@@ -35,7 +35,7 @@ class UserController extends Controller
     /**
      * Create user
      *
-     * This endpoint lets you create a new user.
+     * This endpoint allows you to create a new user.
      * 
      * @responseField id integer The identifier of the user.
      * @responseField name string The name of the user.
@@ -138,7 +138,7 @@ class UserController extends Controller
     /**
      * Update user
      *
-     * This endpoint lets you update a user.
+     * This endpoint allows you to update a user.
      * 
      * @urlParam id integer required The identifier of the user.
      * 
@@ -248,7 +248,7 @@ class UserController extends Controller
     /**
      * Delete user
      *
-     * This endpoint lets you delete a user. This API uses a soft delete approach, so the user will still exists in the database, but will be marked as deleted.
+     * This endpoint allows you to delete a user. This API uses a soft delete approach, so the user will still exists in the database, but will be marked as deleted.
      * 
      * @urlParam id integer required The identifier of the user.
      * 
@@ -299,6 +299,98 @@ class UserController extends Controller
             $errorMessage = in_array(get_class($exception), $exceptionTypes)
                 ? $exception->getMessage()
                 : 'An error has occurred. Could not delete the user as requested.';
+
+            return $this->sendErrorResponse(
+                message: $errorMessage,
+                code: $exception->getCode()
+            );
+        }
+    }
+
+    /**
+     * Get a single user
+     *
+     * This endpoint allows you to return a single user from the database.
+     * 
+     * @urlParam id integer required The identifier of the user.
+     * 
+     * @responseField id integer The identifier of the user.
+     * @responseField name string The name of the user.
+     * @responseField user_type.id integer The identifier of the type of user.
+     * @responseField user_type.name string The type of user.
+     * @responseField document_type.id integer The identifier of the type of document.
+     * @responseField document_type.name string The type of document.
+     * @responseField document_number string The number of document.
+     * @responseField email string The e-mail of the user.
+     * @responseField created_at string The date and time in which the user was created.
+     * @responseField updated_at string The date and time in which the user was last updated.
+     * 
+     * @response status=200 scenario=success {
+     *      "data": {
+     *          "id": 17,
+     *          "name": "Peter Parker",
+     *          "user_type": {
+     *              "id": 1,
+     *              "name": "comum"
+     *          },
+     *          "document_type": {
+     *              "id": 2,
+     *              "name": "cpf"
+     *          },
+     *          "document_number": "06633022000",
+     *          "email": "peter.parker@marvel.com",
+     *          "created_at": "2024-07-12 15:42:18",
+     *          "updated_at": "2024-07-12 15:42:18"
+     *      }
+     * }
+     *
+     * @response status=401 scenario="unauthenticated" {
+     *      "message": "Unauthenticated."
+     * }
+     * 
+     * @response status=404 scenario="User not found" {
+     *      "message": "The user could not be found."
+     * }
+     *
+     * @response status=500 scenario="unexpected error" {
+     *      "message": "Internal Server Error."
+     * }
+     *
+     * @authenticated
+     * 
+     */
+    public function show(string $id): JsonResponse
+    {
+        try {
+            $user = $this->userService->firstById((int) $id);
+
+            if (!$user) {
+                throw new UserNotFoundException();
+            }
+
+            return $this->sendSuccessResponse(
+                data: new UserResource($user),
+                code: Response::HTTP_OK
+            );
+        } catch (Throwable $exception) {
+            Log::error(
+                '[UserController] Failed to find the user.',
+                [
+                    'error_message' => $exception->getMessage(),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                    'data' => [
+                        'id' => $id ?? null
+                    ],
+                    'stack_trace' => $exception->getTrace()
+                ]
+            );
+
+            $exceptionTypes = [UserNotFoundException::class];
+
+            $errorMessage = in_array(get_class($exception), $exceptionTypes)
+                ? $exception->getMessage()
+                : 'An error has occurred. Could not find the user as requested.';
 
             return $this->sendErrorResponse(
                 message: $errorMessage,

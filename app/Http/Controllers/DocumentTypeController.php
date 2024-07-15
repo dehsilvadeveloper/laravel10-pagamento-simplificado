@@ -29,7 +29,7 @@ class DocumentTypeController extends Controller
     /**
      * List document types
      *
-     * This endpoint lets you get a list of document types.
+     * This endpoint allows you to get a list of document types.
      *
      * @responseField id integer The identifier of the document type.
      * @responseField name string The name of the document type.
@@ -87,7 +87,7 @@ class DocumentTypeController extends Controller
     /**
      * Get a single document type
      * 
-     * This endpoint is used to return a single document type from the database.
+     * This endpoint allows you to return a single document type from the database.
      * 
      * @urlParam id integer required The identifier of the document type.
      * 

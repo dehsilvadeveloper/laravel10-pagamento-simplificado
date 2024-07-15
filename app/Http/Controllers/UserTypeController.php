@@ -29,7 +29,7 @@ class UserTypeController extends Controller
     /**
      * List user types
      *
-     * This endpoint lets you get a list of user types.
+     * This endpoint allows you to get a list of user types.
      *
      * @responseField id integer The identifier of the user type.
      * @responseField name string The name of the user type.
@@ -87,7 +87,7 @@ class UserTypeController extends Controller
     /**
      * Get a single user type
      * 
-     * This endpoint is used to return a single user type from the database.
+     * This endpoint allows you to return a single user type from the database.
      * 
      * @urlParam id integer required The identifier of the user type.
      * 
