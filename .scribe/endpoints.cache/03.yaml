@@ -17,7 +17,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Create user'
-      description: 'This endpoint lets you create a new user.'
+      description: 'This endpoint allows you to create a new user.'
       authenticated: true
       custom: []
     headers:
@@ -258,7 +258,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer D5PVcbafe6kg48ZdEhv3a61'
+      - 'Bearer 6v5PaD3hb64aEcgkedZV18f'
     controller: null
     method: null
     route: null
@@ -275,7 +275,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Update user'
-      description: 'This endpoint lets you update a user.'
+      description: 'This endpoint allows you to update a user.'
       authenticated: true
       custom: []
     headers:
@@ -287,13 +287,13 @@ endpoints:
         name: id
         description: 'The identifier of the user.'
         required: true
-        example: 1
+        example: 18
         type: integer
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: 1
+      id: 18
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -529,7 +529,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer 5f6ZvkaD63bEc8eV4dagh1P'
+      - 'Bearer d5g3v61haeDkaVcE6P8Z4bf'
     controller: null
     method: null
     route: null
@@ -546,7 +546,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Delete user'
-      description: 'This endpoint lets you delete a user. This API uses a soft delete approach, so the user will still exists in the database, but will be marked as deleted.'
+      description: 'This endpoint allows you to delete a user. This API uses a soft delete approach, so the user will still exists in the database, but will be marked as deleted.'
       authenticated: true
       custom: []
     headers:
@@ -558,13 +558,13 @@ endpoints:
         name: id
         description: 'The identifier of the user.'
         required: true
-        example: 5
+        example: 18
         type: integer
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: 5
+      id: 18
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -611,7 +611,380 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer eV1kv8b4Paah6cdfZ653gDE'
+      - 'Bearer PV5e1Zdh8bk64cEDfaav36g'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/users
+    metadata:
+      groupName: Users
+      groupDescription: |-
+
+        Endpoints for managing users
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List users'
+      description: 'This endpoint allows you to get a list of users.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "data": [
+                   {
+                       "id": 1,
+                       "name": "John Doe",
+                       "user_type": {
+                           "id": 1,
+                           "name": "comum"
+                       },
+                       "document_type": {
+                           "id": 2,
+                           "name": "cpf"
+                       },
+                       "document_number": "70349142069",
+                       "email": "john.doe@test.com",
+                       "created_at": "2024-07-11 15:24:09",
+                       "updated_at": "2024-07-11 17:01:20"
+                   },
+                   {
+                       "id": 2,
+                       "name": "Stark Industries",
+                       "user_type": {
+                           "id": 2,
+                           "name": "lojista"
+                       },
+                       "document_type": {
+                           "id": 1,
+                           "name": "cnpj"
+                       },
+                       "document_number": "04716808000120",
+                       "email": "stark.industries@fake.com",
+                       "created_at": "2024-07-11 15:24:10",
+                       "updated_at": "2024-07-11 15:24:10"
+                   }
+               ]
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: unauthenticated
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+               "message": "Internal Server Error."
+          }
+        headers: []
+        description: 'unexpected error'
+        custom: []
+    responseFields:
+      id:
+        name: id
+        description: 'The identifier of the user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      name:
+        name: name
+        description: 'The name of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.id:
+        name: user_type.id
+        description: 'The identifier of the type of user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.name:
+        name: user_type.name
+        description: 'The type of user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.id:
+        name: document_type.id
+        description: 'The identifier of the type of document.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.name:
+        name: document_type.name
+        description: 'The type of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_number:
+        name: document_number
+        description: 'The number of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      email:
+        name: email
+        description: 'The e-mail of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      created_at:
+        name: created_at
+        description: 'The date and time in which the user was created.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      updated_at:
+        name: updated_at
+        description: 'The date and time in which the user was last updated.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer k5hae6P6dbZVf4c8D1Eavg3'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/users/{id}'
+    metadata:
+      groupName: Users
+      groupDescription: |-
+
+        Endpoints for managing users
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get a single user'
+      description: 'This endpoint allows you to return a single user from the database.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The identifier of the user.'
+        required: true
+        example: 9
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      id: 9
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "data": {
+                   "id": 17,
+                   "name": "Peter Parker",
+                   "user_type": {
+                       "id": 1,
+                       "name": "comum"
+                   },
+                   "document_type": {
+                       "id": 2,
+                       "name": "cpf"
+                   },
+                   "document_number": "06633022000",
+                   "email": "peter.parker@marvel.com",
+                   "created_at": "2024-07-12 15:42:18",
+                   "updated_at": "2024-07-12 15:42:18"
+               }
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: unauthenticated
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+               "message": "The user could not be found."
+          }
+        headers: []
+        description: 'User not found'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+               "message": "Internal Server Error."
+          }
+        headers: []
+        description: 'unexpected error'
+        custom: []
+    responseFields:
+      id:
+        name: id
+        description: 'The identifier of the user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      name:
+        name: name
+        description: 'The name of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.id:
+        name: user_type.id
+        description: 'The identifier of the type of user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.name:
+        name: user_type.name
+        description: 'The type of user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.id:
+        name: document_type.id
+        description: 'The identifier of the type of document.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.name:
+        name: document_type.name
+        description: 'The type of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_number:
+        name: document_number
+        description: 'The number of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      email:
+        name: email
+        description: 'The e-mail of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      created_at:
+        name: created_at
+        description: 'The date and time in which the user was created.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      updated_at:
+        name: updated_at
+        description: 'The date and time in which the user was last updated.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer Zdc6ag8PbEe5V63Dhvfk4a1'
     controller: null
     method: null
     route: null

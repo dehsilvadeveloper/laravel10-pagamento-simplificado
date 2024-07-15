@@ -15,7 +15,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'List user types'
-      description: 'This endpoint lets you get a list of user types.'
+      description: 'This endpoint allows you to get a list of user types.'
       authenticated: true
       custom: []
     headers:
@@ -88,7 +88,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer 1DgbZh6aPdv3V6f8eE5k4ca'
+      - 'Bearer fvePcga4k6bEVaZDd386h51'
     controller: null
     method: null
     route: null
@@ -105,7 +105,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Get a single user type'
-      description: 'This endpoint is used to return a single user type from the database.'
+      description: 'This endpoint allows you to return a single user type from the database.'
       authenticated: true
       custom: []
     headers:
@@ -117,13 +117,13 @@ endpoints:
         name: id
         description: 'The identifier of the user type.'
         required: true
-        example: 5
+        example: 9
         type: integer
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: 5
+      id: 9
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -191,7 +191,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer E6fgeP8VvZa13kb5chDd4a6'
+      - 'Bearer 6kcgbdD5fZaEV4v13a6P8he'
     controller: null
     method: null
     route: null

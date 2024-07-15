@@ -150,6 +150,13 @@ Accept: {{accept}}
 Content-Type: {{contentType}}
 Authorization: Bearer {{accessToken}}
 
+### Get List Of Users
+
+GET {{baseUrl}}/users
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
+
 ### Show Specific User
 
 GET {{baseUrl}}/users/1

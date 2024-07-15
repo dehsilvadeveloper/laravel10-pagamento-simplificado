@@ -15,7 +15,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'List document types'
-      description: 'This endpoint lets you get a list of document types.'
+      description: 'This endpoint allows you to get a list of document types.'
       authenticated: true
       custom: []
     headers:
@@ -88,7 +88,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer EVP8g5k1a6cvZ46fbehDad3'
+      - 'Bearer e86Ev15ZkfacbPVDga6d3h4'
     controller: null
     method: null
     route: null
@@ -105,7 +105,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Get a single document type'
-      description: 'This endpoint is used to return a single document type from the database.'
+      description: 'This endpoint allows you to return a single document type from the database.'
       authenticated: true
       custom: []
     headers:
@@ -117,13 +117,13 @@ endpoints:
         name: id
         description: 'The identifier of the document type.'
         required: true
-        example: 4
+        example: 16
         type: integer
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: 4
+      id: 16
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -191,7 +191,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer 4VEfP6eca8Dabkd5gZv3h61'
+      - 'Bearer g6E36V5dah8aZvDkefb41Pc'
     controller: null
     method: null
     route: null

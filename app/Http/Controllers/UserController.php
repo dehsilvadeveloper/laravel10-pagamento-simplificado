@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use Throwable;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use App\Domain\Common\Exceptions\EmptyRequestException;
@@ -16,6 +14,7 @@ use App\Domain\User\Services\Interfaces\UserServiceInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Traits\Http\ApiResponse;
 
@@ -394,6 +393,96 @@ class UserController extends Controller
 
             return $this->sendErrorResponse(
                 message: $errorMessage,
+                code: $exception->getCode()
+            );
+        }
+    }
+
+    /**
+     * List users
+     *
+     * This endpoint allows you to get a list of users.
+     *
+     * @responseField id integer The identifier of the user.
+     * @responseField name string The name of the user.
+     * @responseField user_type.id integer The identifier of the type of user.
+     * @responseField user_type.name string The type of user.
+     * @responseField document_type.id integer The identifier of the type of document.
+     * @responseField document_type.name string The type of document.
+     * @responseField document_number string The number of document.
+     * @responseField email string The e-mail of the user.
+     * @responseField created_at string The date and time in which the user was created.
+     * @responseField updated_at string The date and time in which the user was last updated.
+     *
+     * @response status=200 scenario=success {
+     *      "data": [
+     *          {
+     *              "id": 1,
+     *              "name": "John Doe",
+     *              "user_type": {
+     *                  "id": 1,
+     *                  "name": "comum"
+     *              },
+     *              "document_type": {
+     *                  "id": 2,
+     *                  "name": "cpf"
+     *              },
+     *              "document_number": "70349142069",
+     *              "email": "john.doe@test.com",
+     *              "created_at": "2024-07-11 15:24:09",
+     *              "updated_at": "2024-07-11 17:01:20"
+     *          },
+     *          {
+     *              "id": 2,
+     *              "name": "Stark Industries",
+     *              "user_type": {
+     *                  "id": 2,
+     *                  "name": "lojista"
+     *              },
+     *              "document_type": {
+     *                  "id": 1,
+     *                  "name": "cnpj"
+     *              },
+     *              "document_number": "04716808000120",
+     *              "email": "stark.industries@fake.com",
+     *              "created_at": "2024-07-11 15:24:10",
+     *              "updated_at": "2024-07-11 15:24:10"
+     *          }
+     *      ]
+     * }
+     *
+     * @response status=401 scenario="unauthenticated" {
+     *      "message": "Unauthenticated."
+     * }
+     *
+     * @response status=500 scenario="unexpected error" {
+     *      "message": "Internal Server Error."
+     * }
+     *
+     * @authenticated
+     */
+    public function index(): JsonResponse
+    {
+        try {
+            $users = $this->userService->getAll();
+
+            return $this->sendSuccessResponse(
+                data: new UserCollection($users),
+                code: Response::HTTP_OK
+            );
+        } catch (Throwable $exception) {
+            Log::error(
+                '[UserController] Failed to get list of users.',
+                [
+                    'error_message' => $exception->getMessage(),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                    'stack_trace' => $exception->getTrace()
+                ]
+            );
+
+            return $this->sendErrorResponse(
+                message: 'An error has occurred. Could not get the users list as requested.',
                 code: $exception->getCode()
             );
         }
