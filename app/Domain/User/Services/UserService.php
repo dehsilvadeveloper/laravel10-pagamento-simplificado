@@ -94,6 +94,21 @@ class UserService implements UserServiceInterface
     {
         try {
             return $this->userRepository->deleteById($id);
+        } catch (ModelNotFoundException $exception) {
+            Log::error(
+                '[UserService] Cannot delete. The user could not be found.',
+                [
+                    'error_message' => $exception->getMessage(),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                    'data' => [
+                        'id' => $id ?? null
+                    ],
+                    'stack_trace' => $exception->getTrace()
+                ]
+            );
+
+            throw new UserNotFoundException();
         } catch (Throwable $exception) {
             Log::error(
                 '[UserService] Failed to delete the user.',

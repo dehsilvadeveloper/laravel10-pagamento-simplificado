@@ -48,7 +48,7 @@ class UserController extends Controller
      * @responseField created_at string The date and time in which the user was created.
      * @responseField updated_at string The date and time in which the user was last updated.
      * 
-     * @response status=200 scenario=success {
+     * @response status=201 scenario=success {
      *      "message": "User created with success.",
      *      "data": {
      *          "id": 17,
@@ -237,6 +237,68 @@ class UserController extends Controller
             $errorMessage = in_array(get_class($exception), $exceptionTypes)
                 ? $exception->getMessage()
                 : 'An error has occurred. Could not update the user as requested.';
+
+            return $this->sendErrorResponse(
+                message: $errorMessage,
+                code: $exception->getCode()
+            );
+        }
+    }
+
+    /**
+     * Delete user
+     *
+     * This endpoint lets you delete a user. This API uses a soft delete approach, so the user will still exists in the database, but will be marked as deleted.
+     * 
+     * @urlParam id integer required The identifier of the user.
+     * 
+     * @response status=200 scenario=success {
+     *      "message": "User deleted with success."
+     * }
+     *
+     * @response status=401 scenario="unauthenticated" {
+     *      "message": "Unauthenticated."
+     * }
+     * 
+     * @response status=404 scenario="User not found" {
+     *      "message": "The user could not be found."
+     * }
+     *
+     * @response status=500 scenario="unexpected error" {
+     *      "message": "Internal Server Error."
+     * }
+     *
+     * @authenticated
+     * 
+     */
+    public function delete(string $id): JsonResponse
+    {
+        try {
+            $this->userService->delete((int) $id);
+
+            return $this->sendSuccessResponse(
+                message: 'User deleted with success.',
+                code: Response::HTTP_OK
+            );
+        } catch (Throwable $exception) {
+            Log::error(
+                '[UserController] Failed to delete the user.',
+                [
+                    'error_message' => $exception->getMessage(),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                    'data' => [
+                        'id' => $id ?? null
+                    ],
+                    'stack_trace' => $exception->getTrace()
+                ]
+            );
+
+            $exceptionTypes = [UserNotFoundException::class];
+
+            $errorMessage = in_array(get_class($exception), $exceptionTypes)
+                ? $exception->getMessage()
+                : 'An error has occurred. Could not delete the user as requested.';
 
             return $this->sendErrorResponse(
                 message: $errorMessage,

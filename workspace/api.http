@@ -142,3 +142,10 @@ Authorization: Bearer {{accessToken}}
     "name": "Pokemon Adventurer Company",
     "document_number": "10100518000150"
 }
+
+### Delete User
+
+DELETE {{baseUrl}}/users/5
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}

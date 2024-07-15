@@ -37,5 +37,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/users')->name('user.')->group(function () {
         Route::post('/', [UserController::class, 'create'])->name('create');
         Route::patch('/{id}', [UserController::class, 'update'])->name('update');
+        Route::delete('/{id}', [UserController::class, 'delete'])->name('delete');
     });
 });
