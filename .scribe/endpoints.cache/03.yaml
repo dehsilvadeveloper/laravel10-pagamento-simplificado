@@ -93,7 +93,7 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 200
+        status: 201
         content: |-
           {
                "message": "User created with success.",
@@ -258,7 +258,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer VPDe1gEbv3a6468Zaf5hcdk'
+      - 'Bearer D5PVcbafe6kg48ZdEhv3a61'
     controller: null
     method: null
     route: null
@@ -287,13 +287,13 @@ endpoints:
         name: id
         description: 'The identifier of the user.'
         required: true
-        example: 4
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: 4
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -529,7 +529,89 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer E41agZ68kfe53Vvab6DhdPc'
+      - 'Bearer 5f6ZvkaD63bEc8eV4dagh1P'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/users/{id}'
+    metadata:
+      groupName: Users
+      groupDescription: |-
+
+        Endpoints for managing users
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete user'
+      description: 'This endpoint lets you delete a user. This API uses a soft delete approach, so the user will still exists in the database, but will be marked as deleted.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The identifier of the user.'
+        required: true
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      id: 5
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "message": "User deleted with success."
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: unauthenticated
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+               "message": "The user could not be found."
+          }
+        headers: []
+        description: 'User not found'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+               "message": "Internal Server Error."
+          }
+        headers: []
+        description: 'unexpected error'
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer eV1kv8b4Paah6cdfZ653gDE'
     controller: null
     method: null
     route: null
