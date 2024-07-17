@@ -19,7 +19,7 @@ A API desenvolvida deve respeitar as regras de negócio a seguir:
 
 - Este serviço deve ser RESTFul;
 
-- Para ambos tipos de usuário, precisamos do `Nome Completo`, `CPF/CNPJ`, `e-mail` e `Senha`. CPF/CNPJ e e-mail devem ser únicos no sistema. Sendo assim, seu sistema deve permitir apenas um cadastro com o mesmo CPF ou endereço de e-mail;
+- Para ambos tipos de usuário, precisamos do `Nome Completo`, `CPF/CNPJ`, `E-mail` e `Senha`. CPF/CNPJ e e-mail devem ser únicos no sistema. Sendo assim, seu sistema deve permitir apenas um cadastro com o mesmo CPF/CNPJ ou endereço de e-mail;
 
 - Usuários comuns podem enviar dinheiro (efetuar transferência) para lojistas e entre usuários comuns;
 
@@ -59,7 +59,7 @@ Lembre-se considerar as possíveis respostas que podem ser recebidas do mock no 
 
 ### Endpoint de transferência
 
-Você pode implementar o que achar conveniente para o funcionamento do sistema, porém a avaliação do resultado do desafio vai considerar apenas o fluxo de transferência entre 2 usuários. A implementação do endpoint de transferência deve seguir o contrato seguir:
+A implementação do endpoint de transferência deve seguir o contrato seguir:
 
 ```json
 POST /transfer
@@ -71,6 +71,10 @@ Content-Type: application/json
   "payee": 15
 }
 ```
+
+### Avaliação
+
+Você pode implementar o que achar conveniente para o funcionamento do sistema, porém a avaliação do resultado do desafio vai considerar apenas o fluxo de transferência entre 2 usuários. O fluxo de gerenciamento de usuários e autenticação da API não são requisitos para conclusão do desafio, mas são bem-vindos se implementados.
 
 Lembre-se de respeitar as regras de negócio do desafio.
 

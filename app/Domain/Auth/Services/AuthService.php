@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 use App\Domain\Auth\DataTransferObjects\ApiLoginDto;
 use App\Domain\Auth\DataTransferObjects\SuccessfulAuthDto;
 use App\Domain\Auth\Exceptions\IncorrectPasswordException;
-use App\Domain\Auth\Exceptions\InvalidApiUserException;
+use App\Domain\Auth\Exceptions\IncorrectEmailException;
 use App\Domain\Auth\Services\Interfaces\AuthServiceInterface;
 use App\Domain\ApiUser\Models\ApiUser;
 use App\Domain\ApiUser\Services\Interfaces\ApiUserServiceInterface;
@@ -27,7 +27,9 @@ class AuthService implements AuthServiceInterface
 
             $validatedUser->tokens()->delete();
 
-            $expiresAt = now()->addMinutes(5);
+            $expiresAt = now()->addMinutes(
+                env('SANCTUM_TOKEN_EXPIRATION_MINUTES', 5)
+            );
 
             $token = $validatedUser->createToken(
                 $dto->email,
@@ -63,17 +65,11 @@ class AuthService implements AuthServiceInterface
         $user = $this->apiUserService->firstByEmail($email);
 
         if (!$user) {
-            throw new InvalidApiUserException(
-                "Could not found a valid API user with the email: {$email}.",
-                Response::HTTP_BAD_REQUEST
-            );
+            throw new IncorrectEmailException();
         }
 
         if (!Hash::check($password, $user->password)) {
-            throw new IncorrectPasswordException(
-                'The password provided for this API user is incorrect.',
-                Response::HTTP_BAD_REQUEST
-            );
+            throw new IncorrectPasswordException();
         }
 
         return $user;

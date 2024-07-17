@@ -11,6 +11,8 @@ use App\Infrastructure\Database\Eloquent\DocumentTypeRepositoryEloquent;
 use App\Domain\DocumentType\Repositories\DocumentTypeRepositoryInterface;
 use App\Infrastructure\Database\Eloquent\UserTypeRepositoryEloquent;
 use App\Domain\User\Repositories\UserTypeRepositoryInterface;
+use App\Infrastructure\Database\Eloquent\UserRepositoryEloquent;
+use App\Domain\User\Repositories\UserRepositoryInterface;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
@@ -74,5 +76,6 @@ class DatabaseServiceProvider extends ServiceProvider
     private function bindUserRepositoryClasses(): void
     {
         $this->app->bind(UserTypeRepositoryInterface::class, UserTypeRepositoryEloquent::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepositoryEloquent::class);
     }
 }

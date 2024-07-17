@@ -55,7 +55,7 @@ class ApiLoginTest extends TestCase
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
         $response->assertExactJson([
-            'message' => 'Could not found a valid API user with the email: nonexistentemail@test.com.'
+            'message' => 'Could not found a valid API user with the provided email.'
         ]);
     }
 

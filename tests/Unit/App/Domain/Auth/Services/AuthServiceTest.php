@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 use App\Domain\Auth\DataTransferObjects\ApiLoginDto;
 use App\Domain\Auth\DataTransferObjects\SuccessfulAuthDto;
 use App\Domain\Auth\Exceptions\IncorrectPasswordException;
-use App\Domain\Auth\Exceptions\InvalidApiUserException;
+use App\Domain\Auth\Exceptions\IncorrectEmailException;
 use App\Domain\Auth\Services\AuthService;
 use App\Domain\ApiUser\Models\ApiUser;
 use App\Domain\ApiUser\Services\Interfaces\ApiUserServiceInterface;
@@ -86,8 +86,8 @@ class AuthServiceTest extends TestCase
             'password' => 'password'
         ];
 
-        $this->expectException(InvalidApiUserException::class);
-        $this->expectExceptionMessage("Could not found a valid API user with the email: {$userData['email']}.");
+        $this->expectException(IncorrectEmailException::class);
+        $this->expectExceptionMessage('Could not found a valid API user with the provided email.');
 
         $this->apiUserServiceMock
             ->shouldReceive('firstByEmail')

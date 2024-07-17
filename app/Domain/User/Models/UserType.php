@@ -32,4 +32,9 @@ class UserType extends Model
     {
         return UserTypeFactory::new();
     }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 }

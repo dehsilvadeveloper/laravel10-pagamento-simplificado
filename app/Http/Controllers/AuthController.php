@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use App\Domain\Auth\DataTransferObjects\ApiLoginDto;
 use App\Domain\Auth\Exceptions\IncorrectPasswordException;
-use App\Domain\Auth\Exceptions\InvalidApiUserException;
+use App\Domain\Auth\Exceptions\IncorrectEmailException;
 use App\Domain\Auth\Services\Interfaces\AuthServiceInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApiLoginRequest;
@@ -47,11 +47,23 @@ class AuthController extends Controller
      * }
      *
      * @response status=400 scenario="user with email provided not found" {
-     *      "message": "Could not found a valid API user with the email: test@test.com."
+     *      "message": "'Could not found a valid API user with the provided email."
      * }
      *
      * @response status=400 scenario="password incorrect" {
-     *      "message": "The password provided for this user is incorrect."
+     *      "message": "The password provided for this API user is incorrect."
+     * }
+     * 
+     * @response status=422 scenario="validation error" {
+     *      "message": "The email field is required. (and 1 more error)",
+     *      "errors": {
+     *          "email": [
+     *              "The email field is required."
+     *          ],
+     *          "password": [
+     *              "The password field is required."
+     *          ]
+     *      }
      * }
      *
      * @response status=500 scenario="unexpected error" {
@@ -87,7 +99,7 @@ class AuthController extends Controller
                 ]
             );
 
-            $exceptionTypes = [InvalidApiUserException::class, IncorrectPasswordException::class];
+            $exceptionTypes = [IncorrectEmailException::class, IncorrectPasswordException::class];
 
             $errorMessage = in_array(get_class($exception), $exceptionTypes)
                 ? $exception->getMessage()
@@ -136,8 +148,9 @@ class AuthController extends Controller
      */
     public function me(Request $request): JsonResponse
     {
-        return (new AuthenticatedApiUserResource($request->user()))
-                ->response()
-                ->setStatusCode(Response::HTTP_OK);
+        return $this->sendSuccessResponse(
+            data: new AuthenticatedApiUserResource($request->user()),
+            code: Response::HTTP_OK
+        );
     }
 }

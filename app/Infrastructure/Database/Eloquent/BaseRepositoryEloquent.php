@@ -77,7 +77,7 @@ class BaseRepositoryEloquent implements RepositoryEloquentInterface
 
     public function getAll(array $columns = ['*']): Collection
     {
-        return $this->model->get($columns);
+        return $this->model->orderBy('id', 'desc')->get($columns);
     }
 
     public function getAllTrashed(array $columns = ['*']): Collection

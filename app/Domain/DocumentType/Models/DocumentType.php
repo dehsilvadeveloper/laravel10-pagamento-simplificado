@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Database\Factories\DocumentTypeFactory;
+use App\Domain\User\Models\User;
 
 class DocumentType extends Model
 {
@@ -31,5 +32,10 @@ class DocumentType extends Model
     protected static function newFactory(): Factory
     {
         return DocumentTypeFactory::new();
+    }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
     }
 }
