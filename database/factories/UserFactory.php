@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use App\Domain\DocumentType\Enums\DocumentTypeEnum;
@@ -24,6 +25,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $now = Carbon::now();
         $userType = fake()->randomElement([UserTypeEnum::COMMON, UserTypeEnum::SHOPKEEPER]);
         $documentType = $this->generateDocumentType($userType);
 
@@ -33,7 +35,9 @@ class UserFactory extends Factory
             'document_type_id' => $documentType->value,
             'document_number' => $this->generateDocumentNumber($documentType),
             'email' => fake()->unique()->safeEmail(),
-            'password' => static::$password ??= Hash::make('password')
+            'password' => static::$password ??= Hash::make('password'),
+            'created_at' => $now,
+            'updated_at' => $now
         ];
     }
 
