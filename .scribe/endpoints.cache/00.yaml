@@ -68,7 +68,7 @@ endpoints:
         status: 400
         content: |-
           {
-               "message": "Could not found a valid API user with the email: test@test.com."
+               "message": "'Could not found a valid API user with the provided email."
           }
         headers: []
         description: 'user with email provided not found'
@@ -77,10 +77,27 @@ endpoints:
         status: 400
         content: |-
           {
-               "message": "The password provided for this user is incorrect."
+               "message": "The password provided for this API user is incorrect."
           }
         headers: []
         description: 'password incorrect'
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+               "message": "The email field is required. (and 1 more error)",
+               "errors": {
+                   "email": [
+                       "The email field is required."
+                   ],
+                   "password": [
+                       "The password field is required."
+                   ]
+               }
+          }
+        headers: []
+        description: 'validation error'
         custom: []
       -
         status: 500
@@ -243,7 +260,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer 6D6ka1bcZghEaf5v3d8P4eV'
+      - 'Bearer e5E6acvVZ1D6gfd8Pabh43k'
     controller: null
     method: null
     route: null

@@ -163,7 +163,9 @@ class DocumentTypeRepositoryEloquentTest extends TestCase
         $recordsCount = 3;
 
         $generatedRecords = DocumentType::factory()->count($recordsCount)->create();
-        $generatedRecordsAsArray = $generatedRecords->toArray();
+        $sortedGeneratedRecords = $generatedRecords->sortByDesc('id');
+        $sortedGeneratedRecords = $sortedGeneratedRecords->values();
+        $generatedRecordsAsArray = $sortedGeneratedRecords->toArray();
 
         $records = $this->repository->getAll();
         $recordsAsArray = $records->toArray();

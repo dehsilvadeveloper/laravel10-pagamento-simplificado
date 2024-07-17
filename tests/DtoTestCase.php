@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Spatie\LaravelData\Exceptions\CannotCastEnum;
 use Spatie\LaravelData\Exceptions\CannotCreateData;
 
 abstract class DtoTestCase extends TestCase
@@ -49,6 +50,13 @@ abstract class DtoTestCase extends TestCase
     protected function runCreationFromArrayWithInvalidValuesAssertions(string $dtoClass, array $data): void
     {
         $this->expectException(ValidationException::class);
+
+        $this->createDto($dtoClass, $data);
+    }
+
+    protected function runCreationFromArrayWithInvalidEnumValuesAssertions(string $dtoClass, array $data): void
+    {
+        $this->expectException(CannotCastEnum::class);
 
         $this->createDto($dtoClass, $data);
     }
