@@ -2,8 +2,9 @@
 
 namespace App\Domain\User\Notifications;
 
-use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Mail\Mailable;
 use Illuminate\Notifications\Notification;
+use App\Mail\User\WelcomeMailable;
 
 class WelcomeNotification extends Notification
 {
@@ -28,14 +29,9 @@ class WelcomeNotification extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(object $notifiable): Mailable
     {
-        return (new MailMessage)
-                    ->subject('Welcome to Our Platform')
-                    ->greeting('Hello!')
-                    ->line('Welcome to the Simplified Payment application.')
-                    ->action('Visit Us', url('/'))
-                    ->line('Thank you for using our application!');
+        return (new WelcomeMailable($notifiable))->to($notifiable->email);
     }
 
     /**
