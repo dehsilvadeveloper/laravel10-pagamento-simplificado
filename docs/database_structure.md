@@ -56,41 +56,12 @@ Tabela com as notificações disparadas pela aplicação.
 | Campo | Tipo | Nullable | Descrição |
 |-|-|-|-|  
 | id | integer | não | Chave primária | 
-| message | text | não | Texto da notificação |
 | recipient_id | integer | não | ID de usuário de quem deve receber a notificação |
-| notification_type_id | integer | não | ID do tipo de notificação |
-| notification_status_id | integer | não | ID do status da notificação |
+| type | text | não | Nome da classe de notificação disparada (WelcomeNotification, etc) |
+| channel | varchar(70) | não | Canal pelo qual foi disparada a notificação (mail, sms, etc) |
+| response | text | não | Resposta do envio da notificação |
 | created_at | datetime | não | Data e hora da criação da notificação |
 | updated_at | datetime | sim | Data e hora da última atualização da notificação |
-
-#### Tabela: notification_status_histories
-
-Tabela com as mudanças de status de uma notificação dentro do ciclo de vida da mesma na aplicação.
-
-| Campo | Tipo | Nullable | Descrição |
-|-|-|-|-|  
-| id | integer | não | Chave primária |
-| notification_id | integer | não | ID da notificação |
-| notification_status_id | integer | não | ID do tipo de status da notificação |
-| changed_at | datetime | não | Data e hora da da mudança de status da notificação |
-
-#### Tabela: notification_types
-
-Tabela com o tipo de notificações que podem ser disparadas pela aplicação (email, sms, external_notifier).
-
-| Campo | Tipo | Nullable | Descrição |
-|-|-|-|-|  
-| id | integer | não | Chave primária | 
-| name | varchar(50) | não | Nome do tipo de notificação |
-
-#### Tabela: notification_statuses
-
-Tabela com os statuses possíveis para as notificações (pendente, enviado, erro).
-
-| Campo | Tipo | Nullable | Descrição |
-|-|-|-|-|  
-| id | integer | não | Chave primária | 
-| name | varchar(50) | não | Nome do status de notificação |
 
 #### Tabela: transfers
 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Database\Factories\UserFactory;
 use App\Domain\DocumentType\Models\DocumentType;
 
@@ -14,6 +15,7 @@ class User extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use Notifiable;
 
     protected $table = 'users';
     protected $primaryKey = 'id';

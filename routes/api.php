@@ -17,6 +17,16 @@ use App\Http\Controllers\UserTypeController;
 |
 */
 
+Route::get('/notification-test', function () {
+    //UserCreated::dispatch($user);
+    //$user->notify(new WelcomeNotification());
+
+    $user = \App\Domain\User\Models\User::find(1);
+    $user->notify(new \App\Domain\User\Notifications\WelcomeNotification());
+
+    print 'executed';
+});
+
 Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::middleware('auth:sanctum')->group(function () {
