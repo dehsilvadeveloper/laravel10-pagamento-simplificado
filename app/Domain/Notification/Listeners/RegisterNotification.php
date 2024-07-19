@@ -23,7 +23,7 @@ class RegisterNotification
     public function handle(NotificationSent $event): void
     {
         Log::debug(
-            '[RegisterNotification] A notification was sent. Here is the related data.',
+            '[RegisterNotification] A notification was sent.',
             [
                 'recipient_id' => $event->notifiable->id,
                 'type' => get_class($event->notification),

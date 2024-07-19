@@ -35,6 +35,17 @@ class WelcomeNotification extends Notification
     }
 
     /**
+     * Get the sms representation of the notification.
+     */
+    public function toSms(object $notifiable): array
+    {
+        return [
+            'phone_number' => $notifiable->phone_number ?? '11989049461',
+            'message' => "Hello, dear {$notifiable->name}. Welcome to the Simplified Payment application."
+        ];
+    }
+
+    /**
      * Get the array representation of the notification.
      *
      * @return array<string, mixed>
