@@ -4,7 +4,7 @@ namespace App\Domain\User\Notifications;
 
 use Illuminate\Mail\Mailable;
 use Illuminate\Notifications\Notification;
-use App\Mail\User\WelcomeMailable;
+use App\Domain\User\Mails\WelcomeMailable;
 
 class WelcomeNotification extends Notification
 {

@@ -37,7 +37,7 @@ Route::prefix('/mailables-previews')->name('mailable-preview.')->group(function 
             return 'User not found. Cannot preview email.';
         }
 
-        return new \App\Mail\User\WelcomeMailable($user);
+        return new \App\Domain\User\Mails\WelcomeMailable($user);
     })->name('user.welcome');
 });
 
