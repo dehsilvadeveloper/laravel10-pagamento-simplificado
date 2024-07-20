@@ -13,7 +13,6 @@ class WelcomeNotification extends Notification
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -23,7 +22,7 @@ class WelcomeNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'sms'];
     }
 
     /**
@@ -52,8 +51,6 @@ class WelcomeNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 }
