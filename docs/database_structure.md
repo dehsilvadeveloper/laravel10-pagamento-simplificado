@@ -38,17 +38,6 @@ Tabela com respostas recebidas por serviço de autorização externo antecedendo
 | created_at | datetime | não | Data e hora da criação da resposta recebida |
 | updated_at | datetime | sim | Data e hora da última atualização da resposta recebida |
 
-#### Tabela: failed_notifications
-
-Tabela com informações de notificações que falharam no processo de envio.
-
-| Campo | Tipo | Nullable | Descrição |
-|-|-|-|-|  
-| id | integer | não | Chave primária | 
-| notification_id | integer | não | ID da notificação |
-| exception | text | não | Mensagem de erro obtida |
-| failed_at | datetime | não | Data e hora da criação do registro da falha |
-
 #### Tabela: notifications 
 
 Tabela com as notificações disparadas pela aplicação.

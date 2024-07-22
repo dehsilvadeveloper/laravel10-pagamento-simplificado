@@ -52,6 +52,7 @@ class SendUserCreatedNotifications implements ShouldQueue
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
                 'data' => [
+                    'event' => get_class($event),
                     'user' => $event->user ?? null
                 ],
                 'stack_trace' => $exception->getTrace()
