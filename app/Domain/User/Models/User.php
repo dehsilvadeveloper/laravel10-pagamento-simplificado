@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Database\Factories\UserFactory;
 use App\Domain\DocumentType\Models\DocumentType;
+use App\Domain\Notification\Models\Notification;
 
 class User extends Model
 {
@@ -70,5 +72,10 @@ class User extends Model
     public function documentType(): BelongsTo
     {
         return $this->belongsTo(DocumentType::class);
+    }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class, 'recipient_id');
     }
 }
