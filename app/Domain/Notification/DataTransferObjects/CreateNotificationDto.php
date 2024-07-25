@@ -8,9 +8,9 @@ class CreateNotificationDto extends BaseDto
 {
     public function __construct(
         public int $recipientId,
-        public string $type,
+        public mixed $type,
         public string $channel,
-        public ?string $response
+        public mixed $response
     ) {
     }
 }

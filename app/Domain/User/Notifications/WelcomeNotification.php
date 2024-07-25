@@ -4,6 +4,7 @@ namespace App\Domain\User\Notifications;
 
 use Illuminate\Mail\Mailable;
 use Illuminate\Notifications\Notification;
+use App\Domain\Common\ValueObjects\SentSmsMessage;
 use App\Domain\User\Mails\WelcomeMailable;
 
 class WelcomeNotification extends Notification
@@ -36,12 +37,13 @@ class WelcomeNotification extends Notification
     /**
      * Get the sms representation of the notification.
      */
-    public function toSms(object $notifiable): array
+    public function toSms(object $notifiable): SentSmsMessage
     {
-        return [
-            'phone_number' => $notifiable->phone_number ?? '11989049461',
-            'message' => "Hello, dear {$notifiable->name}. Welcome to the Simplified Payment application."
-        ];
+        return new SentSmsMessage(
+            $notifiable->phone_number ?? '11989049461',
+            "Hello, dear {$notifiable->name}. Welcome to the Simplified Payment application.",
+            'sent'
+        );
     }
 
     /**

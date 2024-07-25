@@ -16,8 +16,8 @@ use App\Domain\Notification\Models\Notification;
 class User extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     use Notifiable;
+    use SoftDeletes;
 
     protected $table = 'users';
     protected $primaryKey = 'id';

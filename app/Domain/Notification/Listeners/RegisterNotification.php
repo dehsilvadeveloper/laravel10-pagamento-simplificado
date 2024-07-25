@@ -3,16 +3,21 @@
 namespace App\Domain\Notification\Listeners;
 
 use Throwable;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Mail\SentMessage;
 use Illuminate\Notifications\Events\NotificationSent;
+use Illuminate\Support\Facades\Log;
+use App\Domain\Common\ValueObjects\SentSmsMessage;
+use App\Domain\Notification\DataTransferObjects\CreateNotificationDto;
+use App\Domain\Notification\Repositories\NotificationRepositoryInterface;
 
 class RegisterNotification
 {
     /**
      * Create the event listener.
      */
-    public function __construct()
-    {
+    public function __construct(
+        private NotificationRepositoryInterface $notificationRepository
+    ) {
     }
 
     /**
@@ -20,7 +25,14 @@ class RegisterNotification
      */
     public function handle(NotificationSent $event): void
     {
-        // SAVE RECORD OF SENT NOTIFICATION ON DATABASE HERE.
+        $this->notificationRepository->create(
+            CreateNotificationDto::from([
+                'recipient_id' => $event->notifiable->id,
+                'type' => get_class($event->notification),
+                'channel' => $event->channel,
+                'response' => $this->getResponseSummary($event->response)
+            ])
+        );
 
         Log::debug(
             '[RegisterNotification] A notification was sent.',
@@ -54,5 +66,21 @@ class RegisterNotification
                 'stack_trace' => $exception->getTrace()
             ]
         );
+    }
+
+    /**
+     * Get the event response summary.
+     */
+    protected function getResponseSummary($response): string
+    {
+        if ($response instanceof SentMessage) {
+            return 'Notification Mail sent successfully.';
+        }
+
+        if ($response instanceof SentSmsMessage) {
+            return 'Notification SMS sent to ' . $response->getPhoneNumber() . ' successfully.';
+        }
+
+        return 'Notification sent successfully.';
     }
 }
