@@ -20,6 +20,27 @@ http://localhost:9999/api-docs
 
 Lembre-se de iniciar a aplicação antes de tentar acessar a página da documentação da API.
 
+### Filas / Queues
+
+A aplicação conta com ações *assíncronas*, ou seja, ações que não são executadas no momento da requisição. As ações são as seguintes:
+
+- Disparo de notificação de boas-vindas (após criação de usuário);
+- Disparo de notificação de transferência recebida (após um usuário receber uma nova transferência);
+
+Estas ações são armazenadas no **Redis** e ficam aguardando disponibilidade da aplicação para executá-las.
+
+Para executar estas ações você deve rodar o seguinte comando no terminal:
+
+```
+docker-compose exec main php artisan queue:work --queue=notifications
+```
+
+Este comando vai deixar a aplicação em estado de espera, ou seja, aguardando que ações sejam colocadas na fila para serem executadas.
+
+Se você deseja interromper o estado de espera da aplicação, basta utilizar a seguinte combinação de teclas no terminal:
+
+`ctrl + c`
+
 ### Rodando testes
 
 Para rodar os testes da aplicação, você pode utilizar o seguinte comando num terminal aberto na raiz do diretório do projeto:
