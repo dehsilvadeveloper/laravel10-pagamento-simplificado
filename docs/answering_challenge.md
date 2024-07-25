@@ -18,11 +18,17 @@ Foi desenhado um diagrama de fluxo para a aplicação usando a ferramenta [Draw.
     <img src="./diagrams/pagamento_simplificado.drawio.png" alt="Diagrama de Fluxo" width="150" />
 </a>
 
+### Ambiente
+
+Visando evitar problemas de divergência de ambientes em diferentes máquinas, todo o código da aplicação foi incluído em containers criados com a ferramenta **Docker**.
+
 ### Explicação da API
 
-Um dos pontos de atenção levantados na descrição do desafio é a necessidade de se validar os dados necessários para criação de usuários. São requeridos os campos `Nome Completo`, `Número do Documento (CPF/CNPJ)`, `E-mail` e `Senha`, sendo que `Número do Documento (CPF/CNPJ)` e `E-mail` devem ser únicos. Apesar de não ser obrigatório, foi decidido criar uma estrutura para gerenciamento de usuários, permitindo ações de criação, atualização, remoção, visualização e listagem. A ação de remoção usa a abordagem do *soft delete*, ou seja, os usuários não são removidos de verdade do banco de dados, apenas sinalizados como removidos, o que ajuda a manter a consistência das informações de transferências.
+Um dos pontos de atenção levantados na descrição do desafio é a necessidade de se validar os dados necessários para criação de usuários. São requeridos os campos `Nome Completo`, `Número do Documento (CPF/CNPJ)`, `E-mail` e `Senha`, sendo que `Número do Documento (CPF/CNPJ)` e `E-mail` devem ser únicos. Apesar de não ser obrigatório, foi decidido criar uma estrutura para gerenciamento de usuários, permitindo ações de criação, atualização, remoção, visualização e listagem. A ação de remoção usa a abordagem do *soft delete*, ou seja, os usuários não são removidos de verdade do banco de dados, apenas sinalizados como removidos, o que ajuda a manter a consistência das informações de transferências (transferências não vão estar vinculadas a usuários que não existem no banco de dados).
 
-Outro ponto com relação aos usuários foi a implementação das entidades `user_types` e `document_types`. O objetivo destas entidades é organizar informações de tipos e permitir que mais itens sejam adicionados futuramente. Por padrão a aplicação conta com os tipos de usuário `comum` e `lojista` e com os tipos de documento `cnpj` e `cpf`, sendo estes dados obtidos da descrição do desafio.
+Outro ponto com relação aos usuários foi a implementação das entidades `user_types` e `document_types`. O objetivo destas entidades é organizar informações de tipos e permitir que mais itens sejam adicionados futuramente. Por padrão a aplicação conta com os tipos de usuário `comum` e `lojista` e com os tipos de documento `cnpj` e `cpf`, sendo estes dados obtidos da descrição do desafio. Para facilitar a identificação dos tipos internamente no código, também foram incluídas classes enum (*DocumentTypeEnum* e *UserTypeEnum*).
+
+Após a ação de criação de usuário, a aplicação dispara notificações com uma mensagem de boas-vindas. As notificações são disparadas por dois canais diferentes (`email` e `sms`), mas seu comportamento é modificado para apenas simular os envios visto que não estamos em ambiente de produção. Os envios simulados registram informações em logs e também na entidade `notifications` do banco de dados. Estão notificações envolvem filas de execução (*queues*), então você deve se referir ao tópico **Filas / Queues** na seguinte [página](using_api.md) para obter mais detalhes.
 
 Caso não deseje lidar com a criação de usuários, a aplicação fornece alguns usuários padrão para sua conveniência. São fornecidos 2 usuários do tipo **comum** (John Doe e Jane Doe) e 2 usuários do tipo **lojista** (Pokemon Company e Stark Industries), sendo as informações destes obtidas pelo endpoint de listagem de usuários.
 
@@ -68,10 +74,6 @@ php artisan make:dto Domain/User/DataTransferObjects/CreateUserDto
 ```
 
 As classes DTO fazem uso do package **laravel-data**.
-
-### Ambiente
-
-Visando evitar problemas de divergência de ambientes em diferentes máquinas, todo o código da aplicação foi incluído em containers criados com a ferramenta **Docker**.
 
 ### Testes
 

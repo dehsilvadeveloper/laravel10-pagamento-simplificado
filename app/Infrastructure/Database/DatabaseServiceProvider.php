@@ -13,6 +13,8 @@ use App\Infrastructure\Database\Eloquent\UserTypeRepositoryEloquent;
 use App\Domain\User\Repositories\UserTypeRepositoryInterface;
 use App\Infrastructure\Database\Eloquent\UserRepositoryEloquent;
 use App\Domain\User\Repositories\UserRepositoryInterface;
+use App\Infrastructure\Database\Eloquent\NotificationRepositoryEloquent;
+use App\Domain\Notification\Repositories\NotificationRepositoryInterface;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,7 @@ class DatabaseServiceProvider extends ServiceProvider
         $this->bindApiUserRepositoryClasses();
         $this->bindDocumentTypeRepositoryClasses();
         $this->bindUserRepositoryClasses();
+        $this->bindNotificationRepositoryClasses();
     }
 
     /**
@@ -77,5 +80,15 @@ class DatabaseServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserTypeRepositoryInterface::class, UserTypeRepositoryEloquent::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepositoryEloquent::class);
+    }
+
+    /**
+     * Bind repository classes for domain Notification
+     *
+     * @return void
+     */
+    private function bindNotificationRepositoryClasses(): void
+    {
+        $this->app->bind(NotificationRepositoryInterface::class, NotificationRepositoryEloquent::class);
     }
 }

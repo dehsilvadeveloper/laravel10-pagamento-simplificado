@@ -118,7 +118,7 @@ docker-compose down
 
 Este comando vai encerrar todos os containers Docker e a aplicação não estará mais disponível para uso.
 
-Se você iniciou a aplicação sem o uso da opção `-d`, você deverá a seguinte combinação de teclas no terminal aberto para encerrá-la:
+Se você iniciou a aplicação sem o uso da opção `-d`, você deverá utilizar a seguinte combinação de teclas no terminal aberto para encerrá-la:
 
 `ctrl + c`
 

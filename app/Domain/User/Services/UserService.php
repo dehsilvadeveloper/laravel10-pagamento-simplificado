@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Domain\User\DataTransferObjects\CreateUserDto;
 use App\Domain\User\DataTransferObjects\UpdateUserDto;
+use App\Domain\User\Events\UserCreated;
 use App\Domain\User\Exceptions\UserNotFoundException;
 use App\Domain\User\Models\User;
 use App\Domain\User\Services\Interfaces\UserServiceInterface;
@@ -29,6 +30,8 @@ class UserService implements UserServiceInterface
             $user = $this->userRepository->create($userDto);
 
             DB::commit();
+
+            event(new UserCreated($user));
 
             return $user;
         } catch (Throwable $exception) {
