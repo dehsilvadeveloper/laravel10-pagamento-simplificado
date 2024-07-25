@@ -7,11 +7,13 @@ use Exception;
 use Mockery;
 use Mockery\MockInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 use App\Domain\DocumentType\Enums\DocumentTypeEnum;
 use App\Domain\User\DataTransferObjects\CreateUserDto;
 use App\Domain\User\DataTransferObjects\UpdateUserDto;
 use App\Domain\User\Enums\UserTypeEnum;
+use App\Domain\User\Events\UserCreated;
 use App\Domain\User\Models\User;
 use App\Domain\User\Repositories\UserRepositoryInterface;
 use App\Domain\User\Services\UserService;
@@ -38,6 +40,8 @@ class UserServiceTest extends TestCase
      */
     public function test_can_create(): void
     {
+        Event::fake();
+
         $data = [
             'user_type_id' => UserTypeEnum::COMMON->value,
             'document_type_id' => DocumentTypeEnum::CPF->value,
@@ -57,6 +61,8 @@ class UserServiceTest extends TestCase
             ->andReturn($fakeRecord);
 
         $createdRecord = $this->service->create($dto);
+
+        Event::assertDispatched(UserCreated::class);
 
         $this->assertInstanceOf(User::class, $createdRecord);
         $this->assertEquals($fakeRecord->user_type_id, $createdRecord->user_type_id);

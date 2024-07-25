@@ -19,6 +19,18 @@ use App\Http\Controllers\UserTypeController;
 
 Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
 
+Route::prefix('/mailables-previews')->name('mailable-preview.')->group(function () {
+    Route::get('/user/welcome', function () {
+        $user = \App\Domain\User\Models\User::find(1);
+
+        if (!$user) {
+            return 'User not found. Cannot preview email.';
+        }
+
+        return new \App\Domain\User\Mails\WelcomeMailable($user);
+    })->name('user.welcome');
+});
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/auth')->group(function () {
         Route::get('/me', [AuthController::class, 'me'])->name('auth.me');

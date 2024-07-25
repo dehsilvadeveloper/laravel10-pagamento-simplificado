@@ -5,9 +5,11 @@ namespace Tests\Feature\User;
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Event;
 use App\Domain\ApiUser\Models\ApiUser;
 use App\Domain\DocumentType\Enums\DocumentTypeEnum;
 use App\Domain\User\Enums\UserTypeEnum;
+use App\Domain\User\Events\UserCreated;
 use App\Domain\User\Models\User;
 use Database\Seeders\DocumentTypeSeeder;
 use Database\Seeders\UserTypeSeeder;
@@ -27,6 +29,8 @@ class CreateUserTest extends TestCase
      */
     public function test_can_create(): void
     {
+        Event::fake();
+
         $apiUser = ApiUser::factory()->create();
 
         Sanctum::actingAs($apiUser, ['*']);
@@ -41,6 +45,8 @@ class CreateUserTest extends TestCase
         ];
 
         $response = $this->postJson(route('user.create'), $data);
+
+        Event::assertDispatched(UserCreated::class);
 
         $response->assertStatus(Response::HTTP_CREATED);
         $response->assertJsonStructure([
