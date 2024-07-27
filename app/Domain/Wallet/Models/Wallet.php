@@ -15,6 +15,7 @@ class Wallet extends Model
 
     protected $table = 'wallets';
     protected $primaryKey = 'id';
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

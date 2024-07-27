@@ -21,6 +21,7 @@ class WalletModelTest extends ModelTestCase
             'casts' => [
                 'id' => 'int'
             ],
+            'dates' => [],
             'table' => 'wallets'
         ]);
 
