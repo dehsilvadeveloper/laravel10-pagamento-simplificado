@@ -44,6 +44,8 @@ class UserController extends Controller
      * @responseField document_type.name string The type of document.
      * @responseField document_number string The number of document.
      * @responseField email string The e-mail of the user.
+     * @responseField wallet.id integer The identifier of the wallet of the user.
+     * @responseField wallet.balance float The current balance of the wallet of the user.
      * @responseField created_at string The date and time in which the user was created.
      * @responseField updated_at string The date and time in which the user was last updated.
      * 
@@ -63,7 +65,8 @@ class UserController extends Controller
      *          "document_number": "06633022000",
      *          "email": "peter.parker@marvel.com",
      *          "wallet": {
-     * 
+     *              "id": 1,
+     *              "balance": 150.10
      *          }
      *          "created_at": "2024-07-12 15:42:18",
      *          "updated_at": "2024-07-12 15:42:18"
