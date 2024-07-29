@@ -18,7 +18,8 @@ class CreateUserDto extends BaseDto
         public DocumentTypeEnum $documentTypeId,
         public string $documentNumber,
         public string $email,
-        public string $password
+        public string $password,
+        public float $starterBalance
     ) {
     }
 }

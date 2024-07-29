@@ -62,6 +62,9 @@ class UserController extends Controller
      *          },
      *          "document_number": "06633022000",
      *          "email": "peter.parker@marvel.com",
+     *          "wallet": {
+     * 
+     *          }
      *          "created_at": "2024-07-12 15:42:18",
      *          "updated_at": "2024-07-12 15:42:18"
      *      }
@@ -91,6 +94,9 @@ class UserController extends Controller
      *          ],
      *          "password": [
      *              "The password field is required."
+     *          ],
+     *          "starter_balance": [
+     *              "The starter balance field is required."
      *          ]
      *      }
      * }
