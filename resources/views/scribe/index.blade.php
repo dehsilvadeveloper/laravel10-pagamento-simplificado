@@ -96,6 +96,16 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-endpoints" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="endpoints">
+                    <a href="#endpoints">Endpoints</a>
+                </li>
+                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-mailables-previews-user-welcome">
+                                <a href="#endpoints-GETapi-mailables-previews-user-welcome">GET api/mailables-previews/user/welcome</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-user-types" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="user-types">
                     <a href="#user-types">User Types</a>
@@ -138,7 +148,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 15, 2024</li>
+        <li>Last updated: August 1, 2024</li>
     </ul>
 </div>
 
@@ -879,7 +889,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/13" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -887,7 +897,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/13';
 $response = $client-&gt;get(
     $url,
     [
@@ -904,7 +914,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/13"
 );
 
 const headers = {
@@ -923,7 +933,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/13'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -1063,10 +1073,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-document-types--id-"
-               value="16"
+               value="13"
                data-component="url">
     <br>
-<p>The identifier of the document type. Example: <code>16</code></p>
+<p>The identifier of the document type. Example: <code>13</code></p>
             </div>
                     </form>
 
@@ -1086,7 +1096,246 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <br>
 <p>The name of the document type.</p>
         </div>
-                    <h1 id="user-types">User Types</h1>
+                    <h1 id="endpoints">Endpoints</h1>
+
+    
+
+                                <h2 id="endpoints-GETapi-mailables-previews-user-welcome">GET api/mailables-previews/user/welcome</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-mailables-previews-user-welcome">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/mailables-previews/user/welcome" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/mailables-previews/user/welcome';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/mailables-previews/user/welcome"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/mailables-previews/user/welcome'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-mailables-previews-user-welcome">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">content-type: text/html; charset=UTF-8
+cache-control: no-cache, private
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 59
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Welcome to Our Platform&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f1f1f1;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 200px;
+        }
+
+        .message {
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .message p {
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #008cba;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005f73;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+        
+        &lt;div class=&quot;message&quot;&gt;
+            &lt;p&gt;Hello, dear&lt;i&gt; John Doe&lt;/i&gt;.&lt;/p&gt;
+            &lt;p&gt;Welcome to the &lt;b&gt;Simplified Payment application&lt;/b&gt;.&lt;/p&gt;
+            &lt;p&gt;Thank you for choose us! 😉&lt;/p&gt;
+
+            &lt;button&gt;Visit us here&lt;/button&gt;
+
+            &lt;br /&gt;&lt;br /&gt;
+
+            &lt;p&gt;Best regards.&lt;/p&gt;
+            &lt;p&gt;&lt;b&gt;Simplified Payment Team.&lt;/b&gt;&lt;/p&gt;
+        &lt;/div&gt;
+        
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-mailables-previews-user-welcome" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-mailables-previews-user-welcome"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-mailables-previews-user-welcome"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-mailables-previews-user-welcome" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-mailables-previews-user-welcome">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-mailables-previews-user-welcome" data-method="GET"
+      data-path="api/mailables-previews/user/welcome"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-mailables-previews-user-welcome', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-mailables-previews-user-welcome"
+                    onclick="tryItOut('GETapi-mailables-previews-user-welcome');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-mailables-previews-user-welcome"
+                    onclick="cancelTryOut('GETapi-mailables-previews-user-welcome');" hidden>Cancel
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-mailables-previews-user-welcome"
+                    data-initial-text="Send Request"
+                    data-loading-text="Sending..."
+                    hidden>Send Request
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/mailables-previews/user/welcome</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-mailables-previews-user-welcome"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-mailables-previews-user-welcome"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                <h1 id="user-types">User Types</h1>
 
     <p>Endpoints for managing user types</p>
 
@@ -1310,7 +1559,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/9" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/14" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1318,7 +1567,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/9';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/14';
 $response = $client-&gt;get(
     $url,
     [
@@ -1335,7 +1584,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/9"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/14"
 );
 
 const headers = {
@@ -1354,7 +1603,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/9'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/14'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -1494,10 +1743,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-user-types--id-"
-               value="9"
+               value="14"
                data-component="url">
     <br>
-<p>The identifier of the user type. Example: <code>9</code></p>
+<p>The identifier of the user type. Example: <code>14</code></p>
             </div>
                     </form>
 
@@ -1545,7 +1794,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"document_type_id\": 2,
     \"document_number\": \"60796747008\",
     \"email\": \"john.doe@test.com\",
-    \"password\": \"TDwbC4zvy963xa@#hSEDH\"
+    \"password\": \"TDwbC4zvy963xa@#hSEDH\",
+    \"starter_balance\": 200.5
 }"
 </code></pre></div>
 
@@ -1568,6 +1818,7 @@ $response = $client-&gt;post(
             'document_number' =&gt; '60796747008',
             'email' =&gt; 'john.doe@test.com',
             'password' =&gt; 'TDwbC4zvy963xa@#hSEDH',
+            'starter_balance' =&gt; 200.5,
         ],
     ]
 );
@@ -1592,7 +1843,8 @@ let body = {
     "document_type_id": 2,
     "document_number": "60796747008",
     "email": "john.doe@test.com",
-    "password": "TDwbC4zvy963xa@#hSEDH"
+    "password": "TDwbC4zvy963xa@#hSEDH",
+    "starter_balance": 200.5
 };
 
 fetch(url, {
@@ -1613,7 +1865,8 @@ payload = {
     "document_type_id": 2,
     "document_number": "60796747008",
     "email": "john.doe@test.com",
-    "password": "TDwbC4zvy963xa@#hSEDH"
+    "password": "TDwbC4zvy963xa@#hSEDH",
+    "starter_balance": 200.5
 }
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
@@ -1633,23 +1886,27 @@ response.json()</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;User created with success.&quot;,
-    &quot;data&quot;: {
-        &quot;id&quot;: 17,
-        &quot;name&quot;: &quot;Peter Parker&quot;,
-        &quot;user_type&quot;: {
-            &quot;id&quot;: 1,
-            &quot;name&quot;: &quot;comum&quot;
-        },
-        &quot;document_type&quot;: {
-            &quot;id&quot;: 2,
-            &quot;name&quot;: &quot;cpf&quot;
-        },
-        &quot;document_number&quot;: &quot;06633022000&quot;,
-        &quot;email&quot;: &quot;peter.parker@marvel.com&quot;,
-        &quot;created_at&quot;: &quot;2024-07-12 15:42:18&quot;,
-        &quot;updated_at&quot;: &quot;2024-07-12 15:42:18&quot;
-    }
+     &quot;message&quot;: &quot;User created with success.&quot;,
+     &quot;data&quot;: {
+         &quot;id&quot;: 17,
+         &quot;name&quot;: &quot;Peter Parker&quot;,
+         &quot;user_type&quot;: {
+             &quot;id&quot;: 1,
+             &quot;name&quot;: &quot;comum&quot;
+         },
+         &quot;document_type&quot;: {
+             &quot;id&quot;: 2,
+             &quot;name&quot;: &quot;cpf&quot;
+         },
+         &quot;document_number&quot;: &quot;06633022000&quot;,
+         &quot;email&quot;: &quot;peter.parker@marvel.com&quot;,
+         &quot;wallet&quot;: {
+             &quot;id&quot;: 1,
+             &quot;balance&quot;: 150.10
+         }
+         &quot;created_at&quot;: &quot;2024-07-12 15:42:18&quot;,
+         &quot;updated_at&quot;: &quot;2024-07-12 15:42:18&quot;
+     }
 }</code>
  </pre>
             <blockquote>
@@ -1686,6 +1943,9 @@ response.json()</code></pre></div>
         ],
         &quot;password&quot;: [
             &quot;The password field is required.&quot;
+        ],
+        &quot;starter_balance&quot;: [
+            &quot;The starter balance field is required.&quot;
         ]
     }
 }</code>
@@ -1847,6 +2107,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>The password of the user. Must be at least 8 characters. Example: <code>TDwbC4zvy963xa@#hSEDH</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>starter_balance</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="starter_balance"                data-endpoint="POSTapi-users"
+               value="200.5"
+               data-component="body">
+    <br>
+<p>The starter balance of the wallet of the user. Example: <code>200.5</code></p>
+        </div>
         </form>
 
     <h3>Response</h3>
@@ -1930,6 +2201,31 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The e-mail of the user.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>wallet</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>The identifier of the wallet of the user.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>balance</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+<br>
+<p>The current balance of the wallet of the user.</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>created_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -1957,7 +2253,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/18" \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/11" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -1974,7 +2270,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/18';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/11';
 $response = $client-&gt;patch(
     $url,
     [
@@ -1999,7 +2295,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/18"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/11"
 );
 
 const headers = {
@@ -2028,7 +2324,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/18'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/11'
 payload = {
     "user_type_id": 1,
     "name": "John Doe",
@@ -2055,23 +2351,27 @@ response.json()</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;User updated with success.&quot;,
-    &quot;data&quot;: {
-        &quot;id&quot;: 17,
-        &quot;name&quot;: &quot;Peter Parker&quot;,
-        &quot;user_type&quot;: {
-            &quot;id&quot;: 1,
-            &quot;name&quot;: &quot;comum&quot;
-        },
-        &quot;document_type&quot;: {
-            &quot;id&quot;: 2,
-            &quot;name&quot;: &quot;cpf&quot;
-        },
-        &quot;document_number&quot;: &quot;06633022000&quot;,
-        &quot;email&quot;: &quot;peter.parker@marvel.com&quot;,
-        &quot;created_at&quot;: &quot;2024-07-12 15:42:18&quot;,
-        &quot;updated_at&quot;: &quot;2024-07-12 15:42:18&quot;
-    }
+     &quot;message&quot;: &quot;User updated with success.&quot;,
+     &quot;data&quot;: {
+         &quot;id&quot;: 17,
+         &quot;name&quot;: &quot;Peter Parker&quot;,
+         &quot;user_type&quot;: {
+             &quot;id&quot;: 1,
+             &quot;name&quot;: &quot;comum&quot;
+         },
+         &quot;document_type&quot;: {
+             &quot;id&quot;: 2,
+             &quot;name&quot;: &quot;cpf&quot;
+         },
+         &quot;document_number&quot;: &quot;06633022000&quot;,
+         &quot;email&quot;: &quot;peter.parker@marvel.com&quot;,
+         &quot;wallet&quot;: {
+             &quot;id&quot;: 1,
+             &quot;balance&quot;: 150.10
+         }
+         &quot;created_at&quot;: &quot;2024-07-12 15:42:18&quot;,
+         &quot;updated_at&quot;: &quot;2024-07-12 15:42:18&quot;
+     }
 }</code>
  </pre>
             <blockquote>
@@ -2212,10 +2512,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-users--id-"
-               value="18"
+               value="11"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>18</code></p>
+<p>The identifier of the user. Example: <code>11</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -2367,6 +2667,31 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The e-mail of the user.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>wallet</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>The identifier of the wallet of the user.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>balance</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+<br>
+<p>The current balance of the wallet of the user.</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>created_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -2394,7 +2719,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/18" \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/7" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2402,7 +2727,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/18';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/7';
 $response = $client-&gt;delete(
     $url,
     [
@@ -2419,7 +2744,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/18"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/7"
 );
 
 const headers = {
@@ -2438,7 +2763,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/18'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/7'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -2575,10 +2900,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-users--id-"
-               value="18"
+               value="7"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>18</code></p>
+<p>The identifier of the user. Example: <code>7</code></p>
             </div>
                     </form>
 
@@ -2659,40 +2984,48 @@ response.json()</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: [
-        {
-            &quot;id&quot;: 1,
-            &quot;name&quot;: &quot;John Doe&quot;,
-            &quot;user_type&quot;: {
-                &quot;id&quot;: 1,
-                &quot;name&quot;: &quot;comum&quot;
-            },
-            &quot;document_type&quot;: {
-                &quot;id&quot;: 2,
-                &quot;name&quot;: &quot;cpf&quot;
-            },
-            &quot;document_number&quot;: &quot;70349142069&quot;,
-            &quot;email&quot;: &quot;john.doe@test.com&quot;,
-            &quot;created_at&quot;: &quot;2024-07-11 15:24:09&quot;,
-            &quot;updated_at&quot;: &quot;2024-07-11 17:01:20&quot;
-        },
-        {
-            &quot;id&quot;: 2,
-            &quot;name&quot;: &quot;Stark Industries&quot;,
-            &quot;user_type&quot;: {
-                &quot;id&quot;: 2,
-                &quot;name&quot;: &quot;lojista&quot;
-            },
-            &quot;document_type&quot;: {
-                &quot;id&quot;: 1,
-                &quot;name&quot;: &quot;cnpj&quot;
-            },
-            &quot;document_number&quot;: &quot;04716808000120&quot;,
-            &quot;email&quot;: &quot;stark.industries@fake.com&quot;,
-            &quot;created_at&quot;: &quot;2024-07-11 15:24:10&quot;,
-            &quot;updated_at&quot;: &quot;2024-07-11 15:24:10&quot;
-        }
-    ]
+     &quot;data&quot;: [
+         {
+             &quot;id&quot;: 1,
+             &quot;name&quot;: &quot;John Doe&quot;,
+             &quot;user_type&quot;: {
+                 &quot;id&quot;: 1,
+                 &quot;name&quot;: &quot;comum&quot;
+             },
+             &quot;document_type&quot;: {
+                 &quot;id&quot;: 2,
+                 &quot;name&quot;: &quot;cpf&quot;
+             },
+             &quot;document_number&quot;: &quot;70349142069&quot;,
+             &quot;email&quot;: &quot;john.doe@test.com&quot;,
+             &quot;wallet&quot;: {
+                 &quot;id&quot;: 1,
+                 &quot;balance&quot;: 150.10
+             }
+             &quot;created_at&quot;: &quot;2024-07-11 15:24:09&quot;,
+             &quot;updated_at&quot;: &quot;2024-07-11 17:01:20&quot;
+         },
+         {
+             &quot;id&quot;: 2,
+             &quot;name&quot;: &quot;Stark Industries&quot;,
+             &quot;user_type&quot;: {
+                 &quot;id&quot;: 2,
+                 &quot;name&quot;: &quot;lojista&quot;
+             },
+             &quot;document_type&quot;: {
+                 &quot;id&quot;: 1,
+                 &quot;name&quot;: &quot;cnpj&quot;
+             },
+             &quot;document_number&quot;: &quot;04716808000120&quot;,
+             &quot;email&quot;: &quot;stark.industries@fake.com&quot;,
+             &quot;wallet&quot;: {
+                 &quot;id&quot;: 1,
+                 &quot;balance&quot;: 150.10
+             }
+             &quot;created_at&quot;: &quot;2024-07-11 15:24:10&quot;,
+             &quot;updated_at&quot;: &quot;2024-07-11 15:24:10&quot;
+         }
+     ]
 }</code>
  </pre>
             <blockquote>
@@ -2877,6 +3210,31 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The e-mail of the user.</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>wallet</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>The identifier of the wallet of the user.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>balance</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+<br>
+<p>The current balance of the wallet of the user.</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>created_at</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -2904,7 +3262,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/users/9" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/users/12" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2912,7 +3270,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/9';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/12';
 $response = $client-&gt;get(
     $url,
     [
@@ -2929,7 +3287,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/9"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/12"
 );
 
 const headers = {
@@ -2948,7 +3306,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/9'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/12'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -2967,22 +3325,26 @@ response.json()</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: {
-        &quot;id&quot;: 17,
-        &quot;name&quot;: &quot;Peter Parker&quot;,
-        &quot;user_type&quot;: {
-            &quot;id&quot;: 1,
-            &quot;name&quot;: &quot;comum&quot;
-        },
-        &quot;document_type&quot;: {
-            &quot;id&quot;: 2,
-            &quot;name&quot;: &quot;cpf&quot;
-        },
-        &quot;document_number&quot;: &quot;06633022000&quot;,
-        &quot;email&quot;: &quot;peter.parker@marvel.com&quot;,
-        &quot;created_at&quot;: &quot;2024-07-12 15:42:18&quot;,
-        &quot;updated_at&quot;: &quot;2024-07-12 15:42:18&quot;
-    }
+     &quot;data&quot;: {
+         &quot;id&quot;: 17,
+         &quot;name&quot;: &quot;Peter Parker&quot;,
+         &quot;user_type&quot;: {
+             &quot;id&quot;: 1,
+             &quot;name&quot;: &quot;comum&quot;
+         },
+         &quot;document_type&quot;: {
+             &quot;id&quot;: 2,
+             &quot;name&quot;: &quot;cpf&quot;
+         },
+         &quot;document_number&quot;: &quot;06633022000&quot;,
+         &quot;email&quot;: &quot;peter.parker@marvel.com&quot;,
+         &quot;wallet&quot;: {
+             &quot;id&quot;: 1,
+             &quot;balance&quot;: 150.10
+         }
+         &quot;created_at&quot;: &quot;2024-07-12 15:42:18&quot;,
+         &quot;updated_at&quot;: &quot;2024-07-12 15:42:18&quot;
+     }
 }</code>
  </pre>
             <blockquote>
@@ -3100,10 +3462,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-users--id-"
-               value="9"
+               value="12"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>9</code></p>
+<p>The identifier of the user. Example: <code>12</code></p>
             </div>
                     </form>
 
@@ -3186,6 +3548,31 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
 <br>
 <p>The e-mail of the user.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>wallet</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>The identifier of the wallet of the user.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>balance</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+<br>
+<p>The current balance of the wallet of the user.</p>
+                    </div>
+                                    </details>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>created_at</code></b>&nbsp;&nbsp;

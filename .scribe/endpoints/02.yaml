@@ -1,21 +1,21 @@
-name: 'User Types'
+name: 'Document Types'
 description: |-
 
-  Endpoints for managing user types
+  Endpoints for managing document types
 endpoints:
   -
     httpMethods:
       - GET
-    uri: api/user-types
+    uri: api/document-types
     metadata:
-      groupName: 'User Types'
+      groupName: 'Document Types'
       groupDescription: |-
 
-        Endpoints for managing user types
+        Endpoints for managing document types
       subgroup: ''
       subgroupDescription: ''
-      title: 'List user types'
-      description: 'This endpoint allows you to get a list of user types.'
+      title: 'List document types'
+      description: 'This endpoint allows you to get a list of document types.'
       authenticated: true
       custom: []
     headers:
@@ -37,11 +37,11 @@ endpoints:
                "data": [
                    {
                        "id": 1,
-                       "name": "comum"
+                       "name": "cnpj"
                    },
                    {
                        "id": 2,
-                       "name": "lojista"
+                       "name": "cpf"
                    }
                ]
           }
@@ -69,7 +69,7 @@ endpoints:
     responseFields:
       id:
         name: id
-        description: 'The identifier of the user type.'
+        description: 'The identifier of the document type.'
         required: false
         example: null
         type: integer
@@ -78,7 +78,7 @@ endpoints:
         custom: []
       name:
         name: name
-        description: 'The name of the user type.'
+        description: 'The name of the document type.'
         required: false
         example: null
         type: string
@@ -88,7 +88,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer fvePcga4k6bEVaZDd386h51'
+      - 'Bearer E1aV3Zv546deagc6Phkbf8D'
     controller: null
     method: null
     route: null
@@ -96,16 +96,16 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/user-types/{id}'
+    uri: 'api/document-types/{id}'
     metadata:
-      groupName: 'User Types'
+      groupName: 'Document Types'
       groupDescription: |-
 
-        Endpoints for managing user types
+        Endpoints for managing document types
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get a single user type'
-      description: 'This endpoint allows you to return a single user type from the database.'
+      title: 'Get a single document type'
+      description: 'This endpoint allows you to return a single document type from the database.'
       authenticated: true
       custom: []
     headers:
@@ -115,15 +115,15 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The identifier of the user type.'
+        description: 'The identifier of the document type.'
         required: true
-        example: 9
+        example: 13
         type: integer
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: 9
+      id: 13
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -136,7 +136,7 @@ endpoints:
           {
                "data": {
                    "id": 2,
-                   "name": "comum"
+                   "name": "cpf"
                }
           }
         headers: []
@@ -155,10 +155,10 @@ endpoints:
         status: 404
         content: |-
           {
-               "message": "The user type could not be found."
+               "message": "The document type could not be found."
           }
         headers: []
-        description: 'User type not found'
+        description: 'Document type not found'
         custom: []
       -
         status: 500
@@ -172,7 +172,7 @@ endpoints:
     responseFields:
       id:
         name: id
-        description: 'The identifier of the user type.'
+        description: 'The identifier of the document type.'
         required: false
         example: null
         type: integer
@@ -181,7 +181,7 @@ endpoints:
         custom: []
       name:
         name: name
-        description: 'The name of the user type.'
+        description: 'The name of the document type.'
         required: false
         example: null
         type: string
@@ -191,7 +191,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer 6kcgbdD5fZaEV4v13a6P8he'
+      - 'Bearer gh4vDe1kZcb5a6PV3a6fEd8'
     controller: null
     method: null
     route: null
