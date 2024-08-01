@@ -9,6 +9,7 @@ use App\Domain\ApiUser\Models\ApiUser;
 use App\Domain\DocumentType\Enums\DocumentTypeEnum;
 use App\Domain\User\Enums\UserTypeEnum;
 use App\Domain\User\Models\User;
+use App\Domain\Wallet\Models\Wallet;
 use Database\Seeders\DocumentTypeSeeder;
 use Database\Seeders\UserTypeSeeder;
 
@@ -36,6 +37,10 @@ class GetUserTest extends TestCase
             'document_type_id' => DocumentTypeEnum::CPF->value
         ]);
 
+        Wallet::factory()->for($existingRecord)->create([
+            'balance' => fake()->randomFloat(2, 10, 900)
+        ]);
+
         $response = $this->getJson(route('user.show', ['id' => $existingRecord->id]));
 
         $response->assertStatus(Response::HTTP_OK);
@@ -52,7 +57,11 @@ class GetUserTest extends TestCase
                     'name'
                 ],
                 'document_number',
-                'email'
+                'email',
+                'wallet' => [
+                    'id',
+                    'balance'
+                ]
             ]
         ]);
         $response->assertJson([

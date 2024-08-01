@@ -18,7 +18,7 @@ class WalletFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory()->create(),
+            'user_id' => User::factory(),
             'balance' => fake()->randomFloat(2, 10, 900)
         ];
     }
