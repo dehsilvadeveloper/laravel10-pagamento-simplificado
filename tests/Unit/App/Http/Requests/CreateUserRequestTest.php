@@ -33,7 +33,8 @@ class CreateUserRequestTest extends TestCase
             'document_number' => fake()->cpf(false),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateUserRequest())->replace($data);
@@ -54,7 +55,7 @@ class CreateUserRequestTest extends TestCase
         $validator = Validator::make($data, $request->rules(), $request->messages());
 
         $this->assertTrue($validator->fails());
-        $this->assertCount(6, $validator->errors());
+        $this->assertCount(7, $validator->errors());
     }
 
     /**
@@ -69,7 +70,8 @@ class CreateUserRequestTest extends TestCase
             'document_number' => fake()->cpf(false),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateUserRequest())->replace($data);
@@ -98,7 +100,8 @@ class CreateUserRequestTest extends TestCase
             'document_number' => fake()->cpf(false),
             'name' => fake()->sentence(80),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateUserRequest())->replace($data);
@@ -127,7 +130,8 @@ class CreateUserRequestTest extends TestCase
             'document_number' => fake()->cpf(false),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateUserRequest())->replace($data);
@@ -162,7 +166,8 @@ class CreateUserRequestTest extends TestCase
             'document_number' => $documentNumber,
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateUserRequest())->replace($data);
@@ -197,7 +202,8 @@ class CreateUserRequestTest extends TestCase
             'document_number' => $documentNumber,
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateUserRequest())->replace($data);
@@ -226,7 +232,8 @@ class CreateUserRequestTest extends TestCase
             'document_number' => fake()->cpf(false),
             'name' => fake()->name(),
             'email' => 'invalid_format_email',
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateUserRequest())->replace($data);
@@ -261,7 +268,8 @@ class CreateUserRequestTest extends TestCase
             'document_number' => fake()->cpf(false),
             'name' => fake()->name(),
             'email' => $email,
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateUserRequest())->replace($data);
@@ -290,7 +298,8 @@ class CreateUserRequestTest extends TestCase
             'document_number' => fake()->cpf(false),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => 'TDw'
+            'password' => 'TDw',
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateUserRequest())->replace($data);
@@ -304,6 +313,67 @@ class CreateUserRequestTest extends TestCase
                 'The password field must be at least 8 characters.'
             ],
             $validator->errors()->get('password')
+        );
+    }
+
+    /**
+     * @group requests
+     * @group user
+     */
+    public function test_fail_with_non_mumeric_starter_balance(): void
+    {
+        $data = [
+            'user_type_id' => UserTypeEnum::COMMON->value,
+            'document_type_id' => DocumentTypeEnum::CPF->value,
+            'document_number' => fake()->cpf(false),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => fake()->password(12),
+            'starter_balance' => 'abc'
+        ];
+
+        $request = (new CreateUserRequest())->replace($data);
+        $validator = Validator::make($data, $request->rules(), $request->messages());
+
+        $this->assertTrue($validator->fails());
+        $this->assertCount(2, $validator->errors());
+        $this->assertTrue($validator->errors()->has('starter_balance'));
+        $this->assertEquals(
+            [
+                'The starter balance field must be a number.',
+                'The starter balance field must be greater than 0.'
+            ],
+            $validator->errors()->get('starter_balance')
+        );
+    }
+
+    /**
+     * @group requests
+     * @group user
+     */
+    public function test_fail_with_starter_balance_with_zero_value(): void
+    {
+        $data = [
+            'user_type_id' => UserTypeEnum::COMMON->value,
+            'document_type_id' => DocumentTypeEnum::CPF->value,
+            'document_number' => fake()->cpf(false),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => fake()->password(12),
+            'starter_balance' => 0
+        ];
+
+        $request = (new CreateUserRequest())->replace($data);
+        $validator = Validator::make($data, $request->rules(), $request->messages());
+
+        $this->assertTrue($validator->fails());
+        $this->assertCount(1, $validator->errors());
+        $this->assertTrue($validator->errors()->has('starter_balance'));
+        $this->assertEquals(
+            [
+                'The starter balance field must be greater than 0.'
+            ],
+            $validator->errors()->get('starter_balance')
         );
     }
 }

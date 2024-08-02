@@ -13,6 +13,9 @@ return [
                 'document_number' => fake()->cpf(false),
                 'email' => 'john.doe@test.com',
                 'password' => 'defaultpassword'
+            ],
+            'wallet' => [
+                'balance' => 455.30
             ]
         ],
         [
@@ -23,6 +26,9 @@ return [
                 'document_number' => fake()->cpf(false),
                 'email' => 'jane.doe@test.com',
                 'password' => 'defaultpassword'
+            ],
+            'wallet' => [
+                'balance' => 455.30
             ]
         ],
         [
@@ -33,6 +39,9 @@ return [
                 'document_number' => fake()->cnpj(false),
                 'email' => 'pokemon.company@fake.com',
                 'password' => 'defaultpassword'
+            ],
+            'wallet' => [
+                'balance' => 1255.50
             ]
         ],
         [
@@ -43,6 +52,9 @@ return [
                 'document_number' => fake()->cnpj(false),
                 'email' => 'stark.industries@fake.com',
                 'password' => 'defaultpassword'
+            ],
+            'wallet' => [
+                'balance' => 1255.50
             ]
         ]
     ]

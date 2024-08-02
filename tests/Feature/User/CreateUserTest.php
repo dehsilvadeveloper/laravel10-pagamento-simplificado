@@ -41,7 +41,8 @@ class CreateUserTest extends TestCase
             'document_number' => fake()->cpf(false),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $response = $this->postJson(route('user.create'), $data);
@@ -63,7 +64,11 @@ class CreateUserTest extends TestCase
                     'name'
                 ],
                 'document_number',
-                'email'
+                'email',
+                'wallet' => [
+                    'id',
+                    'balance'
+                ]
             ]
         ]);
         $response->assertJson([
@@ -79,7 +84,10 @@ class CreateUserTest extends TestCase
                     'name' => DocumentTypeEnum::CPF->name(),
                 ],
                 'document_number' => $data['document_number'],
-                'email' => $data['email']
+                'email' => $data['email'],
+                'wallet' => [
+                    'balance' => $data['starter_balance']
+                ]
             ]
         ]);
     }
@@ -104,7 +112,8 @@ class CreateUserTest extends TestCase
                 'document_type_id',
                 'document_number',
                 'email',
-                'password'
+                'password',
+                'starter_balance'
             ]
         ]);
         $response->assertJson([
@@ -114,7 +123,8 @@ class CreateUserTest extends TestCase
                 'document_type_id' => ['The document type id field is required.'],
                 'document_number' => ['The document number field is required.'],
                 'email' => ['The email field is required.'],
-                'password' => ['The password field is required.']
+                'password' => ['The password field is required.'],
+                'starter_balance' => ['The starter balance field is required.']
             ]
         ]);
     }
@@ -134,7 +144,8 @@ class CreateUserTest extends TestCase
             'document_number' => fake()->cpf(false),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $response = $this->postJson(route('user.create'), $data);
@@ -178,7 +189,8 @@ class CreateUserTest extends TestCase
             'document_number' => $documentNumber,
             'name' => fake()->name(),
             'email' => $email,
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $response = $this->postJson(route('user.create'), $data);

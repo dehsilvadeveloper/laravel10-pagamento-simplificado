@@ -99,7 +99,8 @@ Authorization: Bearer {{accessToken}}
     "document_type_id": 2,
     "document_number": "06633022000",
     "email": "peter.parker@marvel.com",
-    "password": "UKyEuc2Bh0ZDKjQ"
+    "password": "UKyEuc2Bh0ZDKjQ",
+    "starter_balance": 450
 }
 
 ### Create New User (of the user type SHOPKEEPER)
@@ -115,7 +116,8 @@ Authorization: Bearer {{accessToken}}
     "document_type_id": 1,
     "document_number": "09625891000146",
     "email": "wayne.tech@dccomics.com",
-    "password": "UKyEuc2Bh0ZDKjQ"
+    "password": "UKyEuc2Bh0ZDKjQ",
+    "starter_balance": 450.20
 }
 
 ### Update User (of the user type COMMON)

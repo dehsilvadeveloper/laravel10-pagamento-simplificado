@@ -44,6 +44,8 @@ class UserController extends Controller
      * @responseField document_type.name string The type of document.
      * @responseField document_number string The number of document.
      * @responseField email string The e-mail of the user.
+     * @responseField wallet.id integer The identifier of the wallet of the user.
+     * @responseField wallet.balance float The current balance of the wallet of the user.
      * @responseField created_at string The date and time in which the user was created.
      * @responseField updated_at string The date and time in which the user was last updated.
      * 
@@ -62,6 +64,10 @@ class UserController extends Controller
      *          },
      *          "document_number": "06633022000",
      *          "email": "peter.parker@marvel.com",
+     *          "wallet": {
+     *              "id": 1,
+     *              "balance": 150.10
+     *          }
      *          "created_at": "2024-07-12 15:42:18",
      *          "updated_at": "2024-07-12 15:42:18"
      *      }
@@ -91,6 +97,9 @@ class UserController extends Controller
      *          ],
      *          "password": [
      *              "The password field is required."
+     *          ],
+     *          "starter_balance": [
+     *              "The starter balance field is required."
      *          ]
      *      }
      * }
@@ -149,6 +158,8 @@ class UserController extends Controller
      * @responseField document_type.name string The type of document.
      * @responseField document_number string The number of document.
      * @responseField email string The e-mail of the user.
+     * @responseField wallet.id integer The identifier of the wallet of the user.
+     * @responseField wallet.balance float The current balance of the wallet of the user.
      * @responseField created_at string The date and time in which the user was created.
      * @responseField updated_at string The date and time in which the user was last updated.
      * 
@@ -167,6 +178,10 @@ class UserController extends Controller
      *          },
      *          "document_number": "06633022000",
      *          "email": "peter.parker@marvel.com",
+     *          "wallet": {
+     *              "id": 1,
+     *              "balance": 150.10
+     *          }
      *          "created_at": "2024-07-12 15:42:18",
      *          "updated_at": "2024-07-12 15:42:18"
      *      }
@@ -321,6 +336,8 @@ class UserController extends Controller
      * @responseField document_type.name string The type of document.
      * @responseField document_number string The number of document.
      * @responseField email string The e-mail of the user.
+     * @responseField wallet.id integer The identifier of the wallet of the user.
+     * @responseField wallet.balance float The current balance of the wallet of the user.
      * @responseField created_at string The date and time in which the user was created.
      * @responseField updated_at string The date and time in which the user was last updated.
      * 
@@ -338,6 +355,10 @@ class UserController extends Controller
      *          },
      *          "document_number": "06633022000",
      *          "email": "peter.parker@marvel.com",
+     *          "wallet": {
+     *              "id": 1,
+     *              "balance": 150.10
+     *          }
      *          "created_at": "2024-07-12 15:42:18",
      *          "updated_at": "2024-07-12 15:42:18"
      *      }
@@ -411,6 +432,8 @@ class UserController extends Controller
      * @responseField document_type.name string The type of document.
      * @responseField document_number string The number of document.
      * @responseField email string The e-mail of the user.
+     * @responseField wallet.id integer The identifier of the wallet of the user.
+     * @responseField wallet.balance float The current balance of the wallet of the user.
      * @responseField created_at string The date and time in which the user was created.
      * @responseField updated_at string The date and time in which the user was last updated.
      *
@@ -429,6 +452,10 @@ class UserController extends Controller
      *              },
      *              "document_number": "70349142069",
      *              "email": "john.doe@test.com",
+     *              "wallet": {
+     *                  "id": 1,
+     *                  "balance": 150.10
+     *              }
      *              "created_at": "2024-07-11 15:24:09",
      *              "updated_at": "2024-07-11 17:01:20"
      *          },
@@ -445,6 +472,10 @@ class UserController extends Controller
      *              },
      *              "document_number": "04716808000120",
      *              "email": "stark.industries@fake.com",
+     *              "wallet": {
+     *                  "id": 1,
+     *                  "balance": 150.10
+     *              }
      *              "created_at": "2024-07-11 15:24:10",
      *              "updated_at": "2024-07-11 15:24:10"
      *          }

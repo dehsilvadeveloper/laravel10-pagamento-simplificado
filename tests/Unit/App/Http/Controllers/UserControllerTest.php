@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Queue;
 use App\Domain\User\Models\User;
 use App\Domain\User\Services\Interfaces\UserServiceInterface;
+use App\Domain\Wallet\Models\Wallet;
 use App\Http\Controllers\UserController;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -54,19 +55,26 @@ class UserControllerTest extends TestCase
         Queue::fake();
 
         $password = fake()->password(12);
-        $fakeRecord = User::factory()->make(['password' => $password]);
-        $fakeRecord->id = 1;
+        $starterBalance = fake()->randomFloat(2, 10, 900);
+        $fakeUserRecord = User::factory()->make(['password' => $password]);
+        $fakeUserRecord->id = 1;
+        $fakeWalletRecord = Wallet::factory()->for($fakeUserRecord)->make([
+            'balance' => $starterBalance
+        ]);
+        $fakeWalletRecord->id = 1;
+        $fakeUserRecord->setRelation('wallet', $fakeWalletRecord);
 
         $request = CreateUserRequest::create(
             route('user.create'),
             'POST',
             [
-                'user_type_id' => $fakeRecord->user_type_id,
-                'name' => $fakeRecord->name,
-                'document_type_id' => $fakeRecord->document_type_id,
-                'document_number' => $fakeRecord->document_number,
-                'email' => $fakeRecord->email,
-                'password' => $password
+                'user_type_id' => $fakeUserRecord->user_type_id,
+                'name' => $fakeUserRecord->name,
+                'document_type_id' => $fakeUserRecord->document_type_id,
+                'document_number' => $fakeUserRecord->document_number,
+                'email' => $fakeUserRecord->email,
+                'password' => $password,
+                'starter_balance' => $starterBalance
             ]
         );
         $request->setLaravelSession($this->app['session']);
@@ -77,7 +85,7 @@ class UserControllerTest extends TestCase
         $this->serviceMock
             ->shouldReceive('create')
             ->once()
-            ->andReturn($fakeRecord);
+            ->andReturn($fakeUserRecord);
 
         $response = $this->controller->create($request);
         $responseAsArray = $response->getData(true);
@@ -93,6 +101,8 @@ class UserControllerTest extends TestCase
         $this->assertArrayHasKey('name', $responseAsArray['data']['document_type']);
         $this->assertArrayHasKey('document_number', $responseAsArray['data']);
         $this->assertArrayHasKey('email', $responseAsArray['data']);
+        $this->assertArrayHasKey('id', $responseAsArray['data']['wallet']);
+        $this->assertArrayHasKey('balance', $responseAsArray['data']['wallet']);
     }
 
     /**

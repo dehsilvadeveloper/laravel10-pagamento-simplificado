@@ -24,7 +24,8 @@ class CreateUserDtoTest extends DtoTestCase
                 'document_type_id' => DocumentTypeEnum::CPF->value,
                 'document_number' => fake()->cpf(false),
                 'email' => fake()->unique()->safeEmail(),
-                'password' => fake()->password(12)
+                'password' => fake()->password(12),
+                'starter_balance' => fake()->randomFloat(2, 10, 900)
             ]
         );
     }
@@ -43,7 +44,8 @@ class CreateUserDtoTest extends DtoTestCase
                 'documentTypeId' => DocumentTypeEnum::CPF->value,
                 'documentNumber' => fake()->cpf(false),
                 'email' => fake()->unique()->safeEmail(),
-                'password' => fake()->password(12)
+                'password' => fake()->password(12),
+                'starterBalance' => fake()->randomFloat(2, 10, 900)
             ]
         );
     }
@@ -71,7 +73,8 @@ class CreateUserDtoTest extends DtoTestCase
                 'document_type_id' => 88,
                 'document_number' => fake()->cpf(false),
                 'email' => fake()->unique()->safeEmail(),
-                'password' => fake()->password(12)
+                'password' => fake()->password(12),
+                'starter_balance' => fake()->randomFloat(2, 10, 900)
             ]
         );
     }
@@ -93,7 +96,8 @@ class CreateUserDtoTest extends DtoTestCase
                     'document_type_id' => DocumentTypeEnum::CPF->value,
                     'document_number' => fake()->cpf(false),
                     'email' => fake()->unique()->safeEmail(),
-                    'password' => fake()->password(12)
+                    'password' => fake()->password(12),
+                    'starter_balance' => fake()->randomFloat(2, 10, 900)
                 ]
             )
         );
@@ -125,7 +129,8 @@ class CreateUserDtoTest extends DtoTestCase
                     'document_type_id' => 88,
                     'document_number' => fake()->cpf(false),
                     'email' => fake()->unique()->safeEmail(),
-                    'password' => fake()->password(12)
+                    'password' => fake()->password(12),
+                    'starter_balance' => fake()->randomFloat(2, 10, 900)
                 ]
             )
         );

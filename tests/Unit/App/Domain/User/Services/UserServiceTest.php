@@ -17,6 +17,11 @@ use App\Domain\User\Events\UserCreated;
 use App\Domain\User\Models\User;
 use App\Domain\User\Repositories\UserRepositoryInterface;
 use App\Domain\User\Services\UserService;
+use App\Domain\Wallet\DataTransferObjects\CreateWalletDto;
+use App\Domain\Wallet\Models\Wallet;
+use App\Domain\Wallet\Repositories\WalletRepositoryInterface;
+use Database\Seeders\DocumentTypeSeeder;
+use Database\Seeders\UserTypeSeeder;
 
 class UserServiceTest extends TestCase
 {
@@ -24,14 +29,27 @@ class UserServiceTest extends TestCase
     private $service;
 
     /** @var MockInterface */
-    private $repositoryMock;
+    private $userRepositoryMock;
+
+    /** @var MockInterface */
+    private $walletRepositoryMock;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->repositoryMock = Mockery::mock(UserRepositoryInterface::class);
-        $this->service = app(UserService::class, ['userRepository' => $this->repositoryMock]);
+        $this->seed(DocumentTypeSeeder::class);
+        $this->seed(UserTypeSeeder::class);
+
+        $this->userRepositoryMock = Mockery::mock(UserRepositoryInterface::class);
+        $this->walletRepositoryMock = Mockery::mock(WalletRepositoryInterface::class);
+        $this->service = app(
+            UserService::class, 
+            [
+                'userRepository' => $this->userRepositoryMock,
+                'walletRepository' => $this->walletRepositoryMock
+            ]
+        );
     }
 
     /**
@@ -42,35 +60,55 @@ class UserServiceTest extends TestCase
     {
         Event::fake();
 
-        $data = [
+        $userData = [
             'user_type_id' => UserTypeEnum::COMMON->value,
             'document_type_id' => DocumentTypeEnum::CPF->value,
             'document_number' => fake()->cpf(false),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
+        $userDto = CreateUserDto::from($userData);
+        $fakeUserRecord = User::factory()->make($userData);
+        $fakeUserRecord->id = 10;
 
-        $fakeRecord = User::factory()->make($data);
-        $dto = CreateUserDto::from($data);
+        $fakeWalletRecord = Wallet::factory()->for($fakeUserRecord)->make([
+            'balance' => $userData['starter_balance']
+        ]);
 
-        $this->repositoryMock
+        $fakeUserRecord->setRelation('wallet', $fakeWalletRecord);
+
+        $this->userRepositoryMock
             ->shouldReceive('create')
             ->once()
-            ->with($dto)
-            ->andReturn($fakeRecord);
+            ->with($userDto)
+            ->andReturn($fakeUserRecord);
 
-        $createdRecord = $this->service->create($dto);
+        $this->walletRepositoryMock->shouldReceive('create')
+            ->once()
+            ->with(
+                // Para evitar problemas com identidade de objeto, "mockamos" o DTO dentro do with()
+                // Caso contrário um DTO gerado pelo teste unitário 
+                // e o DTO gerado dentro do service não serão considerados idênticos
+                Mockery::on(function ($arg) {
+                    return $arg instanceof CreateWalletDto;
+                })
+            )
+            ->andReturn($fakeWalletRecord);
+
+        $createdRecord = $this->service->create($userDto);
 
         Event::assertDispatched(UserCreated::class);
 
         $this->assertInstanceOf(User::class, $createdRecord);
-        $this->assertEquals($fakeRecord->user_type_id, $createdRecord->user_type_id);
-        $this->assertEquals($fakeRecord->name, $createdRecord->name);
-        $this->assertEquals($fakeRecord->document_type_id, $createdRecord->document_type_id);
-        $this->assertEquals($fakeRecord->document_number, $createdRecord->document_number);
-        $this->assertEquals($fakeRecord->email, $createdRecord->email);
-        $this->assertEquals($fakeRecord->password, $createdRecord->password);
+        $this->assertEquals($fakeUserRecord->user_type_id, $createdRecord->user_type_id);
+        $this->assertEquals($fakeUserRecord->name, $createdRecord->name);
+        $this->assertEquals($fakeUserRecord->document_type_id, $createdRecord->document_type_id);
+        $this->assertEquals($fakeUserRecord->document_number, $createdRecord->document_number);
+        $this->assertEquals($fakeUserRecord->email, $createdRecord->email);
+        $this->assertEquals($fakeUserRecord->password, $createdRecord->password);
+        $this->assertEquals($fakeWalletRecord->balance, $createdRecord->wallet->balance);
     }
 
     /**
@@ -89,7 +127,8 @@ class UserServiceTest extends TestCase
                 'document_number' => fake()->cpf(false),
                 'name' => fake()->name(),
                 'email' => fake()->unique()->safeEmail(),
-                'password' => fake()->password(12)
+                'password' => fake()->password(12),
+                'starter_balance' => fake()->randomFloat(2, 10, 900)
             ]
         );
 
@@ -102,7 +141,7 @@ class UserServiceTest extends TestCase
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('create')
             ->once()
             ->with($dto)
@@ -138,7 +177,7 @@ class UserServiceTest extends TestCase
         $fakeUpdatedRecord->name = $dto->name;
         $fakeUpdatedRecord->email = $dto->email;
 
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('update')
             ->once()
             ->with($fakeRecord->id, $dto)
@@ -191,7 +230,7 @@ class UserServiceTest extends TestCase
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('update')
             ->once()
             ->with($existingRecord->id, $dto)
@@ -216,7 +255,7 @@ class UserServiceTest extends TestCase
         ]);
         $existingRecord->id = 1;
 
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('deleteById')
             ->once()
             ->with($existingRecord->id)
@@ -255,7 +294,7 @@ class UserServiceTest extends TestCase
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('deleteById')
             ->once()
             ->with($existingRecord->id)
@@ -273,7 +312,7 @@ class UserServiceTest extends TestCase
         $fakeRecord = User::factory()->make();
         $fakeRecord->id = 1;
 
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('firstById')
             ->once()
             ->with($fakeRecord->id, ['*'])
@@ -308,7 +347,7 @@ class UserServiceTest extends TestCase
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('firstById')
             ->once()
             ->andThrows(new Exception('Houston, we have a problem.'));
@@ -325,7 +364,7 @@ class UserServiceTest extends TestCase
         $fakeRecord = User::factory()->make();
         $fakeRecord->id = 1;
 
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('firstByField')
             ->once()
             ->with('email', $fakeRecord->email, ['*'])
@@ -360,7 +399,7 @@ class UserServiceTest extends TestCase
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('firstByField')
             ->once()
             ->andThrows(new Exception('Houston, we have a problem.'));
@@ -377,7 +416,7 @@ class UserServiceTest extends TestCase
         $recordsCount = 3;
         $fakeRecords = User::factory()->count($recordsCount)->make();
 
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('getAll')
             ->once()
             ->andReturn($fakeRecords);
@@ -402,7 +441,7 @@ class UserServiceTest extends TestCase
      */
     public function test_can_get_empty_list_of_records(): void
     {
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('getAll')
             ->once()
             ->andReturn(new Collection());
@@ -428,7 +467,7 @@ class UserServiceTest extends TestCase
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 
-        $this->repositoryMock
+        $this->userRepositoryMock
             ->shouldReceive('getAll')
             ->once()
             ->andThrows(new Exception('Houston, we have a problem.'));
