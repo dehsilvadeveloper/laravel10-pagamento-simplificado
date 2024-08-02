@@ -6,6 +6,8 @@
 [![Docker][docker-shield]][ref-docker]
 [![Git][git-shield]][ref-git]
 [![Redis][redis-shield]][ref-redis]
+[![Markdown][markdown-shield]][ref-markdown]
+[![Env][env-shield]][ref-env]
 
 # Desafio Pagamento Simplificado (Versão Laravel 10)
 
@@ -106,6 +108,8 @@ Lembre-se de respeitar as regras de negócio do desafio.
 [docker-shield]: https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white
 [git-shield]: https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white
 [redis-shield]: https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white
+[markdown-shield]: https://img.shields.io/badge/Markdown-000?style=for-the-badge&logo=markdown
+[env-shield]: https://img.shields.io/badge/.ENV-ECD53F?logo=dotenv&logoColor=000&style=for-the-badge
 
 <!-- References -->
 [ref-laravel]: https://laravel.com/docs/10.x/readme
@@ -116,3 +120,5 @@ Lembre-se de respeitar as regras de negócio do desafio.
 [ref-docker]: https://www.docker.com
 [ref-git]: https://git-scm.com
 [ref-redis]: https://redis.io/docs/latest/develop/data-types/
+[ref-markdown]: https://www.markdownguide.org/getting-started/
+[ref-env]: https://medium.com/@sujathamudadla1213/what-is-the-use-of-env-8d6b3eb94843
