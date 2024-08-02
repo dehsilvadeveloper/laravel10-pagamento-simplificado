@@ -39,6 +39,8 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{accessToken}}
 ```
 
+Atrelado a entidade `users` nós temos a entidade `wallets`, que são as carteiras que armazenam os valores monetários disponíveis para cada usuário. São estes valores que são utilizados nas transferências. Nesta aplicação um usuário pode possuir apenas uma carteira.
+
 ### Segurança
 
 Com relação a segurança da API, foi utilizada uma proteção das rotas com a exigência de envio de um token de acesso no cabeçalho das requisições. A aplicação fornece um usuário padrão para uso e uma rota para geração de tokens. Detalhes sobre esta rota podem ser obtidos na *documentação da API*.
