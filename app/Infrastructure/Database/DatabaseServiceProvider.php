@@ -15,6 +15,8 @@ use App\Infrastructure\Database\Eloquent\UserRepositoryEloquent;
 use App\Domain\User\Repositories\UserRepositoryInterface;
 use App\Infrastructure\Database\Eloquent\NotificationRepositoryEloquent;
 use App\Domain\Notification\Repositories\NotificationRepositoryInterface;
+use App\Infrastructure\Database\Eloquent\WalletRepositoryEloquent;
+use App\Domain\Wallet\Repositories\WalletRepositoryInterface;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
@@ -30,6 +32,7 @@ class DatabaseServiceProvider extends ServiceProvider
         $this->bindDocumentTypeRepositoryClasses();
         $this->bindUserRepositoryClasses();
         $this->bindNotificationRepositoryClasses();
+        $this->bindWalletRepositoryClasses();
     }
 
     /**
@@ -90,5 +93,15 @@ class DatabaseServiceProvider extends ServiceProvider
     private function bindNotificationRepositoryClasses(): void
     {
         $this->app->bind(NotificationRepositoryInterface::class, NotificationRepositoryEloquent::class);
+    }
+
+    /**
+     * Bind repository classes for domain Wallet
+     *
+     * @return void
+     */
+    private function bindWalletRepositoryClasses(): void
+    {
+        $this->app->bind(WalletRepositoryInterface::class, WalletRepositoryEloquent::class);
     }
 }

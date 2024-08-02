@@ -13,12 +13,15 @@ use App\Domain\User\Exceptions\UserNotFoundException;
 use App\Domain\User\Models\User;
 use App\Domain\User\Services\Interfaces\UserServiceInterface;
 use App\Domain\User\Repositories\UserRepositoryInterface;
+use App\Domain\Wallet\DataTransferObjects\CreateWalletDto;
+use App\Domain\Wallet\Repositories\WalletRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserService implements UserServiceInterface
 {
     public function __construct(
-        private UserRepositoryInterface $userRepository
+        private UserRepositoryInterface $userRepository,
+        private WalletRepositoryInterface $walletRepository
     ) {
     }
 
@@ -27,7 +30,17 @@ class UserService implements UserServiceInterface
         DB::beginTransaction();
 
         try {
+            $starterBalance = $userDto->starterBalance;
+            unset($userDto->starterBalance);
+
             $user = $this->userRepository->create($userDto);
+
+            $this->walletRepository->create(
+                CreateWalletDto::from([
+                    'user_id' => $user->id,
+                    'balance' => $starterBalance
+                ]
+            ));
 
             DB::commit();
 

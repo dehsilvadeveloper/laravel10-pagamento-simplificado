@@ -23,5 +23,7 @@ class UserSeederTest extends TestCase
             unset($data['user']['password']);
             $this->assertDatabaseHas('users', $data['user']);
         }
+
+        $this->assertDatabaseCount('wallets', count(config('users.default')));
     }
 }

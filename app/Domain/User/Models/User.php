@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Database\Factories\UserFactory;
 use App\Domain\DocumentType\Models\DocumentType;
 use App\Domain\Notification\Models\Notification;
+use App\Domain\Wallet\Models\Wallet;
 
 class User extends Model
 {
@@ -77,5 +79,10 @@ class User extends Model
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class, 'recipient_id');
+    }
+
+    public function wallet(): HasOne
+    {
+        return $this->hasOne(Wallet::class);
     }
 }

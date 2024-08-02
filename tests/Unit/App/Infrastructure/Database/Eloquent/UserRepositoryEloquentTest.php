@@ -52,7 +52,8 @@ class UserRepositoryEloquentTest extends TestCase
             'document_number' => fake()->cpf(false),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $createdRecord = $this->repository->create(
@@ -60,7 +61,7 @@ class UserRepositoryEloquentTest extends TestCase
         );
 
         $this->assertInstanceOf(User::class, $createdRecord);
-        $this->assertDatabaseHas('users', Arr::except($data, ['password']));
+        $this->assertDatabaseHas('users', Arr::except($data, ['password', 'starter_balance']));
         $this->assertTrue(Hash::check($data['password'], $createdRecord->password));
     }
 
@@ -93,7 +94,8 @@ class UserRepositoryEloquentTest extends TestCase
             'document_number' => fake()->cpf(false),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => fake()->password(12)
+            'password' => fake()->password(12),
+            'starter_balance' => fake()->randomFloat(2, 10, 900)
         ];
 
         $this->repository->create(CreateUserDto::from($data));

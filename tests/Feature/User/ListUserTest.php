@@ -7,6 +7,7 @@ use Laravel\Sanctum\Sanctum;
 use Illuminate\Http\Response;
 use App\Domain\ApiUser\Models\ApiUser;
 use App\Domain\User\Models\User;
+use App\Domain\Wallet\Models\Wallet;
 use Database\Seeders\DocumentTypeSeeder;
 use Database\Seeders\UserTypeSeeder;
 
@@ -30,7 +31,13 @@ class ListUserTest extends TestCase
         Sanctum::actingAs($apiUser, ['*']);
 
         $recordsCount = 3;
-        User::factory()->count($recordsCount)->create();
+
+        User::factory()
+            ->count($recordsCount)
+            ->create()
+            ->each(function(User $user) {
+                Wallet::factory()->create(['user_id' => $user->id]);
+            });
 
         $response = $this->getJson(route('user.index'));
 
@@ -49,7 +56,11 @@ class ListUserTest extends TestCase
                         'name'
                     ],
                     'document_number',
-                    'email'
+                    'email',
+                    'wallet' => [
+                        'id',
+                        'balance'
+                    ]
                 ]
             ]
         ]);
