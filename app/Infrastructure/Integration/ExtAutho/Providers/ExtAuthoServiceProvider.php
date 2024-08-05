@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Domain\DocumentType\Providers;
+namespace App\Infrastructure\Integration\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Domain\DocumentType\Services\DocumentTypeService;
-use App\Domain\DocumentType\Services\Interfaces\DocumentTypeServiceInterface;
+use App\Infrastructure\Integration\ExtAutho\Services\ExtAuthoRequestService;
+use App\Infrastructure\Integration\ExtAutho\Services\Interfaces\ExtAuthoRequestServiceInterface;
 
-class DocumentTypeServiceProvider extends ServiceProvider
+class ExtAuthoServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -28,12 +28,12 @@ class DocumentTypeServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bind service classes for domain DocumentType
+     * Bind service classes
      *
      * @return void
      */
     private function bindServiceClasses(): void
     {
-        $this->app->bind(DocumentTypeServiceInterface::class, DocumentTypeService::class);
+        $this->app->bind(ExtAuthoRequestServiceInterface::class, ExtAuthoRequestService::class);
     }
 }

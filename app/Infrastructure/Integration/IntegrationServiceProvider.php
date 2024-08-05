@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Integration;
 
 use Illuminate\Support\ServiceProvider;
+use App\Infrastructure\Integration\Providers\ExtAuthoServiceProvider;
 
 class IntegrationServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class IntegrationServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Register your nested service providers here
+        $this->app->register(ExtAuthoServiceProvider::class);
     }
 
     /**
