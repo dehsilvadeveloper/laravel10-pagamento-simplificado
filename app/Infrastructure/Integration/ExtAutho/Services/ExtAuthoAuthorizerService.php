@@ -16,7 +16,7 @@ class ExtAuthoAuthorizerService
     {
         $response = $this->extAuthoRequestService->sendRequest(
             new HttpRequestObject(
-                endpoint: 'https://example.com/api/authorize',
+                endpoint: config('external_authorizer.urls.authorize'),
                 method: HttpMethodEnum::POST,
                 body: [],
                 headers: [
