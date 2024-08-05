@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Integration;
 
 use Illuminate\Support\ServiceProvider;
-use App\Infrastructure\Integration\Providers\ExtAuthoServiceProvider;
+use App\Infrastructure\Integration\ExtAutho\Providers\ExtAuthoServiceProvider;
 
 class IntegrationServiceProvider extends ServiceProvider
 {

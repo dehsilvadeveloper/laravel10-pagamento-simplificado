@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Integration\Providers;
+namespace App\Infrastructure\Integration\ExtAutho\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Infrastructure\Integration\ExtAutho\Services\ExtAuthoRequestService;
