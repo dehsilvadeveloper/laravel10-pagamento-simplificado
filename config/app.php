@@ -176,6 +176,7 @@ return [
          */
         App\Infrastructure\Database\DatabaseServiceProvider::class,
         App\Domain\DomainServiceProvider::class,
+        App\Infrastructure\Integration\IntegrationServiceProvider::class,
     ])->toArray(),
 
     /*
