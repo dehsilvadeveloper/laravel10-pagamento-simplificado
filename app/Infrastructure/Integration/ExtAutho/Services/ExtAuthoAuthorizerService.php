@@ -11,9 +11,10 @@ use App\Domain\Common\Exceptions\EmptyRequestException;
 use App\Domain\Common\Exceptions\EmptyResponseException;
 use App\Domain\Common\ValueObjects\HttpRequestObject;
 use App\Domain\TransferAuthorization\DataTransferObjects\AuthorizeTransferDto;
+use App\Domain\TransferAuthorization\Services\Interfaces\TransferAuthorizerServiceInterface;
 use App\Infrastructure\Integration\ExtAutho\Services\Interfaces\ExtAuthoRequestServiceInterface;
 
-class ExtAuthoAuthorizerService
+class ExtAuthoAuthorizerService implements TransferAuthorizerServiceInterface
 {
     public function __construct(private ExtAuthoRequestServiceInterface $extAuthoRequestService)
     {

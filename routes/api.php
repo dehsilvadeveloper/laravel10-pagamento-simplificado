@@ -84,9 +84,9 @@ Route::get('/test-authorizer', function () {
     ]);
 
     /**
-     * @var \App\Infrastructure\Integration\ExtAutho\Services\ExtAuthoAuthorizerService
+     * @var \App\Domain\TransferAuthorization\Services\Interfaces\TransferAuthorizerServiceInterface
      */
-    $service = app(\App\Infrastructure\Integration\ExtAutho\Services\ExtAuthoAuthorizerService::class);
+    $service = app(\App\Domain\TransferAuthorization\Services\Interfaces\TransferAuthorizerServiceInterface::class);
     $result = $service->authorize($dto);
 
     print 'Here is the result: <br><br>';
