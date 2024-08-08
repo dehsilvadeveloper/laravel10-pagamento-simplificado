@@ -70,3 +70,26 @@ Route::prefix('/previews/mailables')->name('previews.mailables')->group(function
 | Mock Routes
 |-------------------------------------------
 */
+
+// Temporary route
+Route::get('/test-authorizer', function () {
+    /**
+     * @var \App\Domain\TransferAuthorization\DataTransferObjects\AuthorizeTransferDto
+     */
+    $dto = \App\Domain\TransferAuthorization\DataTransferObjects\AuthorizeTransferDto::from([
+        'transfer_id' => 1,
+        'payer_id' => 5,
+        'payee_id' => 6,
+        'amount' => 25.50
+    ]);
+
+    /**
+     * @var \App\Infrastructure\Integration\ExtAutho\Services\ExtAuthoAuthorizerService
+     */
+    $service = app(\App\Infrastructure\Integration\ExtAutho\Services\ExtAuthoAuthorizerService::class);
+    $result = $service->authorize($dto);
+
+    print 'Here is the result: <br><br>';
+    print '<pre>';
+    dd($result);
+});

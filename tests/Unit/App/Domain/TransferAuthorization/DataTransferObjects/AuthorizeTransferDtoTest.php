@@ -17,6 +17,7 @@ class AuthorizeTransferDtoTest extends DtoTestCase
         $this->runCreationFromSnakecaseArrayAssertions(
             AuthorizeTransferDto::class,
             [
+                'transfer_id' => 1,
                 'payer_id' => 5,
                 'payee_id' => 6,
                 'amount' => 25.50
@@ -33,6 +34,7 @@ class AuthorizeTransferDtoTest extends DtoTestCase
         $this->runCreationFromCamelcaseArrayAssertions(
             AuthorizeTransferDto::class,
             [
+                'transferId' => 1,
                 'payerId' => 5,
                 'payeeId' => 6,
                 'amount' => 25.50
@@ -61,6 +63,7 @@ class AuthorizeTransferDtoTest extends DtoTestCase
                 '/dummy',
                 'POST',
                 [
+                    'transfer_id' => 1,
                     'payer_id' => 5,
                     'payee_id' => 6,
                     'amount' => 25.50
@@ -90,6 +93,7 @@ class AuthorizeTransferDtoTest extends DtoTestCase
                 '/dummy',
                 'POST',
                 [
+                    'transfer_id' => 1,
                     'payer_id' => 'abc',
                     'payee_id' => 'xyz',
                     'amount' => 25.50

@@ -26,18 +26,6 @@ Tabela com os tipos de documentos possíveis para os usuários (cpf, cnpj).
 | created_at | datetime | não | Data e hora da criação do tipo de documento |
 | updated_at | datetime | sim | Data e hora da última atualização do tipo de documento |
 
-#### Tabela: external_authorization_responses
-
-Tabela com respostas recebidas por serviço de autorização externo antecedendo processamento de transferência.
-
-| Campo | Tipo | Nullable | Descrição |
-|-|-|-|-|  
-| id | integer | não | Chave primária | 
-| transfer_id | integer | não | ID da transferência |
-| response | json | não | Objeto JSON retornado como resposta do autorizador |
-| created_at | datetime | não | Data e hora da criação da resposta recebida |
-| updated_at | datetime | sim | Data e hora da última atualização da resposta recebida |
-
 #### Tabela: notifications 
 
 Tabela com as notificações disparadas pela aplicação.
@@ -65,26 +53,28 @@ Tabela com informações das transferências realizadas na aplicação.
 | transfer_status_id | integer | não | ID do tipo de status da transferencia |
 | created_at | datetime | não | Data e hora da criação da transferência |
 | updated_at | datetime | sim | Data e hora da última atualização da transferência |
-
-#### Tabela: transfer_status_histories
-
-Tabela com as mudanças de status de uma transferência dentro do ciclo de vida da mesma na aplicação.
-
-| Campo | Tipo | Nullable | Descrição |
-|-|-|-|-|  
-| id | integer | não | Chave primária |
-| transfer_id | integer | não | ID da transferencia |
-| transfer_status_id | integer | não | ID do tipo de status da transferencia |
-| changed_at | datetime | não | Data e hora da da mudança de status da transferência |
+| authorized_at | datetime | sim | Data e hora em que a transferência foi autorizada |
 
 #### Tabela: transfer_statuses
 
-Tabela com os statuses possíveis para as transferências (pendente, autorizado, concluído, erro).
+Tabela com os statuses possíveis para as transferências (pendente, concluído, não autorizado, erro).
 
 | Campo | Tipo | Nullable | Descrição |
 |-|-|-|-|  
 | id | integer | não | Chave primária | 
 | name | varchar(50) | não | Nome do status de transferência |
+
+#### Tabela: transfer_authorization_responses
+
+Tabela com respostas recebidas por serviço de autorização externo antecedendo concretização de transferência.
+
+| Campo | Tipo | Nullable | Descrição |
+|-|-|-|-|  
+| id | integer | não | Chave primária | 
+| transfer_id | integer | não | ID da transferência |
+| response | json | não | Objeto JSON retornado como resposta do autorizador |
+| created_at | datetime | não | Data e hora da criação da resposta recebida |
+| updated_at | datetime | sim | Data e hora da última atualização da resposta recebida |
 
 #### Tabela: users
 

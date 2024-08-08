@@ -165,3 +165,13 @@ GET {{baseUrl}}/users/1
 Accept: {{accept}}
 Content-Type: {{contentType}}
 Authorization: Bearer {{accessToken}}
+
+########################################
+#
+#  EXTERNAL AUTHORIZATION
+#
+########################################
+
+### Authorize (with third party service)
+
+GET https://util.devi.tools/api/v2/authorize
