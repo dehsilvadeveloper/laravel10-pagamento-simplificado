@@ -3,8 +3,8 @@
 namespace App\Infrastructure\Integration\ExtAutho\Services;
 
 use Throwable;
-use Illuminate\Http\Response;
 use Illuminate\Http\Client\Response as ClientResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use App\Domain\Common\Enums\HttpMethodEnum;
 use App\Domain\Common\Exceptions\EmptyRequestException;
