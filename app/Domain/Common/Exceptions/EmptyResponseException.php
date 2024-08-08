@@ -5,10 +5,10 @@ namespace App\Domain\Common\Exceptions;
 use Exception;
 use Illuminate\Http\Response;
 
-class EmptyRequestException extends Exception
+class EmptyResponseException extends Exception
 {
-    protected $message = 'You cannot process a resource without provide data.';
-    protected $code = Response::HTTP_UNPROCESSABLE_ENTITY;
+    protected $message = 'The body of the response returned is empty.';
+    protected $code = Response::HTTP_NO_CONTENT;
 
     public function __construct(?string $message = null, ?int $code = null)
     {
