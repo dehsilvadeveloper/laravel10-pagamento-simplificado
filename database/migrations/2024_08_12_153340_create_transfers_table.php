@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('amount', 10, 2)->default(0);
             $table->unsignedBigInteger('transfer_status_id');
             $table->timestamps();
+            $table->timestamp('authorized_at')->nullable();
 
             $table->foreign('payer_id')
                   ->references('id')
