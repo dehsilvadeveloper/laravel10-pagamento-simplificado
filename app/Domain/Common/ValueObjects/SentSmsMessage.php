@@ -2,7 +2,7 @@
 
 namespace App\Domain\Common\ValueObjects;
 
-class SentSmsMessage
+class SentSmsMessageObject
 {
     public function __construct(
         private string $phoneNumber,
