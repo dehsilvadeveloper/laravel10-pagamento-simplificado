@@ -2,12 +2,12 @@
 
 namespace App\Domain\Transfer\Models;
 
-//use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-//use Database\Factories\TransferFactory;
+use Database\Factories\TransferFactory;
 use App\Domain\Transfer\Models\TransferStatus;
 use App\Domain\TransferAuthorization\Models\TransferAuthorizationResponse;
 
@@ -45,10 +45,10 @@ class Transfer extends Model
     /**
      * Create a new factory instance for the model.
      */
-    /*protected static function newFactory(): Factory
+    protected static function newFactory(): Factory
     {
         return TransferFactory::new();
-    }*/
+    }
 
     public function status(): BelongsTo
     {

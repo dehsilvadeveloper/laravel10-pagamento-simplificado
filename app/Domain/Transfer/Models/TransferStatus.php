@@ -2,11 +2,11 @@
 
 namespace App\Domain\Transfer\Models;
 
-//use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-//use Database\Factories\TransferStatusFactory;
+use Database\Factories\TransferStatusFactory;
 
 class TransferStatus extends Model
 {
@@ -28,10 +28,10 @@ class TransferStatus extends Model
     /**
      * Create a new factory instance for the model.
      */
-    /*protected static function newFactory(): Factory
+    protected static function newFactory(): Factory
     {
         return TransferStatusFactory::new();
-    }*/
+    }
 
     public function transfers(): HasMany
     {
