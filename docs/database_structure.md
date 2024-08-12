@@ -49,7 +49,7 @@ Tabela com informações das transferências realizadas na aplicação.
 | id | integer | não | Chave primária |
 | payer_id | integer | não | ID de usuário de quem enviou o dinheiro |
 | payee_id | integer | não | ID de usuário de quem recebeu o dinheiro |
-| amount | decimal(12,2) | não | Valor transferido |
+| amount | decimal(10,2) | não | Valor transferido |
 | transfer_status_id | integer | não | ID do tipo de status da transferencia |
 | created_at | datetime | não | Data e hora da criação da transferência |
 | updated_at | datetime | sim | Data e hora da última atualização da transferência |
@@ -112,4 +112,4 @@ Tabela com informações das carteiras dos usuários.
 |-|-|-|-|  
 | id | integer | não | Chave primária | 
 | user_id | integer | não | ID do usuário a quem pertence a carteira |
-| balance | decimal(12,2) | não | Saldo atual da carteira |
+| balance | decimal(10,2) | não | Saldo atual da carteira |
