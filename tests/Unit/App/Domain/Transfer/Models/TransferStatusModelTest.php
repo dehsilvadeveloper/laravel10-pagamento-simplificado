@@ -1,27 +1,27 @@
 <?php
 
-namespace Tests\Unit\App\Domain\Wallet\Models;
+namespace Tests\Unit\App\Domain\Transfer\Models;
 
 use Tests\ModelTestCase;
 use Tests\TestHelpers\DataTransferObjects\ModelConfigurationAssertionParamsDto;
-use App\Domain\Wallet\Models\Wallet;
+use App\Domain\Transfer\Models\TransferStatus;
 
-class WalletModelTest extends ModelTestCase
+class TransferStatusModelTest extends ModelTestCase
 {
     /**
      * @group models
-     * @group wallet
+     * @group transfer
      */
     public function test_has_valid_configuration(): void
     {
         $dto = ModelConfigurationAssertionParamsDto::from([
-            'model' => new Wallet(),
-            'fillable' => ['user_id', 'balance'],
+            'model' => new TransferStatus(),
+            'fillable' => ['name'],
             'casts' => [
                 'id' => 'int'
             ],
             'dates' => [],
-            'table' => 'wallets'
+            'table' => 'transfer_statuses'
         ]);
 
         $this->runConfigurationAssertions($dto);

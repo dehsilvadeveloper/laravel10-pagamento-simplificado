@@ -17,7 +17,6 @@ class UserTypeModelTest extends ModelTestCase
         $dto = ModelConfigurationAssertionParamsDto::from([
             'model' => new UserType(),
             'fillable' => ['name'],
-            'hidden' => [],
             'casts' => [
                 'id' => 'int'
             ],
