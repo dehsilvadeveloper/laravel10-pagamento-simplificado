@@ -3,20 +3,22 @@
 namespace App\Infrastructure\Database\Eloquent\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Infrastructure\Database\Eloquent\BaseRepositoryEloquent;
-use App\Infrastructure\Database\Eloquent\Interfaces\RepositoryEloquentInterface;
-use App\Infrastructure\Database\Eloquent\ApiUserRepositoryEloquent;
 use App\Domain\ApiUser\Repositories\ApiUserRepositoryInterface;
-use App\Infrastructure\Database\Eloquent\DocumentTypeRepositoryEloquent;
 use App\Domain\DocumentType\Repositories\DocumentTypeRepositoryInterface;
-use App\Infrastructure\Database\Eloquent\UserTypeRepositoryEloquent;
-use App\Domain\User\Repositories\UserTypeRepositoryInterface;
-use App\Infrastructure\Database\Eloquent\UserRepositoryEloquent;
-use App\Domain\User\Repositories\UserRepositoryInterface;
-use App\Infrastructure\Database\Eloquent\NotificationRepositoryEloquent;
 use App\Domain\Notification\Repositories\NotificationRepositoryInterface;
-use App\Infrastructure\Database\Eloquent\WalletRepositoryEloquent;
+use App\Domain\TransferAuthorization\Repositories\TransferAuthorizationResponseRepositoryInterface;
+use App\Domain\User\Repositories\UserRepositoryInterface;
+use App\Domain\User\Repositories\UserTypeRepositoryInterface;
 use App\Domain\Wallet\Repositories\WalletRepositoryInterface;
+use App\Infrastructure\Database\Eloquent\ApiUserRepositoryEloquent;
+use App\Infrastructure\Database\Eloquent\BaseRepositoryEloquent;
+use App\Infrastructure\Database\Eloquent\DocumentTypeRepositoryEloquent;
+use App\Infrastructure\Database\Eloquent\NotificationRepositoryEloquent;
+use App\Infrastructure\Database\Eloquent\TransferAuthorizationResponseRepositoryEloquent;
+use App\Infrastructure\Database\Eloquent\UserRepositoryEloquent;
+use App\Infrastructure\Database\Eloquent\UserTypeRepositoryEloquent;
+use App\Infrastructure\Database\Eloquent\WalletRepositoryEloquent;
+use App\Infrastructure\Database\Eloquent\Interfaces\RepositoryEloquentInterface;
 
 class EloquentServiceProvider extends ServiceProvider
 {
@@ -33,6 +35,7 @@ class EloquentServiceProvider extends ServiceProvider
         $this->bindUserRepositoryClasses();
         $this->bindNotificationRepositoryClasses();
         $this->bindWalletRepositoryClasses();
+        $this->bindTransferAuthorizationRepositoryClasses();
     }
 
     /**
@@ -103,5 +106,15 @@ class EloquentServiceProvider extends ServiceProvider
     private function bindWalletRepositoryClasses(): void
     {
         $this->app->bind(WalletRepositoryInterface::class, WalletRepositoryEloquent::class);
+    }
+
+    /**
+     * Bind repository classes for domain TransferAuthorization
+     *
+     * @return void
+     */
+    private function bindTransferAuthorizationRepositoryClasses(): void
+    {
+        $this->app->bind(TransferAuthorizationResponseRepositoryInterface::class, TransferAuthorizationResponseRepositoryEloquent::class);
     }
 }
