@@ -73,11 +73,13 @@ Route::prefix('/previews/mailables')->name('previews.mailables')->group(function
 
 // Temporary route
 Route::get('/test-authorizer', function () {
+    $transfer = \App\Domain\Transfer\Models\Transfer::factory()->create();
+
     /**
      * @var \App\Domain\TransferAuthorization\DataTransferObjects\AuthorizeTransferDto
      */
     $dto = \App\Domain\TransferAuthorization\DataTransferObjects\AuthorizeTransferDto::from([
-        'transfer_id' => 1,
+        'transfer_id' => $transfer->id,
         'payer_id' => 5,
         'payee_id' => 6,
         'amount' => 25.50

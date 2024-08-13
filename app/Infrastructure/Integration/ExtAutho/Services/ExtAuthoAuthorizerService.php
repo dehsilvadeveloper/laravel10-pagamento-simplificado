@@ -11,13 +11,17 @@ use App\Domain\Common\Exceptions\EmptyRequestException;
 use App\Domain\Common\Exceptions\EmptyResponseException;
 use App\Domain\Common\ValueObjects\HttpRequestObject;
 use App\Domain\TransferAuthorization\DataTransferObjects\AuthorizeTransferDto;
+use App\Domain\TransferAuthorization\DataTransferObjects\CreateTransferAuthorizationResponseDto;
+use App\Domain\TransferAuthorization\Repositories\TransferAuthorizationResponseRepositoryInterface;
 use App\Domain\TransferAuthorization\Services\Interfaces\TransferAuthorizerServiceInterface;
 use App\Infrastructure\Integration\ExtAutho\Services\Interfaces\ExtAuthoRequestServiceInterface;
 
 class ExtAuthoAuthorizerService implements TransferAuthorizerServiceInterface
 {
-    public function __construct(private ExtAuthoRequestServiceInterface $extAuthoRequestService)
-    {
+    public function __construct(
+        private ExtAuthoRequestServiceInterface $extAuthoRequestService,
+        private TransferAuthorizationResponseRepositoryInterface $transferAuthorizationResponseRepository
+    ) {
     }
 
     public function authorize(AuthorizeTransferDto $dto): bool
@@ -67,7 +71,12 @@ class ExtAuthoAuthorizerService implements TransferAuthorizerServiceInterface
 
     private function saveAuthorizationResponseOnDatabase(int $transferId, array $response): void
     {
-        // TODO: Inserir registro na tabela "external_authorization_responses" do banco de dados
+        $this->transferAuthorizationResponseRepository->create(
+            CreateTransferAuthorizationResponseDto::from([
+                'transfer_id' => $transferId,
+                'response' => json_encode($response)
+            ])
+        );
     }
 
     private function handleResponse(ClientResponse $response): bool
