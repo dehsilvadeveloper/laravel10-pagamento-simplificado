@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Database\Factories\TransferFactory;
 use App\Domain\Transfer\Models\TransferStatus;
 use App\Domain\TransferAuthorization\Models\TransferAuthorizationResponse;
+use Database\Factories\TransferFactory;
 
 class Transfer extends Model
 {
