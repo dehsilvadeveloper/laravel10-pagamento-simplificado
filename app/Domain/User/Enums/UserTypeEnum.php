@@ -11,7 +11,7 @@ enum UserTypeEnum: int
     {
         return match($this) {
             self::COMMON => config('user_types.default.0.name'),
-            self::SHOPKEEPER =>config('user_types.default.1.name'),
+            self::SHOPKEEPER => config('user_types.default.1.name')
         };
     }
 }
