@@ -96,13 +96,13 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-endpoints" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="endpoints">
-                    <a href="#endpoints">Endpoints</a>
+                    <ul id="tocify-header-mock-external-authorizer" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="mock-external-authorizer">
+                    <a href="#mock-external-authorizer">Mock External Authorizer</a>
                 </li>
-                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-mailables-previews-user-welcome">
-                                <a href="#endpoints-GETapi-mailables-previews-user-welcome">GET api/mailables-previews/user/welcome</a>
+                                    <ul id="tocify-subheader-mock-external-authorizer" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="mock-external-authorizer-GETapi-mocks-external-authorization-authorize">
+                                <a href="#mock-external-authorizer-GETapi-mocks-external-authorization-authorize">Simulate authorization</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -148,7 +148,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: August 1, 2024</li>
+        <li>Last updated: August 15, 2024</li>
     </ul>
 </div>
 
@@ -889,7 +889,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/13" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -897,7 +897,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/13';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16';
 $response = $client-&gt;get(
     $url,
     [
@@ -914,7 +914,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/13"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16"
 );
 
 const headers = {
@@ -933,7 +933,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/13'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -1073,10 +1073,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-document-types--id-"
-               value="13"
+               value="16"
                data-component="url">
     <br>
-<p>The identifier of the document type. Example: <code>13</code></p>
+<p>The identifier of the document type. Example: <code>16</code></p>
             </div>
                     </form>
 
@@ -1096,31 +1096,31 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <br>
 <p>The name of the document type.</p>
         </div>
-                    <h1 id="endpoints">Endpoints</h1>
+                    <h1 id="mock-external-authorizer">Mock External Authorizer</h1>
 
-    
+    <p>Endpoints for simulations related to external authorization of transfers</p>
 
-                                <h2 id="endpoints-GETapi-mailables-previews-user-welcome">GET api/mailables-previews/user/welcome</h2>
+                                <h2 id="mock-external-authorizer-GETapi-mocks-external-authorization-authorize">Simulate authorization</h2>
 
 <p>
 </p>
 
+<p>This endpoint simulates the possible responses for the external authorizer ExtAutho.</p>
 
-
-<span id="example-requests-GETapi-mailables-previews-user-welcome">
+<span id="example-requests-GETapi-mocks-external-authorization-authorize">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/mailables-previews/user/welcome" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/mocks/external-authorization/authorize" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/mailables-previews/user/welcome';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/mocks/external-authorization/authorize';
 $response = $client-&gt;get(
     $url,
     [
@@ -1136,7 +1136,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/mailables-previews/user/welcome"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/mocks/external-authorization/authorize"
 );
 
 const headers = {
@@ -1154,7 +1154,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/mailables-previews/user/welcome'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/mocks/external-authorization/authorize'
 headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -1165,142 +1165,73 @@ response.json()</code></pre></div>
 
 </span>
 
-<span id="example-responses-GETapi-mailables-previews-user-welcome">
+<span id="example-responses-GETapi-mocks-external-authorization-authorize">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (200, success):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">content-type: text/html; charset=UTF-8
-cache-control: no-cache, private
-x-ratelimit-limit: 60
-x-ratelimit-remaining: 59
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
-<code class="language-json" style="max-height: 300px;">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Welcome to Our Platform&lt;/title&gt;
-    &lt;style&gt;
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+<code class="language-json" style="max-height: 300px;">{
+    &quot;status&quot;: &quot;success&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;authorization&quot;: true
         }
+    ]
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, forbidden):</p>
+        </blockquote>
+                <pre>
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f1f1f1;
+<code class="language-json" style="max-height: 300px;">{
+    &quot;status&quot;: &quot;fail&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;authorization&quot;: false
         }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .logo img {
-            max-width: 200px;
-        }
-
-        .message {
-            padding: 20px;
-            background-color: #ffffff;
-        }
-
-        .message p {
-            margin-bottom: 10px;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        button {
-            background-color: #008cba;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            text-transform: uppercase;
-            display: inline-block;
-            font-size: 16px;
-            font-weight: bold;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #005f73;
-        }
-    &lt;/style&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-    &lt;div class=&quot;container&quot;&gt;
-        
-        &lt;div class=&quot;message&quot;&gt;
-            &lt;p&gt;Hello, dear&lt;i&gt; John Doe&lt;/i&gt;.&lt;/p&gt;
-            &lt;p&gt;Welcome to the &lt;b&gt;Simplified Payment application&lt;/b&gt;.&lt;/p&gt;
-            &lt;p&gt;Thank you for choose us! 😉&lt;/p&gt;
-
-            &lt;button&gt;Visit us here&lt;/button&gt;
-
-            &lt;br /&gt;&lt;br /&gt;
-
-            &lt;p&gt;Best regards.&lt;/p&gt;
-            &lt;p&gt;&lt;b&gt;Simplified Payment Team.&lt;/b&gt;&lt;/p&gt;
-        &lt;/div&gt;
-        
-    &lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code>
+    ]
+}</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-mailables-previews-user-welcome" hidden>
+<span id="execution-results-GETapi-mocks-external-authorization-authorize" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-mailables-previews-user-welcome"></span>:
+                id="execution-response-status-GETapi-mocks-external-authorization-authorize"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-mailables-previews-user-welcome"
+    <pre class="json"><code id="execution-response-content-GETapi-mocks-external-authorization-authorize"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETapi-mailables-previews-user-welcome" hidden>
+<span id="execution-error-GETapi-mocks-external-authorization-authorize" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-mailables-previews-user-welcome">
+    <pre><code id="execution-error-message-GETapi-mocks-external-authorization-authorize">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETapi-mailables-previews-user-welcome" data-method="GET"
-      data-path="api/mailables-previews/user/welcome"
+<form id="form-GETapi-mocks-external-authorization-authorize" data-method="GET"
+      data-path="api/mocks/external-authorization/authorize"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-mailables-previews-user-welcome', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-mocks-external-authorization-authorize', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-mailables-previews-user-welcome"
-                    onclick="tryItOut('GETapi-mailables-previews-user-welcome');">Try it out ⚡
+                    id="btn-tryout-GETapi-mocks-external-authorization-authorize"
+                    onclick="tryItOut('GETapi-mocks-external-authorization-authorize');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-mailables-previews-user-welcome"
-                    onclick="cancelTryOut('GETapi-mailables-previews-user-welcome');" hidden>Cancel
+                    id="btn-canceltryout-GETapi-mocks-external-authorization-authorize"
+                    onclick="cancelTryOut('GETapi-mocks-external-authorization-authorize');" hidden>Cancel
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-mailables-previews-user-welcome"
+                    id="btn-executetryout-GETapi-mocks-external-authorization-authorize"
                     data-initial-text="Send Request"
                     data-loading-text="Sending..."
                     hidden>Send Request
@@ -1308,7 +1239,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/mailables-previews/user/welcome</code></b>
+            <b><code>api/mocks/external-authorization/authorize</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -1316,7 +1247,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-mailables-previews-user-welcome"
+                              name="Content-Type"                data-endpoint="GETapi-mocks-external-authorization-authorize"
                value="application/json"
                data-component="header">
     <br>
@@ -1327,7 +1258,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-mailables-previews-user-welcome"
+                              name="Accept"                data-endpoint="GETapi-mocks-external-authorization-authorize"
                value="application/json"
                data-component="header">
     <br>
@@ -1335,7 +1266,34 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                <h1 id="user-types">User Types</h1>
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>The status of the response. Can be &quot;success&quot;or &quot;fail&quot;.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>authorization</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+<br>
+<p>The response of the authorization. Can be true or false.</p>
+                    </div>
+                                    </details>
+        </div>
+                    <h1 id="user-types">User Types</h1>
 
     <p>Endpoints for managing user types</p>
 
@@ -1559,7 +1517,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/14" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/17" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1567,7 +1525,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/14';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/17';
 $response = $client-&gt;get(
     $url,
     [
@@ -1584,7 +1542,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/14"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/17"
 );
 
 const headers = {
@@ -1603,7 +1561,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/14'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/17'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -1743,10 +1701,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-user-types--id-"
-               value="14"
+               value="17"
                data-component="url">
     <br>
-<p>The identifier of the user type. Example: <code>14</code></p>
+<p>The identifier of the user type. Example: <code>17</code></p>
             </div>
                     </form>
 
@@ -2253,7 +2211,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/11" \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/8" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -2270,7 +2228,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/11';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/8';
 $response = $client-&gt;patch(
     $url,
     [
@@ -2295,7 +2253,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/11"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/8"
 );
 
 const headers = {
@@ -2324,7 +2282,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/11'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/8'
 payload = {
     "user_type_id": 1,
     "name": "John Doe",
@@ -2398,7 +2356,7 @@ response.json()</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;You cannot update a resource without provide data.&quot;
+    &quot;message&quot;: &quot;You cannot process a resource without provide data.&quot;
 }</code>
  </pre>
             <blockquote>
@@ -2512,10 +2470,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-users--id-"
-               value="11"
+               value="8"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>11</code></p>
+<p>The identifier of the user. Example: <code>8</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -2719,7 +2677,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/7" \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/9" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2727,7 +2685,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/7';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/9';
 $response = $client-&gt;delete(
     $url,
     [
@@ -2744,7 +2702,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/7"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/9"
 );
 
 const headers = {
@@ -2763,7 +2721,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/7'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/9'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -2900,10 +2858,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-users--id-"
-               value="7"
+               value="9"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>7</code></p>
+<p>The identifier of the user. Example: <code>9</code></p>
             </div>
                     </form>
 
@@ -3262,7 +3220,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/users/12" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/users/6" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3270,7 +3228,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/12';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/6';
 $response = $client-&gt;get(
     $url,
     [
@@ -3287,7 +3245,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/12"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/6"
 );
 
 const headers = {
@@ -3306,7 +3264,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/12'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/6'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -3462,10 +3420,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-users--id-"
-               value="12"
+               value="6"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>12</code></p>
+<p>The identifier of the user. Example: <code>6</code></p>
             </div>
                     </form>
 

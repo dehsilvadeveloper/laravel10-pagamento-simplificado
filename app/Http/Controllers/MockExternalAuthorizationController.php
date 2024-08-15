@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Traits\Http\ApiResponse;
 
 /**
  * @group Mock External Authorizer
@@ -14,8 +13,6 @@ use App\Traits\Http\ApiResponse;
  */
 class MockExternalAuthorizationController extends Controller
 {
-    use ApiResponse;
-
     /**
      * Simulate authorization
      *
@@ -52,9 +49,9 @@ class MockExternalAuthorizationController extends Controller
 
         $response = $responses[array_rand($responses)];
 
-        return $this->sendSuccessResponse(
+        return response()->json(
             data: $response,
-            code: ($response['status'] == 'fail') ? Response::HTTP_FORBIDDEN : Response::HTTP_OK
+            status: ($response['status'] == 'fail') ? Response::HTTP_FORBIDDEN : Response::HTTP_OK
         );
     }
 }

@@ -1,21 +1,689 @@
-name: 'User Types'
+name: Users
 description: |-
 
-  Endpoints for managing user types
+  Endpoints for managing users
 endpoints:
   -
     httpMethods:
-      - GET
-    uri: api/user-types
+      - POST
+    uri: api/users
     metadata:
-      groupName: 'User Types'
+      groupName: Users
       groupDescription: |-
 
-        Endpoints for managing user types
+        Endpoints for managing users
       subgroup: ''
       subgroupDescription: ''
-      title: 'List user types'
-      description: 'This endpoint allows you to get a list of user types.'
+      title: 'Create user'
+      description: 'This endpoint allows you to create a new user.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      user_type_id:
+        name: user_type_id
+        description: 'The type of user. This value can be obtained on the entity user_types.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      name:
+        name: name
+        description: 'The name of the user. Must not be greater than 70 characters.'
+        required: true
+        example: 'John Doe'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type_id:
+        name: document_type_id
+        description: 'The type of document that the user has. This value can be obtained on the entity document_types.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_number:
+        name: document_number
+        description: 'The number of the document that the user has. It can only have numbers. Must match the regex /^[0-9]+$/.'
+        required: true
+        example: '60796747008'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      email:
+        name: email
+        description: 'The email address of the user. Must be a valid email address.'
+        required: true
+        example: john.doe@test.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      password:
+        name: password
+        description: 'The password of the user. Must be at least 8 characters.'
+        required: true
+        example: 'TDwbC4zvy963xa@#hSEDH'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      starter_balance:
+        name: starter_balance
+        description: 'The starter balance of the wallet of the user.'
+        required: true
+        example: 200.5
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanBodyParameters:
+      user_type_id: 1
+      name: 'John Doe'
+      document_type_id: 2
+      document_number: '60796747008'
+      email: john.doe@test.com
+      password: 'TDwbC4zvy963xa@#hSEDH'
+      starter_balance: 200.5
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: |-
+          {
+               "message": "User created with success.",
+               "data": {
+                   "id": 17,
+                   "name": "Peter Parker",
+                   "user_type": {
+                       "id": 1,
+                       "name": "comum"
+                   },
+                   "document_type": {
+                       "id": 2,
+                       "name": "cpf"
+                   },
+                   "document_number": "06633022000",
+                   "email": "peter.parker@marvel.com",
+                   "wallet": {
+                       "id": 1,
+                       "balance": 150.10
+                   }
+                   "created_at": "2024-07-12 15:42:18",
+                   "updated_at": "2024-07-12 15:42:18"
+               }
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: unauthenticated
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+               "message": "The user type id field is required. (and 5 more errors)",
+               "errors": {
+                   "user_type_id": [
+                       "The user type id field is required."
+                   ],
+                   "name": [
+                       "The name field is required."
+                   ],
+                   "document_type_id": [
+                       "The document type id field is required."
+                   ],
+                   "document_number": [
+                       "The document number field is required."
+                   ],
+                   "email": [
+                       "The email field is required."
+                   ],
+                   "password": [
+                       "The password field is required."
+                   ],
+                   "starter_balance": [
+                       "The starter balance field is required."
+                   ]
+               }
+          }
+        headers: []
+        description: 'validation error'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+               "message": "Internal Server Error."
+          }
+        headers: []
+        description: 'unexpected error'
+        custom: []
+    responseFields:
+      id:
+        name: id
+        description: 'The identifier of the user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      name:
+        name: name
+        description: 'The name of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.id:
+        name: user_type.id
+        description: 'The identifier of the type of user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.name:
+        name: user_type.name
+        description: 'The type of user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.id:
+        name: document_type.id
+        description: 'The identifier of the type of document.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.name:
+        name: document_type.name
+        description: 'The type of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_number:
+        name: document_number
+        description: 'The number of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      email:
+        name: email
+        description: 'The e-mail of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      wallet.id:
+        name: wallet.id
+        description: 'The identifier of the wallet of the user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      wallet.balance:
+        name: wallet.balance
+        description: 'The current balance of the wallet of the user.'
+        required: false
+        example: null
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      created_at:
+        name: created_at
+        description: 'The date and time in which the user was created.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      updated_at:
+        name: updated_at
+        description: 'The date and time in which the user was last updated.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer dea6gZ58bhc1EDPa6Vfvk34'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PATCH
+    uri: 'api/users/{id}'
+    metadata:
+      groupName: Users
+      groupDescription: |-
+
+        Endpoints for managing users
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update user'
+      description: 'This endpoint allows you to update a user.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The identifier of the user.'
+        required: true
+        example: 8
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      id: 8
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      user_type_id:
+        name: user_type_id
+        description: 'The type of user. This value can be obtained on the entity user_types.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      name:
+        name: name
+        description: 'The name of the user. Must not be greater than 70 characters.'
+        required: true
+        example: 'John Doe'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type_id:
+        name: document_type_id
+        description: 'The type of document that the user has. This value can be obtained on the entity document_types.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_number:
+        name: document_number
+        description: 'The number of the document that the user has. It can only have numbers. Must match the regex /^[0-9]+$/.'
+        required: true
+        example: '60796747008'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      email:
+        name: email
+        description: 'The email address of the user. Must be a valid email address.'
+        required: true
+        example: john.doe@test.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      password:
+        name: password
+        description: 'The password of the user. Must be at least 8 characters.'
+        required: true
+        example: 'TDwbC4zvy963xa@#hSEDH'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanBodyParameters:
+      user_type_id: 1
+      name: 'John Doe'
+      document_type_id: 2
+      document_number: '60796747008'
+      email: john.doe@test.com
+      password: 'TDwbC4zvy963xa@#hSEDH'
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "message": "User updated with success.",
+               "data": {
+                   "id": 17,
+                   "name": "Peter Parker",
+                   "user_type": {
+                       "id": 1,
+                       "name": "comum"
+                   },
+                   "document_type": {
+                       "id": 2,
+                       "name": "cpf"
+                   },
+                   "document_number": "06633022000",
+                   "email": "peter.parker@marvel.com",
+                   "wallet": {
+                       "id": 1,
+                       "balance": 150.10
+                   }
+                   "created_at": "2024-07-12 15:42:18",
+                   "updated_at": "2024-07-12 15:42:18"
+               }
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: unauthenticated
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+               "message": "The user could not be found."
+          }
+        headers: []
+        description: 'User not found'
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+               "message": "You cannot process a resource without provide data."
+          }
+        headers: []
+        description: 'validation error'
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+               "message": "The email field must be a valid email address.",
+               "errors": {
+                   "email": [
+                       "The email field must be a valid email address."
+                   ]
+               }
+          }
+        headers: []
+        description: 'validation error'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+               "message": "Internal Server Error."
+          }
+        headers: []
+        description: 'unexpected error'
+        custom: []
+    responseFields:
+      id:
+        name: id
+        description: 'The identifier of the user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      name:
+        name: name
+        description: 'The name of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.id:
+        name: user_type.id
+        description: 'The identifier of the type of user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.name:
+        name: user_type.name
+        description: 'The type of user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.id:
+        name: document_type.id
+        description: 'The identifier of the type of document.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.name:
+        name: document_type.name
+        description: 'The type of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_number:
+        name: document_number
+        description: 'The number of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      email:
+        name: email
+        description: 'The e-mail of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      wallet.id:
+        name: wallet.id
+        description: 'The identifier of the wallet of the user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      wallet.balance:
+        name: wallet.balance
+        description: 'The current balance of the wallet of the user.'
+        required: false
+        example: null
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      created_at:
+        name: created_at
+        description: 'The date and time in which the user was created.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      updated_at:
+        name: updated_at
+        description: 'The date and time in which the user was last updated.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 1d8gevaPc65hbkE46Da3VZf'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/users/{id}'
+    metadata:
+      groupName: Users
+      groupDescription: |-
+
+        Endpoints for managing users
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete user'
+      description: 'This endpoint allows you to delete a user. This API uses a soft delete approach, so the user will still exists in the database, but will be marked as deleted.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The identifier of the user.'
+        required: true
+        example: 9
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      id: 9
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "message": "User deleted with success."
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: unauthenticated
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+               "message": "The user could not be found."
+          }
+        headers: []
+        description: 'User not found'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+               "message": "Internal Server Error."
+          }
+        headers: []
+        description: 'unexpected error'
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer gkah6Dd84aPZVvcfbE1653e'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/users
+    metadata:
+      groupName: Users
+      groupDescription: |-
+
+        Endpoints for managing users
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List users'
+      description: 'This endpoint allows you to get a list of users.'
       authenticated: true
       custom: []
     headers:
@@ -37,11 +705,43 @@ endpoints:
                "data": [
                    {
                        "id": 1,
-                       "name": "comum"
+                       "name": "John Doe",
+                       "user_type": {
+                           "id": 1,
+                           "name": "comum"
+                       },
+                       "document_type": {
+                           "id": 2,
+                           "name": "cpf"
+                       },
+                       "document_number": "70349142069",
+                       "email": "john.doe@test.com",
+                       "wallet": {
+                           "id": 1,
+                           "balance": 150.10
+                       }
+                       "created_at": "2024-07-11 15:24:09",
+                       "updated_at": "2024-07-11 17:01:20"
                    },
                    {
                        "id": 2,
-                       "name": "lojista"
+                       "name": "Stark Industries",
+                       "user_type": {
+                           "id": 2,
+                           "name": "lojista"
+                       },
+                       "document_type": {
+                           "id": 1,
+                           "name": "cnpj"
+                       },
+                       "document_number": "04716808000120",
+                       "email": "stark.industries@fake.com",
+                       "wallet": {
+                           "id": 1,
+                           "balance": 150.10
+                       }
+                       "created_at": "2024-07-11 15:24:10",
+                       "updated_at": "2024-07-11 15:24:10"
                    }
                ]
           }
@@ -69,7 +769,7 @@ endpoints:
     responseFields:
       id:
         name: id
-        description: 'The identifier of the user type.'
+        description: 'The identifier of the user.'
         required: false
         example: null
         type: integer
@@ -78,7 +778,97 @@ endpoints:
         custom: []
       name:
         name: name
-        description: 'The name of the user type.'
+        description: 'The name of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.id:
+        name: user_type.id
+        description: 'The identifier of the type of user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.name:
+        name: user_type.name
+        description: 'The type of user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.id:
+        name: document_type.id
+        description: 'The identifier of the type of document.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.name:
+        name: document_type.name
+        description: 'The type of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_number:
+        name: document_number
+        description: 'The number of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      email:
+        name: email
+        description: 'The e-mail of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      wallet.id:
+        name: wallet.id
+        description: 'The identifier of the wallet of the user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      wallet.balance:
+        name: wallet.balance
+        description: 'The current balance of the wallet of the user.'
+        required: false
+        example: null
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      created_at:
+        name: created_at
+        description: 'The date and time in which the user was created.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      updated_at:
+        name: updated_at
+        description: 'The date and time in which the user was last updated.'
         required: false
         example: null
         type: string
@@ -88,7 +878,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer Ek1h3bvcd6Daafg564VP8Ze'
+      - 'Bearer aEefaZkD1cbvPVdg436h685'
     controller: null
     method: null
     route: null
@@ -96,16 +886,16 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: 'api/user-types/{id}'
+    uri: 'api/users/{id}'
     metadata:
-      groupName: 'User Types'
+      groupName: Users
       groupDescription: |-
 
-        Endpoints for managing user types
+        Endpoints for managing users
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get a single user type'
-      description: 'This endpoint allows you to return a single user type from the database.'
+      title: 'Get a single user'
+      description: 'This endpoint allows you to return a single user from the database.'
       authenticated: true
       custom: []
     headers:
@@ -115,15 +905,15 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 'The identifier of the user type.'
+        description: 'The identifier of the user.'
         required: true
-        example: 14
+        example: 6
         type: integer
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: 14
+      id: 6
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -135,8 +925,24 @@ endpoints:
         content: |-
           {
                "data": {
-                   "id": 2,
-                   "name": "comum"
+                   "id": 17,
+                   "name": "Peter Parker",
+                   "user_type": {
+                       "id": 1,
+                       "name": "comum"
+                   },
+                   "document_type": {
+                       "id": 2,
+                       "name": "cpf"
+                   },
+                   "document_number": "06633022000",
+                   "email": "peter.parker@marvel.com",
+                   "wallet": {
+                       "id": 1,
+                       "balance": 150.10
+                   }
+                   "created_at": "2024-07-12 15:42:18",
+                   "updated_at": "2024-07-12 15:42:18"
                }
           }
         headers: []
@@ -155,10 +961,10 @@ endpoints:
         status: 404
         content: |-
           {
-               "message": "The user type could not be found."
+               "message": "The user could not be found."
           }
         headers: []
-        description: 'User type not found'
+        description: 'User not found'
         custom: []
       -
         status: 500
@@ -172,7 +978,7 @@ endpoints:
     responseFields:
       id:
         name: id
-        description: 'The identifier of the user type.'
+        description: 'The identifier of the user.'
         required: false
         example: null
         type: integer
@@ -181,7 +987,97 @@ endpoints:
         custom: []
       name:
         name: name
-        description: 'The name of the user type.'
+        description: 'The name of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.id:
+        name: user_type.id
+        description: 'The identifier of the type of user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      user_type.name:
+        name: user_type.name
+        description: 'The type of user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.id:
+        name: document_type.id
+        description: 'The identifier of the type of document.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_type.name:
+        name: document_type.name
+        description: 'The type of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      document_number:
+        name: document_number
+        description: 'The number of document.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      email:
+        name: email
+        description: 'The e-mail of the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      wallet.id:
+        name: wallet.id
+        description: 'The identifier of the wallet of the user.'
+        required: false
+        example: null
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      wallet.balance:
+        name: wallet.balance
+        description: 'The current balance of the wallet of the user.'
+        required: false
+        example: null
+        type: number
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      created_at:
+        name: created_at
+        description: 'The date and time in which the user was created.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      updated_at:
+        name: updated_at
+        description: 'The date and time in which the user was last updated.'
         required: false
         example: null
         type: string
@@ -191,7 +1087,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer 5Pe4V3b8a1hDZaEdfk6vgc6'
+      - 'Bearer daahZ4eEV8c6PDkg5f631vb'
     controller: null
     method: null
     route: null
