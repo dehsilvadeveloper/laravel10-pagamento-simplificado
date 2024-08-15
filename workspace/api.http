@@ -178,4 +178,4 @@ GET https://util.devi.tools/api/v2/authorize
 
 ### Authorize (with local mocked service)
 
-GET {{baseUrl}}/mocks/authorization/authorize
+GET {{baseUrl}}/mocks/external-authorization/authorize

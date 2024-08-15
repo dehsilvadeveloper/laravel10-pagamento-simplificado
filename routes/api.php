@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentTypeController;
+use App\Http\Controllers\MockExternalAuthorizationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
 
@@ -70,3 +71,9 @@ Route::prefix('/previews/mailables')->name('previews.mailables')->group(function
 | Mock Routes
 |-------------------------------------------
 */
+Route::prefix('/mocks')->name('mocks')->group(function () {
+    Route::get(
+        '/external-authorization/authorize',
+        [MockExternalAuthorizationController::class, 'simulateAuthorize']
+    )->name('authorization.authorize');
+});
