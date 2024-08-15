@@ -5,6 +5,7 @@ namespace Tests\Unit\App\Domain\Notification\Listeners;
 use Tests\TestCase;
 use Exception;
 use Mockery;
+use Mockery\MockInterface;
 use Illuminate\Mail\SentMessage;
 use Illuminate\Notifications\Events\NotificationSent;
 use Illuminate\Support\Facades\Event;
@@ -41,11 +42,13 @@ class RegisterNotificationTest extends TestCase
      */
     public function test_it_register_notification_on_database(): void
     {
+        /** @var MockInterface|NotificationRepositoryInterface $notificationRepositoryMock */
         $notificationRepositoryMock = Mockery::mock(NotificationRepositoryInterface::class);
 
         $notifiableMock = Mockery::mock();
         $notifiableMock->id = 1;
 
+        /** @var MockInterface|NotificationSent $eventMock */
         $eventMock = Mockery::mock(NotificationSent::class);
         $eventMock->notifiable = $notifiableMock;
         $eventMock->notification = Mockery::mock();
@@ -79,9 +82,9 @@ class RegisterNotificationTest extends TestCase
             );
 
         $listener = new RegisterNotification($notificationRepositoryMock);
-        $result = $listener->handle($eventMock);
+        $listener->handle($eventMock);
 
-        $this->assertNull($result);
+        $this->expectNotToPerformAssertions();
     }
 
     /**
@@ -90,11 +93,13 @@ class RegisterNotificationTest extends TestCase
      */
     public function test_it_logs_if_event_fails(): void
     {
+        /** @var MockInterface|NotificationRepositoryInterface $notificationRepositoryMock */
         $notificationRepositoryMock = Mockery::mock(NotificationRepositoryInterface::class);
 
         $notifiableMock = Mockery::mock();
         $notifiableMock->id = 1;
 
+        /** @var MockInterface|NotificationSent $eventMock */
         $eventMock = Mockery::mock(NotificationSent::class);
         $eventMock->notifiable = $notifiableMock;
         $eventMock->notification = Mockery::mock();
@@ -117,8 +122,8 @@ class RegisterNotificationTest extends TestCase
             });
 
         $listener = new RegisterNotification($notificationRepositoryMock);
-        $result = $listener->failed($eventMock, $fakeException);
+        $listener->failed($eventMock, $fakeException);
 
-        $this->assertNull($result);
+        $this->expectNotToPerformAssertions();
     }
 }

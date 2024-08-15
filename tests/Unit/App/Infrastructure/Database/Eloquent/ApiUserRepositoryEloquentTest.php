@@ -5,6 +5,7 @@ namespace Tests\Unit\App\Infrastructure\Database\Eloquent;
 use Tests\TestCase;
 use InvalidArgumentException;
 use Mockery;
+use Mockery\MockInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 use App\Domain\ApiUser\DataTransferObjects\CreateApiUserDto;
@@ -65,6 +66,7 @@ class ApiUserRepositoryEloquentTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You did not provide any data to create the record.');
 
+        /** @var MockInterface|CreateApiUserDto $dtoMock */
         $dtoMock = Mockery::mock(CreateApiUserDto::class);
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 
@@ -117,6 +119,7 @@ class ApiUserRepositoryEloquentTest extends TestCase
             'password' => fake()->password(12)
         ]);
 
+        /** @var MockInterface|UpdateApiUserDto $dtoMock */
         $dtoMock = Mockery::mock(UpdateApiUserDto::class);
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 

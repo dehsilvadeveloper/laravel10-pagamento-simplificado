@@ -20,7 +20,9 @@ class CreateTransferAuthorizationResponseDtoTest extends DtoTestCase
                 'transfer_id' => 1,
                 'response' => json_encode([
                     'status' => 'success',
-                    'authorization' => true
+                    'data' => [
+                        'authorization' => true
+                    ]
                 ])
             ]
         );
@@ -38,7 +40,9 @@ class CreateTransferAuthorizationResponseDtoTest extends DtoTestCase
                 'transferId' => 1,
                 'response' => json_encode([
                     'status' => 'success',
-                    'authorization' => true
+                    'data' => [
+                        'authorization' => true
+                    ]
                 ])
             ]
         );
@@ -68,7 +72,9 @@ class CreateTransferAuthorizationResponseDtoTest extends DtoTestCase
                     'transfer_id' => 1,
                     'response' => json_encode([
                         'status' => 'success',
-                        'authorization' => true
+                        'data' => [
+                            'authorization' => true
+                        ]
                     ])
                 ]
             )
@@ -99,7 +105,9 @@ class CreateTransferAuthorizationResponseDtoTest extends DtoTestCase
                     'transfer_id' => 'abc',
                     'response' => json_encode([
                         'status' => 'success',
-                        'authorization' => true
+                        'data' => [
+                            'authorization' => true
+                        ]
                     ])
                 ]
             )

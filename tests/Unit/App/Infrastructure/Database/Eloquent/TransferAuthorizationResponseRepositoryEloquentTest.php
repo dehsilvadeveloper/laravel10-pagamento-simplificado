@@ -49,7 +49,9 @@ class TransferAuthorizationResponseRepositoryEloquentTest extends TestCase
             'transfer_id' => $transfer->id,
             'response' => json_encode([
                 'status' => 'success',
-                'authorization' => true
+                'data' => [
+                    'authorization' => true
+                ]
             ])
         ];
 

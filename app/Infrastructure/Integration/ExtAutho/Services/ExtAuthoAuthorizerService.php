@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Integration\ExtAutho\Services;
 
 use Throwable;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Client\Response as ClientResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
@@ -38,6 +39,12 @@ class ExtAuthoAuthorizerService implements TransferAuthorizerServiceInterface
             $this->saveAuthorizationResponseOnDatabase($dto->transferId, $response->json());
 
             return $this->handleResponse($response);
+        } catch (EmptyRequestException $exception) {
+            return $this->handleEmptyRequestException($exception, $dto);
+        } catch (RequestException $exception) {
+            return $this->handleClientException($exception, $dto);
+        } catch (EmptyResponseException $exception) {
+            return $this->handleClientEmptyResponseException($exception, $dto);
         } catch (Throwable $exception) {
             return $this->handleException($exception, $dto);
         }
@@ -94,18 +101,26 @@ class ExtAuthoAuthorizerService implements TransferAuthorizerServiceInterface
         return $responseBody->data->authorization ?? false;
     }
 
-    private function handleException(Throwable $exception, AuthorizeTransferDto $dto): bool
+    private function handleEmptyRequestException(EmptyRequestException $exception,  AuthorizeTransferDto $dto): bool
     {
-        Log::error(
-            '[ExtAuthoAuthorizerService] Error while trying to authorize a transfer.',
+        $this->writeErrorLog(
+            '[ExtAuthoAuthorizerService] No data was provided for the authorization process.',
+            $exception,
             [
-                'error_message' => $exception->getMessage(),
-                'file' => $exception->getFile(),
-                'line' => $exception->getLine(),
-                'data' => [
-                    'received_dto_data' => $dto->toArray() ?? null
-                ],
-                'stack_trace' => $exception->getTrace()
+                'received_dto_data' => $dto->toArray() ?? null
+            ]
+        );
+
+        return false;
+    }
+
+    private function handleClientException(RequestException $exception, AuthorizeTransferDto $dto): bool
+    {
+        $this->writeErrorLog(
+            '[ExtAuthoAuthorizerService] The authorizer returned an error.',
+            $exception,
+            [
+                'received_dto_data' => $dto->toArray() ?? null
             ]
         );
 
@@ -117,5 +132,50 @@ class ExtAuthoAuthorizerService implements TransferAuthorizerServiceInterface
         );
 
         return false;
+    }
+
+    private function handleClientEmptyResponseException(
+        EmptyResponseException $exception,
+        AuthorizeTransferDto $dto
+    ): bool {
+        $this->writeErrorLog(
+            '[ExtAuthoAuthorizerService] The authorizer returned a empty response.',
+            $exception,
+            [
+                'received_dto_data' => $dto->toArray() ?? null
+            ]
+        );
+
+        return false;
+    }
+
+    private function handleException(Throwable $exception, AuthorizeTransferDto $dto): bool
+    {
+        $this->writeErrorLog(
+            '[ExtAuthoAuthorizerService] Error while trying to authorize a transfer.',
+            $exception,
+            [
+                'received_dto_data' => $dto->toArray() ?? null
+            ]
+        );
+
+        return false;
+    }
+
+    private function writeErrorLog(string $message, Throwable $exception, array $additionalData = []): void
+    {
+        $context = [
+            'error_message' => $exception->getMessage(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine()
+        ];
+
+        if (!empty($extraData)) {
+            $context['data'] = $additionalData;
+        }
+
+        $context['stack_trace'] = $exception->getTrace();
+
+        Log::error($message, $context);
     }
 }
