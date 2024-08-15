@@ -70,28 +70,3 @@ Route::prefix('/previews/mailables')->name('previews.mailables')->group(function
 | Mock Routes
 |-------------------------------------------
 */
-
-// Temporary route
-Route::get('/test-authorizer', function () {
-    $transfer = \App\Domain\Transfer\Models\Transfer::factory()->create();
-
-    /**
-     * @var \App\Domain\TransferAuthorization\DataTransferObjects\AuthorizeTransferDto
-     */
-    $dto = \App\Domain\TransferAuthorization\DataTransferObjects\AuthorizeTransferDto::from([
-        'transfer_id' => $transfer->id,
-        'payer_id' => 5,
-        'payee_id' => 6,
-        'amount' => 25.50
-    ]);
-
-    /**
-     * @var \App\Domain\TransferAuthorization\Services\Interfaces\TransferAuthorizerServiceInterface
-     */
-    $service = app(\App\Domain\TransferAuthorization\Services\Interfaces\TransferAuthorizerServiceInterface::class);
-    $result = $service->authorize($dto);
-
-    print 'Here is the result: <br><br>';
-    print '<pre>';
-    dd($result);
-});
