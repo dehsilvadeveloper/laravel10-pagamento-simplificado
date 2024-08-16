@@ -44,7 +44,7 @@ Atrelado a entidade `users` nós temos a entidade `wallets`, que são as carteir
 Antes de concretizar uma transferência se faz necessário efetuar uma `autorização` da mesma utilizando um **serviço de autorização externo**, ou seja, um serviço de terceiros. Para o caso deste desafio foi dado o nome de **ExtAutho** para o serviço de autorização externo e a aplicação conta com classes de integração para o correto consumo/utilização do mesmo. O desafio fornece uma url para o autorizador externo, sendo que esta retorna aleatoriamente uma resposta positiva ou negativa para a autorização. Em alguns momentos durante o desenvolvimento desta aplicação a url fornecida apresentou instabilidade, então foi decidido criar uma rota interna da aplicação para simular o mesmo comportamento do serviço externo (ou seja, um *mock* do serviço externo). Desta forma podemos alternar entre as duas urls conforme necessário, sem deixar que a aplicação fique desprovida de um autorizador de transferências. A url do serviço de autorização de transferências fica disponível na variável de ambiente `EXTERNAL_AUTHORIZATION_SERVICE_URL` presente no arquivo `.env`, conforme exemplificado a seguir.
 
 ```
-EXTERNAL_AUTHORIZATION_SERVICE_URL=http://localhost:9999/api/mocks/external-authorization/authorize # Esta é a versão "mockada"
+EXTERNAL_AUTHORIZATION_SERVICE_URL=http://nginx:80/api/mocks/external-authorization/authorize # Esta é a versão "mockada"
 #EXTERNAL_AUTHORIZATION_SERVICE_URL=https://util.devi.tools/api/v2/authorize # Esta é a url providenciada pelo desafio
 ```
 

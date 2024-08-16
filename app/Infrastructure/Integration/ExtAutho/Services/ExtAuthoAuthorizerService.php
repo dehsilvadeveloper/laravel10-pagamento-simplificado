@@ -3,6 +3,8 @@
 namespace App\Infrastructure\Integration\ExtAutho\Services;
 
 use Throwable;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\HttpClientException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Client\Response as ClientResponse;
 use Illuminate\Http\Response;
@@ -41,7 +43,7 @@ class ExtAuthoAuthorizerService implements TransferAuthorizerServiceInterface
             return $this->handleResponse($response);
         } catch (EmptyRequestException $exception) {
             return $this->handleEmptyRequestException($exception, $dto);
-        } catch (RequestException $exception) {
+        } catch (ConnectionException|RequestException $exception) {
             return $this->handleClientException($exception, $dto);
         } catch (EmptyResponseException $exception) {
             return $this->handleClientEmptyResponseException($exception, $dto);
@@ -67,7 +69,7 @@ class ExtAuthoAuthorizerService implements TransferAuthorizerServiceInterface
             headers: [
                 'Content-Type' => 'application/json'
             ],
-            timeout: 5
+            timeout: 3
         );
     
         $response = $this->extAuthoRequestService->sendRequest($request);
@@ -114,7 +116,7 @@ class ExtAuthoAuthorizerService implements TransferAuthorizerServiceInterface
         return false;
     }
 
-    private function handleClientException(RequestException $exception, AuthorizeTransferDto $dto): bool
+    private function handleClientException(HttpClientException $exception, AuthorizeTransferDto $dto): bool
     {
         $this->writeErrorLog(
             '[ExtAuthoAuthorizerService] The authorizer returned an error.',
