@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             ApiUserSeeder::class,
             DocumentTypeSeeder::class,
             UserTypeSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            TransferStatusSeeder::class
         ]);
     }
 }

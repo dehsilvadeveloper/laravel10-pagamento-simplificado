@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentTypeController;
+use App\Http\Controllers\MockExternalAuthorizationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
 
@@ -17,19 +18,12 @@ use App\Http\Controllers\UserTypeController;
 |
 */
 
+/*
+|-------------------------------------------
+| Application Routes
+|-------------------------------------------
+*/
 Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
-
-Route::prefix('/mailables-previews')->name('mailable-preview.')->group(function () {
-    Route::get('/user/welcome', function () {
-        $user = \App\Domain\User\Models\User::find(1);
-
-        if (!$user) {
-            return 'User not found. Cannot preview email.';
-        }
-
-        return new \App\Domain\User\Mails\WelcomeMailable($user);
-    })->name('user.welcome');
-});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/auth')->group(function () {
@@ -53,4 +47,33 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/{id}', [UserController::class, 'show'])->name('show');
     });
+});
+
+/*
+|-------------------------------------------
+| Preview Routes
+|-------------------------------------------
+*/
+Route::prefix('/previews/mailables')->name('previews.mailables')->group(function () {
+    Route::get('/user/welcome', function () {
+        $user = \App\Domain\User\Models\User::find(1);
+
+        if (!$user) {
+            return 'User not found. Cannot preview email.';
+        }
+
+        return new \App\Domain\User\Mails\WelcomeMailable($user);
+    })->name('user.welcome');
+});
+
+/*
+|-------------------------------------------
+| Mock Routes
+|-------------------------------------------
+*/
+Route::prefix('/mocks')->name('mocks')->group(function () {
+    Route::get(
+        '/external-authorization/authorize',
+        [MockExternalAuthorizationController::class, 'simulateAuthorize']
+    )->name('authorization.authorize');
 });

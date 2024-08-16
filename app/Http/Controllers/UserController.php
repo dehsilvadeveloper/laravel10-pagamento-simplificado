@@ -196,7 +196,7 @@ class UserController extends Controller
      * }
      * 
      * @response status=422 scenario="validation error" {
-     *      "message": "You cannot update a resource without provide data."
+     *      "message": "You cannot process a resource without provide data."
      * }
      * 
      * @response status=422 scenario="validation error" {

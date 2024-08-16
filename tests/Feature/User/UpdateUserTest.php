@@ -129,7 +129,7 @@ class UpdateUserTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertJsonStructure(['message']);
         $response->assertJson([
-            'message' => 'You cannot update a resource without provide data.'
+            'message' => 'You cannot process a resource without provide data.'
         ]);
     }
 

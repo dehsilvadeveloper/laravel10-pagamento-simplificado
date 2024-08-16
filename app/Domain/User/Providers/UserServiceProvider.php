@@ -30,7 +30,7 @@ class UserServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bind repository classes for domain User
+     * Bind service classes for domain User
      *
      * @return void
      */

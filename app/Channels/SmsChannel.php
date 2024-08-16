@@ -5,11 +5,11 @@ namespace App\Channels;
 use Exception;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
-use App\Domain\Common\ValueObjects\SentSmsMessage;
+use App\Domain\Common\ValueObjects\SentSmsMessageObject;
 
 class SmsChannel
 {
-    public function send(object $notifiable, Notification $notification): SentSmsMessage
+    public function send(object $notifiable, Notification $notification): SentSmsMessageObject
     {
         if (!method_exists($notification, 'toSms')) {
             throw new Exception('Notification is missing toSms method.');

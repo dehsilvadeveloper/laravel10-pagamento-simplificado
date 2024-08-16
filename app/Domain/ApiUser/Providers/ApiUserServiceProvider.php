@@ -28,7 +28,7 @@ class ApiUserServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bind repository classes for domain ApiUser
+     * Bind service classes for domain ApiUser
      *
      * @return void
      */
