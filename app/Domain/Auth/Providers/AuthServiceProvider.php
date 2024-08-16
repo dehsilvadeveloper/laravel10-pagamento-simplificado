@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bind repository classes for domain Auth
+     * Bind service classes for domain Auth
      *
      * @return void
      */

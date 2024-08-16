@@ -6,7 +6,7 @@ use Throwable;
 use Illuminate\Mail\SentMessage;
 use Illuminate\Notifications\Events\NotificationSent;
 use Illuminate\Support\Facades\Log;
-use App\Domain\Common\ValueObjects\SentSmsMessage;
+use App\Domain\Common\ValueObjects\SentSmsMessageObject;
 use App\Domain\Notification\DataTransferObjects\CreateNotificationDto;
 use App\Domain\Notification\Repositories\NotificationRepositoryInterface;
 
@@ -77,7 +77,7 @@ class RegisterNotification
             return 'Notification Mail sent successfully.';
         }
 
-        if ($response instanceof SentSmsMessage) {
+        if ($response instanceof SentSmsMessageObject) {
             return 'Notification SMS sent to ' . $response->getPhoneNumber() . ' successfully.';
         }
 

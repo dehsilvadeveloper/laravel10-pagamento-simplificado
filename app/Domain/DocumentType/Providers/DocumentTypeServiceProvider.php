@@ -28,7 +28,7 @@ class DocumentTypeServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bind repository classes for domain DocumentType
+     * Bind service classes for domain DocumentType
      *
      * @return void
      */

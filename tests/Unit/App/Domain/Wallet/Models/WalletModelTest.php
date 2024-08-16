@@ -17,7 +17,6 @@ class WalletModelTest extends ModelTestCase
         $dto = ModelConfigurationAssertionParamsDto::from([
             'model' => new Wallet(),
             'fillable' => ['user_id', 'balance'],
-            'hidden' => [],
             'casts' => [
                 'id' => 'int'
             ],

@@ -6,6 +6,7 @@ use Tests\TestCase;
 use InvalidArgumentException;
 use TypeError;
 use Mockery;
+use Mockery\MockInterface;
 use App\Domain\Wallet\DataTransferObjects\CreateWalletDto;
 use App\Domain\Wallet\Models\Wallet;
 use App\Domain\User\Models\User;
@@ -63,6 +64,7 @@ class WalletRepositoryEloquentTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You did not provide any data to create the record.');
 
+        /** @var MockInterface|CreateWalletDto $dtoMock */
         $dtoMock = Mockery::mock(CreateWalletDto::class);
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 
