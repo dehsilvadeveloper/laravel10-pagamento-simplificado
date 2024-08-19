@@ -5,6 +5,7 @@ namespace Tests\Unit\App\Infrastructure\Database\Eloquent;
 use Tests\TestCase;
 use InvalidArgumentException;
 use Mockery;
+use Mockery\MockInterface;
 use App\Domain\Notification\DataTransferObjects\CreateNotificationDto;
 use App\Domain\Notification\Models\Notification;
 use App\Domain\User\Models\User;
@@ -64,6 +65,7 @@ class NotificationRepositoryEloquentTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You did not provide any data to create the record.');
 
+        /** @var MockInterface|CreateNotificationDto $dtoMock */
         $dtoMock = Mockery::mock(CreateNotificationDto::class);
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 

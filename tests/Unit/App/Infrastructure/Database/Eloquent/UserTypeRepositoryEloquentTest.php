@@ -5,6 +5,7 @@ namespace Tests\Unit\App\Infrastructure\Database\Eloquent;
 use Tests\TestCase;
 use InvalidArgumentException;
 use Mockery;
+use Mockery\MockInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Domain\User\DataTransferObjects\CreateUserTypeDto;
 use App\Domain\User\DataTransferObjects\UpdateUserTypeDto;
@@ -59,6 +60,7 @@ class UserTypeRepositoryEloquentTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You did not provide any data to create the record.');
 
+        /** @var MockInterface|CreateUserTypeDto $dtoMock */
         $dtoMock = Mockery::mock(CreateUserTypeDto::class);
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 
@@ -104,6 +106,7 @@ class UserTypeRepositoryEloquentTest extends TestCase
             'name' => fake()->name()
         ]);
 
+        /** @var MockInterface|UpdateUserTypeDto $dtoMock */
         $dtoMock = Mockery::mock(UpdateUserTypeDto::class);
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 
