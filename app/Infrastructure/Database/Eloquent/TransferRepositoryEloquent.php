@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use App\Domain\Transfer\DataTransferObjects\CreateTransferDto;
+use App\Domain\Transfer\Enums\TransferStatusEnum;
 use App\Domain\Transfer\Models\Transfer;
 use App\Domain\Transfer\Repositories\TransferRepositoryInterface;
 
@@ -32,5 +33,16 @@ class TransferRepositoryEloquent implements TransferRepositoryInterface
         }
 
         return $this->model->create($data);
+    }
+
+    public function updateStatus(int $id, TransferStatusEnum $newStatus): Transfer
+    {
+        $item = $this->model->findOrFail($id);
+        $item->update([
+            'transfer_status_id' => $newStatus->value
+        ]);
+        $item->refresh();
+
+        return $item;
     }
 }

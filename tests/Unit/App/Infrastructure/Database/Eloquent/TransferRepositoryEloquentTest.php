@@ -4,8 +4,10 @@ namespace Tests\Unit\App\Infrastructure\Database\Eloquent;
 
 use Tests\TestCase;
 use InvalidArgumentException;
+use TypeError;
 use Mockery;
 use Mockery\MockInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Domain\Transfer\DataTransferObjects\CreateTransferDto;
 use App\Domain\Transfer\Enums\TransferStatusEnum;
 use App\Domain\Transfer\Models\Transfer;
@@ -105,5 +107,52 @@ class TransferRepositoryEloquentTest extends TestCase
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 
         $this->repository->create($dtoMock);
+    }
+
+    /**
+     * @group repositories
+     * @group transfer
+     */
+    public function test_can_update_status(): void
+    {
+        $existingRecord = Transfer::factory()->create([
+            'transfer_status_id' => TransferStatusEnum::PENDING->value
+        ]);
+
+        $updatedRecord = $this->repository->updateStatus($existingRecord->id, TransferStatusEnum::COMPLETED);
+
+        $this->assertInstanceOf(Transfer::class, $updatedRecord);
+        $this->assertEquals($existingRecord->id, $updatedRecord->id);
+        $this->assertEquals(TransferStatusEnum::COMPLETED->value, $updatedRecord->transfer_status_id);
+        $this->assertNotEquals(TransferStatusEnum::PENDING->value, $updatedRecord->transfer_status_id);
+    }
+
+    /**
+     * @group repositories
+     * @group transfer
+     */
+    public function test_cannot_update_with_invalid_status(): void
+    {
+        $this->expectException(TypeError::class);
+
+        $existingRecord = Transfer::factory()->create([
+            'transfer_status_id' => TransferStatusEnum::PENDING->value
+        ]);
+
+        /** @var TransferStatusEnum $invalidStatus */
+        $invalidStatus = 'invalid_status';
+
+        $this->repository->updateStatus($existingRecord->id, $invalidStatus);
+    }
+
+    /**
+     * @group repositories
+     * @group transfer
+     */
+    public function test_cannot_update_status_of_a_nonexistent_record(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $this->repository->updateStatus(999, TransferStatusEnum::COMPLETED);
     }
 }
