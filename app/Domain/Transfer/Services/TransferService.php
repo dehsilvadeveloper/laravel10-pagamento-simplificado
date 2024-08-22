@@ -37,10 +37,9 @@ class TransferService implements TransferServiceInterface
                 throw new UnauthorizedTransferException();
             }
 
-            $processedTransfer = $this->executeTransfer();
+            $processedTransfer = $this->executeTransfer($transfer);
 
-            // TODO: retornar no final o registro da tabela "transfers" atualizado.
-            return app(Transfer::class);
+            return $processedTransfer;
         } catch (Throwable $exception) {
             Log::error(
                 '[TransferService] Failed to execute the transfer between the users as requested.',
@@ -49,7 +48,7 @@ class TransferService implements TransferServiceInterface
                     'file' => $exception->getFile(),
                     'line' => $exception->getLine(),
                     'data' => [
-                        'received_dto' => $params->toArray() ?? null
+                        'received_object' => $params->toArray() ?? null
                     ],
                     'stack_trace' => $exception->getTrace()
                 ]
@@ -83,20 +82,23 @@ class TransferService implements TransferServiceInterface
         );
     }
 
-    private function executeTransfer(): void
+    private function executeTransfer(Transfer $transfer): Transfer
     {
         try {
             DB::beginTransaction();
 
-            // TODO: retirar montante da carteira do "payer".
-            // TODO: adicionar montante na carteira do "payee".
-            // TODO: atualizar registro na tabela "transfers" para status "concluído".
+            $this->walletRepository->decrementById($transfer->payer->wallet->id, 'balance', $transfer->amount);
+            $this->walletRepository->incrementById($transfer->payee->wallet->id, 'balance', $transfer->amount);
+
+            $processedTransfer = $this->transferRepository->updateStatus($transfer->id, TransferStatusEnum::COMPLETED);
 
             DB::commit();
+
+            return $processedTransfer;
         } catch (Throwable $exception) {
             DB::rollBack();
 
-            // TODO: atualizar registro na tabela "transfers" para status "erro".
+            $this->transferRepository->updateStatus($transfer->id, TransferStatusEnum::ERROR);
 
             throw $exception;
         }
