@@ -13,11 +13,14 @@ use App\Domain\Transfer\Models\Transfer;
 use App\Domain\Transfer\Repositories\TransferRepositoryInterface;
 use App\Domain\Transfer\Services\Interfaces\TransferServiceInterface;
 use App\Domain\Transfer\ValueObjects\TransferParamsObject;
+use App\Domain\TransferAuthorization\DataTransferObjects\AuthorizeTransferDto;
+use App\Domain\TransferAuthorization\Services\Interfaces\TransferAuthorizerServiceInterface;
 use App\Domain\Wallet\Repositories\WalletRepositoryInterface;
 
 class TransferService implements TransferServiceInterface
 {
     public function __construct(
+        private TransferAuthorizerServiceInterface $transferAuthorizationService,
         private TransferRepositoryInterface $transferRepository,
         private WalletRepositoryInterface $walletRepository
     ) {
@@ -29,7 +32,8 @@ class TransferService implements TransferServiceInterface
             $transfer = $this->registerTransfer($params);
 
             if (!$this->authorizeTransfer($transfer)) {
-                // TODO: atualizar registro na tabela "transfers" para status "não autorizado".
+                $this->transferRepository->updateStatus($transfer->id, TransferStatusEnum::UNAUTHORIZED);
+
                 throw new UnauthorizedTransferException();
             }
 
@@ -67,9 +71,16 @@ class TransferService implements TransferServiceInterface
         ));
     }
 
-    private function authorizeTransfer(): void
+    private function authorizeTransfer(Transfer $transfer): bool
     {
-
+        return $this->transferAuthorizationService->authorize(
+            AuthorizeTransferDto::from([
+                'transfer_id' => $transfer->id,
+                'payer_id' => $transfer->payer_id,
+                'payee_id' => $transfer->payee_id,
+                'amount' => $transfer->amount
+            ])
+        );
     }
 
     private function executeTransfer(): void
