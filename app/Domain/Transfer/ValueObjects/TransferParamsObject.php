@@ -9,7 +9,7 @@ use App\Domain\User\Enums\UserTypeEnum;
 use App\Domain\User\Models\User;
 use App\Domain\User\Repositories\UserRepositoryInterface;
 
-final class TransferParamsObject
+class TransferParamsObject
 {
     private UserRepositoryInterface $userRepository;
     private int $payerId;

@@ -119,6 +119,6 @@ class TransferParamsObjectTest extends TestCase
 
         $this->userRepositoryMock->shouldReceive('firstById')->andReturn($payerRecord);
 
-        new TransferParamsObject(payerId:1, payeeId:2, amount: 100.00);
+        new TransferParamsObject(payerId: 1, payeeId: 2, amount: 100.00);
     }
 }
