@@ -77,3 +77,40 @@ Route::prefix('/mocks')->name('mocks')->group(function () {
         [MockExternalAuthorizationController::class, 'simulateAuthorize']
     )->name('authorization.authorize');
 });
+
+Route::get('test-transfer', function() {
+    // General information
+    $amountToBeTransferred = 50.00;
+
+    // Generating payer
+    $payer = \App\Domain\User\Models\User::factory()->create([
+        'user_type_id' => \App\Domain\User\Enums\UserTypeEnum::COMMON->value
+    ]);
+    $payerWallet = \App\Domain\Wallet\Models\Wallet::factory()->for($payer)->create([
+        'balance' => 400.00
+    ]);
+    $payer->setRelation('wallet', $payerWallet);
+
+    // Generating payee
+    $payee = \App\Domain\User\Models\User::factory()->create([
+        'user_type_id' => \App\Domain\User\Enums\UserTypeEnum::COMMON->value
+    ]);
+    $payeeWallet = \App\Domain\Wallet\Models\Wallet::factory()->for($payee)->create([
+        'balance' => 100.00
+    ]);
+    $payee->setRelation('wallet', $payeeWallet);
+
+    // Generating transfer params object
+    $transferParams = new \App\Domain\Transfer\ValueObjects\TransferParamsObject(
+        $payer->id,
+        $payee->id,
+        $amountToBeTransferred
+    );
+
+    // Defining TransferService
+    /** @var \App\Domain\Transfer\Services\Interfaces\TransferServiceInterface $service */
+    $service = app(\App\Domain\Transfer\Services\Interfaces\TransferServiceInterface::class);
+
+    // Executing transfer process
+    $service->transfer($transferParams);
+});
