@@ -3,6 +3,7 @@
 namespace Tests\Unit\App\Infrastructure\Database\Eloquent;
 
 use Tests\TestCase;
+use Carbon\Carbon;
 use InvalidArgumentException;
 use TypeError;
 use Mockery;
@@ -154,5 +155,61 @@ class TransferRepositoryEloquentTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $this->repository->updateStatus(999, TransferStatusEnum::COMPLETED);
+    }
+
+    /**
+     * @group repositories
+     * @group transfer
+     */
+    public function test_can_update_authorization_date(): void
+    {
+        $existingRecord = Transfer::factory()->create([
+            'transfer_status_id' => TransferStatusEnum::COMPLETED->value
+        ]);
+
+        $authorizationDate = '2024-04-01 10:15:18';
+
+        $updatedRecord = $this->repository->updateAuthorizationDate(
+            $existingRecord->id,
+            Carbon::parse($authorizationDate)
+        );
+
+        $this->assertInstanceOf(Transfer::class, $updatedRecord);
+        $this->assertEquals($existingRecord->id, $updatedRecord->id);
+        $this->assertEquals($authorizationDate, $updatedRecord->authorized_at);
+    }
+
+    /**
+     * @group repositories
+     * @group transfer
+     */
+    public function test_cannot_update_with_invalid_authorization_date(): void
+    {
+        $this->expectException(TypeError::class);
+
+        $existingRecord = Transfer::factory()->create([
+            'transfer_status_id' => TransferStatusEnum::COMPLETED->value
+        ]);
+
+        /** @var Carbon $invalidDate */
+        $invalidDate = 'invalid_date';
+
+        $this->repository->updateAuthorizationDate($existingRecord->id, $invalidDate);
+    }
+
+    /**
+     * @group repositories
+     * @group transfer
+     */
+    public function test_cannot_update_authorization_date_of_a_nonexistent_record(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $authorizationDate = '2024-04-01 10:15:18';
+
+        $this->repository->updateAuthorizationDate(
+            999,
+            Carbon::parse($authorizationDate)
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Database\Eloquent;
 
+use Carbon\Carbon;
 use InvalidArgumentException;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,17 @@ class TransferRepositoryEloquent implements TransferRepositoryInterface
         $item = $this->model->findOrFail($id);
         $item->update([
             'transfer_status_id' => $newStatus->value
+        ]);
+        $item->refresh();
+
+        return $item;
+    }
+
+    public function updateAuthorizationDate(int $id, Carbon $date): Transfer
+    {
+        $item = $this->model->findOrFail($id);
+        $item->update([
+            'authorized_at' => $date
         ]);
         $item->refresh();
 
