@@ -65,62 +65,34 @@ class TransferServiceTest extends TestCase
     public function test_can_transfer(): void
     {
         $amountToBeTransferred = 50.00;
+        $authorizationDate = '2024-04-05 10:15:05';
 
-        $payer = User::factory()->make([
-            'user_type_id' => UserTypeEnum::COMMON->value
-        ]);
-        $payer->id = 5;
-        $payerWallet = Wallet::factory()->for($payer)->make([
-            'balance' => 400.00
-        ]);
-        $payerWallet->id = 20;
-        $payer->setRelation('wallet', $payerWallet);
+        $payer = $this->generateFakePayer();
+        $payee = $this->generateFakePayee();
+        $transferParamsObjectMock = $this->generateTransferParamsObject($payer, $payee, $amountToBeTransferred);
+        $transfer = $this->generateFakeTransfer($payer, $payee, $amountToBeTransferred);
 
-        $payee = User::factory()->make([
-            'user_type_id' => UserTypeEnum::COMMON->value
-        ]);
-        $payee->id = 6;
-        $payeeWallet = Wallet::factory()->for($payee)->make([
-            'balance' => 100.00
-        ]);
-        $payeeWallet->id = 21;
-        $payee->setRelation('wallet', $payeeWallet);
-
-        $transfer = Transfer::factory()->make([
-            'payer_id' => $payer->id,
-            'payee_id' => $payee->id,
-            'amount' => $amountToBeTransferred,
-            'transfer_status_id' => TransferStatusEnum::PENDING->value
-        ]);
-        $transfer->id = 10;
-        $transfer->setRelation('payer', $payer);
-        $transfer->setRelation('payee', $payee);
-
-        /** @var MockInterface|TransferParamsObject $transferParamsObjectMock */
-        $transferParamsObjectMock = Mockery::mock(TransferParamsObject::class);
-        $transferParamsObjectMock->shouldReceive('getPayerId')->andReturn($payer->id);
-        $transferParamsObjectMock->shouldReceive('getPayeeId')->andReturn($payee->id);
-        $transferParamsObjectMock->shouldReceive('getAmount')->andReturn($amountToBeTransferred);
-        $transferParamsObjectMock->shouldReceive('toArray')->andReturn([
-            'payer_id' => $payer->id,
-            'payee_id' => $payee->id,
-            'amount' => $amountToBeTransferred
-        ]);
-
-        $this->transferRepositoryMock->shouldReceive('create')->once()->andReturn($transfer);
+        $updatedTransfer = $transfer->replicate();
 
         $this->transferAuthorizationServiceMock->shouldReceive('authorize')->once()->andReturn(true);
 
-        $this->walletRepositoryMock->shouldReceive('decrementById')->once();
-        $this->walletRepositoryMock->shouldReceive('incrementById')->once();
-
-        $updatedTransfer = $transfer->replicate();
-        $updatedTransfer->transfer_status_id = TransferStatusEnum::COMPLETED->value;
-
+        $this->transferRepositoryMock->shouldReceive('create')->once()->andReturn($transfer);
+        $this->transferRepositoryMock->shouldReceive('updateAuthorizationDate')
+            ->once()
+            ->andReturnUsing(function() use ($updatedTransfer, $authorizationDate) {
+                $updatedTransfer->authorized_at = $authorizationDate;
+                return $updatedTransfer;
+            });
         $this->transferRepositoryMock->shouldReceive('updateStatus')
             ->once()
             ->with($transfer->id, TransferStatusEnum::COMPLETED)
-            ->andReturn($updatedTransfer);
+            ->andReturnUsing(function() use ($updatedTransfer) {
+                $updatedTransfer->transfer_status_id = TransferStatusEnum::COMPLETED->value;
+                return $updatedTransfer;
+            });
+
+        $this->walletRepositoryMock->shouldReceive('decrementById')->once();
+        $this->walletRepositoryMock->shouldReceive('incrementById')->once();
 
         DB::shouldReceive('beginTransaction')->once();
         DB::shouldReceive('commit')->once();
@@ -132,6 +104,7 @@ class TransferServiceTest extends TestCase
         $this->assertEquals($payee->id, $result->payee_id);
         $this->assertEquals($amountToBeTransferred, $result->amount);
         $this->assertEquals(TransferStatusEnum::COMPLETED->value, $result->transfer_status_id);
+        $this->assertEquals($authorizationDate, $result->authorized_at);
     }
 
     /**
@@ -144,58 +117,23 @@ class TransferServiceTest extends TestCase
 
         $amountToBeTransferred = 50.00;
 
-        $payer = User::factory()->make([
-            'user_type_id' => UserTypeEnum::COMMON->value
-        ]);
-        $payer->id = 5;
-        $payerWallet = Wallet::factory()->for($payer)->make([
-            'balance' => 400.00
-        ]);
-        $payerWallet->id = 20;
-        $payer->setRelation('wallet', $payerWallet);
+        $payer = $this->generateFakePayer();
+        $payee = $this->generateFakePayee();
+        $transferParamsObjectMock = $this->generateTransferParamsObject($payer, $payee, $amountToBeTransferred);
+        $transfer = $this->generateFakeTransfer($payer, $payee, $amountToBeTransferred);
 
-        $payee = User::factory()->make([
-            'user_type_id' => UserTypeEnum::COMMON->value
-        ]);
-        $payee->id = 6;
-        $payeeWallet = Wallet::factory()->for($payee)->make([
-            'balance' => 100.00
-        ]);
-        $payeeWallet->id = 21;
-        $payee->setRelation('wallet', $payeeWallet);
-
-        $transfer = Transfer::factory()->make([
-            'payer_id' => $payer->id,
-            'payee_id' => $payee->id,
-            'amount' => $amountToBeTransferred,
-            'transfer_status_id' => TransferStatusEnum::PENDING->value
-        ]);
-        $transfer->id = 10;
-        $transfer->setRelation('payer', $payer);
-        $transfer->setRelation('payee', $payee);
-
-        /** @var MockInterface|TransferParamsObject $transferParamsObjectMock */
-        $transferParamsObjectMock = Mockery::mock(TransferParamsObject::class);
-        $transferParamsObjectMock->shouldReceive('getPayerId')->andReturn($payer->id);
-        $transferParamsObjectMock->shouldReceive('getPayeeId')->andReturn($payee->id);
-        $transferParamsObjectMock->shouldReceive('getAmount')->andReturn($amountToBeTransferred);
-        $transferParamsObjectMock->shouldReceive('toArray')->andReturn([
-            'payer_id' => $payer->id,
-            'payee_id' => $payee->id,
-            'amount' => $amountToBeTransferred
-        ]);
-
-        $this->transferRepositoryMock->shouldReceive('create')->once()->andReturn($transfer);
+        $updatedTransfer = $transfer->replicate();
 
         $this->transferAuthorizationServiceMock->shouldReceive('authorize')->once()->andReturn(false);
 
-        $updatedTransfer = $transfer->replicate();
-        $updatedTransfer->transfer_status_id = TransferStatusEnum::UNAUTHORIZED->value;
-
+        $this->transferRepositoryMock->shouldReceive('create')->once()->andReturn($transfer);
         $this->transferRepositoryMock->shouldReceive('updateStatus')
             ->once()
             ->with($transfer->id, TransferStatusEnum::UNAUTHORIZED)
-            ->andReturn($updatedTransfer);
+            ->andReturnUsing(function() use ($updatedTransfer) {
+                $updatedTransfer->transfer_status_id = TransferStatusEnum::UNAUTHORIZED->value;
+                return $updatedTransfer;
+            });
 
         $this->service->transfer($transferParamsObjectMock);
     }
@@ -209,37 +147,91 @@ class TransferServiceTest extends TestCase
         $this->expectException(TransferFailedException::class);
 
         $amountToBeTransferred = 50.00;
+        $authorizationDate = '2024-04-05 10:15:05';
 
+        $payer = $this->generateFakePayer();
+        $payee = $this->generateFakePayee();
+        $transferParamsObjectMock = $this->generateTransferParamsObject($payer, $payee, $amountToBeTransferred);
+        $transfer = $this->generateFakeTransfer($payer, $payee, $amountToBeTransferred);
+
+        $updatedTransfer = $transfer->replicate();
+
+        $this->transferAuthorizationServiceMock->shouldReceive('authorize')->once()->andReturn(true);
+
+        $this->transferRepositoryMock->shouldReceive('create')->once()->andReturn($transfer);
+        $this->transferRepositoryMock->shouldReceive('updateAuthorizationDate')
+            ->once()
+            ->andReturnUsing(function() use ($updatedTransfer, $authorizationDate) {
+                $updatedTransfer->authorized_at = $authorizationDate;
+                return $updatedTransfer;
+            });
+        $this->transferRepositoryMock->shouldReceive('updateStatus')
+            ->once()
+            ->with($transfer->id, TransferStatusEnum::ERROR)
+            ->andReturnUsing(function() use ($updatedTransfer) {
+                $updatedTransfer->transfer_status_id = TransferStatusEnum::ERROR->value;
+                return $updatedTransfer;
+            });
+
+        $this->walletRepositoryMock->shouldReceive('decrementById')->once();
+        $this->walletRepositoryMock->shouldReceive('incrementById')
+            ->once()
+            ->andThrow(new Exception('Fake Database error'));
+
+        DB::shouldReceive('beginTransaction')->once();
+        DB::shouldReceive('rollback')->once();
+
+        Log::shouldReceive('error')
+            ->withArgs(function ($message, $context) {
+                return strpos(
+                        $message,
+                        '[TransferService] Failed to execute the transfer between the users as requested.'
+                    ) !== false
+                    && strpos($context['error_message'], 'Fake Database error') !== false;
+            });
+
+        $this->service->transfer($transferParamsObjectMock);
+    }
+
+    private function generateFakePayer(): User
+    {
         $payer = User::factory()->make([
             'user_type_id' => UserTypeEnum::COMMON->value
         ]);
         $payer->id = 5;
+
         $payerWallet = Wallet::factory()->for($payer)->make([
             'balance' => 400.00
         ]);
         $payerWallet->id = 20;
+
         $payer->setRelation('wallet', $payerWallet);
 
+        return $payer;
+    }
+
+    private function generateFakePayee(): User
+    {
         $payee = User::factory()->make([
             'user_type_id' => UserTypeEnum::COMMON->value
         ]);
         $payee->id = 6;
+
         $payeeWallet = Wallet::factory()->for($payee)->make([
             'balance' => 100.00
         ]);
         $payeeWallet->id = 21;
+
         $payee->setRelation('wallet', $payeeWallet);
 
-        $transfer = Transfer::factory()->make([
-            'payer_id' => $payer->id,
-            'payee_id' => $payee->id,
-            'amount' => $amountToBeTransferred,
-            'transfer_status_id' => TransferStatusEnum::PENDING->value
-        ]);
-        $transfer->id = 10;
-        $transfer->setRelation('payer', $payer);
-        $transfer->setRelation('payee', $payee);
+        return $payee;
+    }
 
+    private function generateTransferParamsObject(
+        User $payer,
+        User $payee,
+        float $amountToBeTransferred
+    ): MockInterface|TransferParamsObject {
         /** @var MockInterface|TransferParamsObject $transferParamsObjectMock */
         $transferParamsObjectMock = Mockery::mock(TransferParamsObject::class);
         $transferParamsObjectMock->shouldReceive('getPayerId')->andReturn($payer->id);
@@ -251,36 +243,21 @@ class TransferServiceTest extends TestCase
             'amount' => $amountToBeTransferred
         ]);
 
-        $this->transferRepositoryMock->shouldReceive('create')->once()->andReturn($transfer);
+        return $transferParamsObjectMock;
+    }
 
-        $this->transferAuthorizationServiceMock->shouldReceive('authorize')->once()->andReturn(true);
+    private function generateFakeTransfer(User $payer, User $payee, float $amountToBeTransferred): Transfer
+    {
+        $transfer = Transfer::factory()->make([
+            'payer_id' => $payer->id,
+            'payee_id' => $payee->id,
+            'amount' => $amountToBeTransferred,
+            'transfer_status_id' => TransferStatusEnum::PENDING->value
+        ]);
+        $transfer->id = 10;
+        $transfer->setRelation('payer', $payer);
+        $transfer->setRelation('payee', $payee);
 
-        $this->walletRepositoryMock->shouldReceive('decrementById')->once();
-
-        $this->walletRepositoryMock->shouldReceive('incrementById')
-            ->once()
-            ->andThrow(new Exception('Fake Database error'));
-
-        Log::shouldReceive('error')
-            ->withArgs(function ($message, $context) {
-                return strpos(
-                        $message,
-                        '[TransferService] Failed to execute the transfer between the users as requested.'
-                    ) !== false
-                    && strpos($context['error_message'], 'Fake Database error') !== false;
-            });
-
-        DB::shouldReceive('beginTransaction')->once();
-        DB::shouldReceive('rollback')->once();
-
-        $updatedTransfer = $transfer->replicate();
-        $updatedTransfer->transfer_status_id = TransferStatusEnum::ERROR->value;
-
-        $this->transferRepositoryMock->shouldReceive('updateStatus')
-            ->once()
-            ->with($transfer->id, TransferStatusEnum::ERROR)
-            ->andReturn($updatedTransfer);
-
-        $this->service->transfer($transferParamsObjectMock);
+        return $transfer;
     }
 }

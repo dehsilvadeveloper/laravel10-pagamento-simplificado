@@ -2,6 +2,7 @@
 
 namespace App\Domain\Transfer\Services;
 
+use Carbon\Carbon;
 use Throwable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -36,6 +37,8 @@ class TransferService implements TransferServiceInterface
 
                 throw new UnauthorizedTransferException();
             }
+
+            $this->updateTransferAuthorizationDate($transfer);
 
             $processedTransfer = $this->executeTransfer($transfer);
 
@@ -80,6 +83,11 @@ class TransferService implements TransferServiceInterface
                 'amount' => $transfer->amount
             ])
         );
+    }
+
+    private function updateTransferAuthorizationDate(Transfer $transfer): void
+    {
+        $this->transferRepository->updateAuthorizationDate($transfer->id, Carbon::now());
     }
 
     private function executeTransfer(Transfer $transfer): Transfer
