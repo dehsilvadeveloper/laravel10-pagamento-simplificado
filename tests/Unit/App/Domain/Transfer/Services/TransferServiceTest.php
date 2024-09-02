@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Domain\Transfer\Enums\TransferStatusEnum;
 use App\Domain\Transfer\Exceptions\TransferFailedException;
+use App\Domain\Transfer\Exceptions\UnauthorizedTransferException;
 use App\Domain\Transfer\Models\Transfer;
 use App\Domain\Transfer\Repositories\TransferRepositoryInterface;
 use App\Domain\Transfer\Services\TransferService;
@@ -113,7 +114,7 @@ class TransferServiceTest extends TestCase
      */
     public function test_cannot_transfer_if_authorizer_denies(): void
     {
-        $this->expectException(TransferFailedException::class);
+        $this->expectException(UnauthorizedTransferException::class);
 
         $amountToBeTransferred = 50.00;
 

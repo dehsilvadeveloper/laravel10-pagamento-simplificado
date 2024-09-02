@@ -78,10 +78,7 @@ Route::prefix('/mocks')->name('mocks')->group(function () {
     )->name('authorization.authorize');
 });
 
-Route::get('test-transfer', function() {
-    // General information
-    $amountToBeTransferred = 50.00;
-
+Route::get('simulation/generate-users', function() {
     // Generating payer
     $payer = \App\Domain\User\Models\User::factory()->create([
         'user_type_id' => \App\Domain\User\Enums\UserTypeEnum::COMMON->value
@@ -100,17 +97,36 @@ Route::get('test-transfer', function() {
     ]);
     $payee->setRelation('wallet', $payeeWallet);
 
-    // Generating transfer params object
-    $transferParams = new \App\Domain\Transfer\ValueObjects\TransferParamsObject(
-        $payer->id,
-        $payee->id,
-        $amountToBeTransferred
-    );
+    print 'done!';
+});
 
-    // Defining TransferService
-    /** @var \App\Domain\Transfer\Services\Interfaces\TransferServiceInterface $service */
-    $service = app(\App\Domain\Transfer\Services\Interfaces\TransferServiceInterface::class);
+Route::get('simulation/transfer', function() {
+    try {
+        // General information
+        $amountToBeTransferred = 20.00;
 
-    // Executing transfer process
-    $service->transfer($transferParams);
+        // Generating payer
+        $payerId = 5;
+
+        // Generating payee
+        $payeeId = 6;
+
+        // Generating transfer params object
+        $transferParams = new \App\Domain\Transfer\ValueObjects\TransferParamsObject(
+            $payerId,
+            $payeeId,
+            $amountToBeTransferred
+        );
+
+        // Defining TransferService
+        /** @var \App\Domain\Transfer\Services\Interfaces\TransferServiceInterface $service */
+        $service = app(\App\Domain\Transfer\Services\Interfaces\TransferServiceInterface::class);
+
+        // Executing transfer process
+        $response = $service->transfer($transferParams);
+
+        dd($response->toArray());
+    } catch (Throwable $exception) {
+        dd($exception->getMessage());
+    }
 });

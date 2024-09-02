@@ -43,6 +43,21 @@ class TransferService implements TransferServiceInterface
             $processedTransfer = $this->executeTransfer($transfer);
 
             return $processedTransfer;
+        } catch (UnauthorizedTransferException $exception) {
+            Log::error(
+                '[TransferService] The transfer was not authorized.',
+                [
+                    'error_message' => $exception->getMessage(),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                    'data' => [
+                        'received_object' => $params->toArray() ?? null
+                    ],
+                    'stack_trace' => $exception->getTrace()
+                ]
+            );
+
+            throw $exception;
         } catch (Throwable $exception) {
             Log::error(
                 '[TransferService] Failed to execute the transfer between the users as requested.',

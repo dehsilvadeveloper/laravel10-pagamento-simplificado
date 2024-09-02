@@ -95,8 +95,8 @@ Lembre-se de respeitar as regras de negócio do desafio.
 
 * [Resolvendo o desafio](./docs/answering_challenge.md)
 * [Como começar](./docs/getting_started.md)
-* [Instruções para containers Docker](./docs/docker_containers_instructions.md)
 * [Utilizando a API](./docs/using_api.md)
+* [Instruções para containers Docker](./docs/docker_containers_instructions.md)
 * [Estrutura do banco de dados](./docs/database_structure.md)
 
 <!-- Badge Shields -->
