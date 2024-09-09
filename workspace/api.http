@@ -62,23 +62,36 @@ Authorization: Bearer {{accessToken}}
 
 ########################################
 #
-#  USER TYPES
+#  EXTERNAL AUTHORIZATION
 #
 ########################################
 
-### Get List Of User Types
+### Authorize (with third party service)
 
-GET {{baseUrl}}/user-types
+GET https://util.devi.tools/api/v2/authorize
+
+### Authorize (with local mocked service)
+
+GET {{baseUrl}}/mocks/external-authorization/authorize
+
+########################################
+#
+#  TRANSFERS
+#
+########################################
+
+### Create New Transfer
+
+POST {{baseUrl}}/transfers
 Accept: {{accept}}
 Content-Type: {{contentType}}
 Authorization: Bearer {{accessToken}}
 
-### Show Specific User Type
-
-GET {{baseUrl}}/user-types/1
-Accept: {{accept}}
-Content-Type: {{contentType}}
-Authorization: Bearer {{accessToken}}
+{
+    "payer": 1,
+    "payee": 2,
+    "value": 20.50
+}
 
 ########################################
 #
@@ -168,14 +181,20 @@ Authorization: Bearer {{accessToken}}
 
 ########################################
 #
-#  EXTERNAL AUTHORIZATION
+#  USER TYPES
 #
 ########################################
 
-### Authorize (with third party service)
+### Get List Of User Types
 
-GET https://util.devi.tools/api/v2/authorize
+GET {{baseUrl}}/user-types
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
 
-### Authorize (with local mocked service)
+### Show Specific User Type
 
-GET {{baseUrl}}/mocks/external-authorization/authorize
+GET {{baseUrl}}/user-types/1
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
