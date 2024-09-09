@@ -22,9 +22,9 @@ class CreateTransferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payer_id' => ['required', 'integer', 'exists:users,id'],
-            'payee_id' => ['required', 'integer', 'different:payer_id', 'exists:users,id'],
-            'amount' => ['required', 'numeric', 'gt:0']
+            'payer' => ['required', 'integer', 'exists:users,id'],
+            'payee' => ['required', 'integer', 'different:payer', 'exists:users,id'],
+            'value' => ['required', 'numeric', 'gt:0']
         ];
     }
 
@@ -34,15 +34,18 @@ class CreateTransferRequest extends FormRequest
     public function bodyParameters(): array
     {
         return [
-            'payer_id' => [
-                'description' => 'The user that will transfer the amount. This value can be obtained on the entity users.',
+            'payer' => [
+                'description' => 'The id of the user that will transfer the amount. This value can be obtained on the '
+                    . 'entity users. Payer and payee of a transfer cannot be the same. Users of type SHOPKEEPER '
+                    . 'cannot make transfers, only receive them.',
                 'example' => 1
             ],
-            'payee_id' => [
-                'description' => 'The user that will receive the amount. This value can be obtained on the entity users.',
+            'payee' => [
+                'description' => 'The id of the user that will receive the amount. This value can be obtained on the '
+                . 'entity users. Payee and payer of a transfer cannot be the same',
                 'example' => 2
             ],
-            'amount' => [
+            'value' => [
                 'description' => 'The amount to be transferred between users.',
                 'example' => 200.50
             ]

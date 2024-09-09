@@ -34,9 +34,9 @@ class CreateTransferRequestTest extends TestCase
         ]);
 
         $data = [
-            'payer_id' => $payer->id,
-            'payee_id' => $payee->id,
-            'amount' => fake()->randomFloat(2, 10, 900)
+            'payer' => $payer->id,
+            'payee' => $payee->id,
+            'value' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateTransferRequest())->replace($data);
@@ -71,9 +71,9 @@ class CreateTransferRequestTest extends TestCase
         ]);
 
         $data = [
-            'payer_id' => 999,
-            'payee_id' => $payee->id,
-            'amount' => fake()->randomFloat(2, 10, 900)
+            'payer' => 999,
+            'payee' => $payee->id,
+            'value' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateTransferRequest())->replace($data);
@@ -81,12 +81,12 @@ class CreateTransferRequestTest extends TestCase
 
         $this->assertTrue($validator->fails());
         $this->assertCount(1, $validator->errors());
-        $this->assertTrue($validator->errors()->has('payer_id'));
+        $this->assertTrue($validator->errors()->has('payer'));
         $this->assertEquals(
             [
-                'The selected payer id is invalid.'
+                'The selected payer is invalid.'
             ],
-            $validator->errors()->get('payer_id')
+            $validator->errors()->get('payer')
         );
     }
 
@@ -101,9 +101,9 @@ class CreateTransferRequestTest extends TestCase
         ]);
 
         $data = [
-            'payer_id' => $payer->id,
-            'payee_id' => 999,
-            'amount' => fake()->randomFloat(2, 10, 900)
+            'payer' => $payer->id,
+            'payee' => 999,
+            'value' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateTransferRequest())->replace($data);
@@ -111,12 +111,12 @@ class CreateTransferRequestTest extends TestCase
 
         $this->assertTrue($validator->fails());
         $this->assertCount(1, $validator->errors());
-        $this->assertTrue($validator->errors()->has('payee_id'));
+        $this->assertTrue($validator->errors()->has('payee'));
         $this->assertEquals(
             [
-                'The selected payee id is invalid.'
+                'The selected payee is invalid.'
             ],
-            $validator->errors()->get('payee_id')
+            $validator->errors()->get('payee')
         );
     }
 
@@ -131,9 +131,9 @@ class CreateTransferRequestTest extends TestCase
         ]);
 
         $data = [
-            'payer_id' => $payer->id,
-            'payee_id' => $payer->id,
-            'amount' => fake()->randomFloat(2, 10, 900)
+            'payer' => $payer->id,
+            'payee' => $payer->id,
+            'value' => fake()->randomFloat(2, 10, 900)
         ];
 
         $request = (new CreateTransferRequest())->replace($data);
@@ -141,12 +141,12 @@ class CreateTransferRequestTest extends TestCase
 
         $this->assertTrue($validator->fails());
         $this->assertCount(1, $validator->errors());
-        $this->assertTrue($validator->errors()->has('payee_id'));
+        $this->assertTrue($validator->errors()->has('payee'));
         $this->assertEquals(
             [
-                'The payee id field and payer id must be different.'
+                'The payee field and payer must be different.'
             ],
-            $validator->errors()->get('payee_id')
+            $validator->errors()->get('payee')
         );
     }
 
@@ -154,7 +154,7 @@ class CreateTransferRequestTest extends TestCase
      * @group requests
      * @group transfer
      */
-    public function test_fail_with_non_mumeric_amount(): void
+    public function test_fail_with_non_mumeric_value(): void
     {
         $payer = User::factory()->create([
             'user_type_id' => UserTypeEnum::COMMON->value
@@ -164,9 +164,9 @@ class CreateTransferRequestTest extends TestCase
         ]);
 
         $data = [
-            'payer_id' => $payer->id,
-            'payee_id' => $payee->id,
-            'amount' => 'abc'
+            'payer' => $payer->id,
+            'payee' => $payee->id,
+            'value' => 'abc'
         ];
 
         $request = (new CreateTransferRequest())->replace($data);
@@ -174,13 +174,13 @@ class CreateTransferRequestTest extends TestCase
 
         $this->assertTrue($validator->fails());
         $this->assertCount(2, $validator->errors());
-        $this->assertTrue($validator->errors()->has('amount'));
+        $this->assertTrue($validator->errors()->has('value'));
         $this->assertEquals(
             [
-                'The amount field must be a number.',
-                'The amount field must be greater than 0.'
+                'The value field must be a number.',
+                'The value field must be greater than 0.'
             ],
-            $validator->errors()->get('amount')
+            $validator->errors()->get('value')
         );
     }
 
@@ -188,7 +188,7 @@ class CreateTransferRequestTest extends TestCase
      * @group requests
      * @group transfer
      */
-    public function test_fail_with_amount_with_zero_value(): void
+    public function test_fail_with_with_zero_value(): void
     {
         $payer = User::factory()->create([
             'user_type_id' => UserTypeEnum::COMMON->value
@@ -198,9 +198,9 @@ class CreateTransferRequestTest extends TestCase
         ]);
 
         $data = [
-            'payer_id' => $payer->id,
-            'payee_id' => $payee->id,
-            'amount' => 0
+            'payer' => $payer->id,
+            'payee' => $payee->id,
+            'value' => 0
         ];
 
         $request = (new CreateTransferRequest())->replace($data);
@@ -208,12 +208,12 @@ class CreateTransferRequestTest extends TestCase
 
         $this->assertTrue($validator->fails());
         $this->assertCount(1, $validator->errors());
-        $this->assertTrue($validator->errors()->has('amount'));
+        $this->assertTrue($validator->errors()->has('value'));
         $this->assertEquals(
             [
-                'The amount field must be greater than 0.'
+                'The value field must be greater than 0.'
             ],
-            $validator->errors()->get('amount')
+            $validator->errors()->get('value')
         );
     }
 
@@ -221,7 +221,7 @@ class CreateTransferRequestTest extends TestCase
      * @group requests
      * @group transfer
      */
-    public function test_fail_with_amount_with_negative_value(): void
+    public function test_fail_with_value_with_negative_value(): void
     {
         $payer = User::factory()->create([
             'user_type_id' => UserTypeEnum::COMMON->value
@@ -231,9 +231,9 @@ class CreateTransferRequestTest extends TestCase
         ]);
 
         $data = [
-            'payer_id' => $payer->id,
-            'payee_id' => $payee->id,
-            'amount' => -20
+            'payer' => $payer->id,
+            'payee' => $payee->id,
+            'value' => -20
         ];
 
         $request = (new CreateTransferRequest())->replace($data);
@@ -241,12 +241,12 @@ class CreateTransferRequestTest extends TestCase
 
         $this->assertTrue($validator->fails());
         $this->assertCount(1, $validator->errors());
-        $this->assertTrue($validator->errors()->has('amount'));
+        $this->assertTrue($validator->errors()->has('value'));
         $this->assertEquals(
             [
-                'The amount field must be greater than 0.'
+                'The value field must be greater than 0.'
             ],
-            $validator->errors()->get('amount')
+            $validator->errors()->get('value')
         );
     }
 }
