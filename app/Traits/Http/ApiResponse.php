@@ -27,7 +27,7 @@ trait ApiResponse
             $finalResponseData['data'] = $data;
         }
 
-        return response()->json($finalResponseData, $code, $headers);
+        return response()->json($finalResponseData, $code, $headers, JSON_UNESCAPED_UNICODE);
     }
 
     protected function sendErrorResponse(
@@ -46,6 +46,6 @@ trait ApiResponse
             $finalResponseData['data'] = $data;
         }
 
-        return response()->json($finalResponseData, $code, $headers);
+        return response()->json($finalResponseData, $code, $headers, JSON_UNESCAPED_UNICODE);
     }
 }
