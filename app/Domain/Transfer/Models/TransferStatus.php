@@ -35,6 +35,6 @@ class TransferStatus extends Model
 
     public function transfers(): HasMany
     {
-        return $this->hasMany(Transfer::class);
+        return $this->hasMany(Transfer::class, 'transfer_status_id');
     }
 }

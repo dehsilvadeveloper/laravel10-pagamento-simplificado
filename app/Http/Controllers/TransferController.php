@@ -36,72 +36,97 @@ class TransferController extends Controller
      *
      * This endpoint allows you to create a new transfer.
      * 
-     * @responseField id integer The identifier of the user.
-     * @responseField name string The name of the user.
-     * @responseField user_type.id integer The identifier of the type of user.
-     * @responseField user_type.name string The type of user.
-     * @responseField document_type.id integer The identifier of the type of document.
-     * @responseField document_type.name string The type of document.
-     * @responseField document_number string The number of document.
-     * @responseField email string The e-mail of the user.
-     * @responseField wallet.id integer The identifier of the wallet of the user.
-     * @responseField wallet.balance float The current balance of the wallet of the user.
-     * @responseField created_at string The date and time in which the user was created.
-     * @responseField updated_at string The date and time in which the user was last updated.
+     * @responseField id integer The identifier of the transfer.
+     * @responseField payer.id integer The identifier of the payer.
+     * @responseField payer.name string The name of the payer.
+     * @responseField payer.wallet.id integer The identifier of the wallet of the payer.
+     * @responseField payer.wallet.balance float The current balance of the wallet of the payer.
+     * @responseField payer.created_at string The date and time in which the payer was created.
+     * @responseField payer.updated_at string The date and time in which the payer was last updated.
+     * @responseField payee.id integer The identifier of the payee.
+     * @responseField payee.name string The name of the payee.
+     * @responseField payee.wallet.id integer The identifier of the wallet of the payee.
+     * @responseField payee.wallet.balance float The current balance of the wallet of the payee.
+     * @responseField payee.created_at string The date and time in which the payee was created.
+     * @responseField payee.updated_at string The date and time in which the payee was last updated.
+     * @responseField amount float The amount that was transferred.
+     * @responseField status.id integer The identifier of the current status of the transfer.
+     * @responseField status.name string The name of the current status of the transfer.
+     * @responseField created_at string The date and time in which the transfer was created.
+     * @responseField updated_at string The date and time in which the transfer was last updated.
+     * @responseField created_at string The date and time in which the transfer was authorized.
      * 
      * @response status=201 scenario=success {
      *      "message": "Transfer made with success.",
      *      "data": {
-     *          "id": 17,
-     *          "name": "Peter Parker",
-     *          "user_type": {
+     *          "id": 10,
+     *          "payer": {
      *              "id": 1,
-     *              "name": "comum"
+     *              "name": "John Doe",
+     *              "wallet": {
+     *                  "id": 1,
+     *                  "balance": 434.8
+     *              },
+     *              "created_at": "2024-07-02 11:19:30",
+     *              "updated_at": "2024-07-02 11:19:30"
      *          },
-     *          "document_type": {
+     *          "payee": {
      *              "id": 2,
-     *              "name": "cpf"
+     *              "name": "Jane Doe",
+     *              "wallet": {
+     *                  "id": 2,
+     *                  "balance": 475.8
+     *              },
+     *              "created_at": "2024-07-02 11:19:30",
+     *              "updated_at": "2024-07-02 11:19:30"
      *          },
-     *          "document_number": "06633022000",
-     *          "email": "peter.parker@marvel.com",
-     *          "wallet": {
-     *              "id": 1,
-     *              "balance": 150.10
-     *          }
-     *          "created_at": "2024-07-12 15:42:18",
-     *          "updated_at": "2024-07-12 15:42:18"
+     *          "amount": "20.50",
+     *          "status": {
+     *              "id": 2,
+     *              "name": "concluido"
+     *          },
+     *          "created_at": "2024-07-11 14:46:43",
+     *          "updated_at": "2024-07-11 14:46:45",
+     *          "authorized_at": "2024-07-11 14:46:45"
      *      }
+     * }
+     * 
+     * @response status=400 scenario="transfer general fail" {
+     *      "message": "The transfer between the users has failed."
      * }
      *
      * @response status=401 scenario="unauthenticated" {
      *      "message": "Unauthenticated."
      * }
      * 
+     * @response status=403 scenario="transfer unauthorized error" {
+     *      "message": "The transfer was not authorized."
+     * }
+     * 
      * @response status=422 scenario="validation error" {
-     *      "message": "The user type id field is required. (and 5 more errors)",
+     *      "message": "The payer field is required. (and 2 more errors)",
      *      "errors": {
-     *          "user_type_id": [
-     *              "The user type id field is required."
+     *          "payer": [
+     *              "The payer field is required.",
+     *              "The selected payer is invalid."
      *          ],
-     *          "name": [
-     *              "The name field is required."
+     *          "payee": [
+     *              "The payee field is required.",
+     *              "The selected payee is invalid."
      *          ],
-     *          "document_type_id": [
-     *              "The document type id field is required."
-     *          ],
-     *          "document_number": [
-     *              "The document number field is required."
-     *          ],
-     *          "email": [
-     *              "The email field is required."
-     *          ],
-     *          "password": [
-     *              "The password field is required."
-     *          ],
-     *          "starter_balance": [
-     *              "The starter balance field is required."
+     *          "value": [
+     *              "The value field is required.",
+     *              "The value field must be greater than 0."
      *          ]
      *      }
+     * }
+     * 
+     * @response status=422 scenario="invalid payer error" {
+     *      "message": "The payer is not valid."
+     * }
+     * 
+     * @response status=422 scenario="insufficient funds error" {
+     *      "message": "There is no sufficient funds for this operation."
      * }
      *
      * @response status=500 scenario="unexpected error" {

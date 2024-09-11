@@ -63,7 +63,7 @@ class Transfer extends Model
 
     public function status(): BelongsTo
     {
-        return $this->belongsTo(TransferStatus::class);
+        return $this->belongsTo(TransferStatus::class, 'transfer_status_id');
     }
 
     public function authorizationResponses(): HasMany

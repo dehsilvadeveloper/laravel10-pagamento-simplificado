@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 class TransferFailedException extends Exception
 {
     protected $message = 'The transfer between the users has failed.';
-    protected $code = Response::HTTP_UNPROCESSABLE_ENTITY;
+    protected $code = Response::HTTP_BAD_REQUEST;
 
     public function __construct(?string $message = null, ?int $code = null)
     {
