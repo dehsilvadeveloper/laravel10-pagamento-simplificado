@@ -96,13 +96,23 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-mock-external-authorizer" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="mock-external-authorizer">
-                    <a href="#mock-external-authorizer">Mock External Authorizer</a>
+                    <ul id="tocify-header-mocked-external-authorizer" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="mocked-external-authorizer">
+                    <a href="#mocked-external-authorizer">Mocked External Authorizer</a>
                 </li>
-                                    <ul id="tocify-subheader-mock-external-authorizer" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="mock-external-authorizer-GETapi-mocks-external-authorization-authorize">
-                                <a href="#mock-external-authorizer-GETapi-mocks-external-authorization-authorize">Simulate authorization</a>
+                                    <ul id="tocify-subheader-mocked-external-authorizer" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="mocked-external-authorizer-GETapi-mocks-external-authorization-authorize">
+                                <a href="#mocked-external-authorizer-GETapi-mocks-external-authorization-authorize">Simulate authorization</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-transfers" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="transfers">
+                    <a href="#transfers">Transfers</a>
+                </li>
+                                    <ul id="tocify-subheader-transfers" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="transfers-POSTapi-transfers">
+                                <a href="#transfers-POSTapi-transfers">Create a transfer</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -148,7 +158,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: August 15, 2024</li>
+        <li>Last updated: September 11, 2024</li>
     </ul>
 </div>
 
@@ -889,7 +899,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/12" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -897,7 +907,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/12';
 $response = $client-&gt;get(
     $url,
     [
@@ -914,7 +924,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/12"
 );
 
 const headers = {
@@ -933,7 +943,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/16'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/12'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -1073,10 +1083,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-document-types--id-"
-               value="16"
+               value="12"
                data-component="url">
     <br>
-<p>The identifier of the document type. Example: <code>16</code></p>
+<p>The identifier of the document type. Example: <code>12</code></p>
             </div>
                     </form>
 
@@ -1096,11 +1106,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <br>
 <p>The name of the document type.</p>
         </div>
-                    <h1 id="mock-external-authorizer">Mock External Authorizer</h1>
+                    <h1 id="mocked-external-authorizer">Mocked External Authorizer</h1>
 
     <p>Endpoints for simulations related to external authorization of transfers</p>
 
-                                <h2 id="mock-external-authorizer-GETapi-mocks-external-authorization-authorize">Simulate authorization</h2>
+                                <h2 id="mocked-external-authorizer-GETapi-mocks-external-authorization-authorize">Simulate authorization</h2>
 
 <p>
 </p>
@@ -1292,6 +1302,521 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The response of the authorization. Can be true or false.</p>
                     </div>
                                     </details>
+        </div>
+                    <h1 id="transfers">Transfers</h1>
+
+    <p>Endpoints for managing transfers</p>
+
+                                <h2 id="transfers-POSTapi-transfers">Create a transfer</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>This endpoint allows you to create a new transfer.</p>
+
+<span id="example-requests-POSTapi-transfers">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/transfers" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"payer\": 1,
+    \"payee\": 2,
+    \"value\": 200.5
+}"
+</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/transfers';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'payer' =&gt; 1,
+            'payee' =&gt; 2,
+            'value' =&gt; 200.5,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/transfers"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "payer": 1,
+    "payee": 2,
+    "value": 200.5
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/transfers'
+payload = {
+    "payer": 1,
+    "payee": 2,
+    "value": 200.5
+}
+headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-transfers">
+            <blockquote>
+            <p>Example response (201, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Transfer made with success.&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 10,
+        &quot;payer&quot;: {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;John Doe&quot;,
+            &quot;wallet&quot;: {
+                &quot;id&quot;: 1,
+                &quot;balance&quot;: 434.8
+            },
+            &quot;created_at&quot;: &quot;2024-07-02 11:19:30&quot;,
+            &quot;updated_at&quot;: &quot;2024-07-02 11:19:30&quot;
+        },
+        &quot;payee&quot;: {
+            &quot;id&quot;: 2,
+            &quot;name&quot;: &quot;Jane Doe&quot;,
+            &quot;wallet&quot;: {
+                &quot;id&quot;: 2,
+                &quot;balance&quot;: 475.8
+            },
+            &quot;created_at&quot;: &quot;2024-07-02 11:19:30&quot;,
+            &quot;updated_at&quot;: &quot;2024-07-02 11:19:30&quot;
+        },
+        &quot;amount&quot;: &quot;20.50&quot;,
+        &quot;status&quot;: {
+            &quot;id&quot;: 2,
+            &quot;name&quot;: &quot;concluido&quot;
+        },
+        &quot;created_at&quot;: &quot;2024-07-11 14:46:43&quot;,
+        &quot;updated_at&quot;: &quot;2024-07-11 14:46:45&quot;,
+        &quot;authorized_at&quot;: &quot;2024-07-11 14:46:45&quot;
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400, transfer general fail):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The transfer between the users has failed.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, unauthenticated):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, transfer unauthorized error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The transfer was not authorized.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, validation error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The payer field is required. (and 2 more errors)&quot;,
+    &quot;errors&quot;: {
+        &quot;payer&quot;: [
+            &quot;The payer field is required.&quot;,
+            &quot;The selected payer is invalid.&quot;
+        ],
+        &quot;payee&quot;: [
+            &quot;The payee field is required.&quot;,
+            &quot;The selected payee is invalid.&quot;
+        ],
+        &quot;value&quot;: [
+            &quot;The value field is required.&quot;,
+            &quot;The value field must be greater than 0.&quot;
+        ]
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, invalid payer error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The payer is not valid.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, insufficient funds error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;There is no sufficient funds for this operation.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500, unexpected error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Internal Server Error.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-transfers" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-transfers"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-transfers"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-transfers" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-transfers">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-transfers" data-method="POST"
+      data-path="api/transfers"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-transfers', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-transfers"
+                    onclick="tryItOut('POSTapi-transfers');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-transfers"
+                    onclick="cancelTryOut('POSTapi-transfers');" hidden>Cancel
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-transfers"
+                    data-initial-text="Send Request"
+                    data-loading-text="Sending..."
+                    hidden>Send Request
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/transfers</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-transfers"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-transfers"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-transfers"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>payer</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="payer"                data-endpoint="POSTapi-transfers"
+               value="1"
+               data-component="body">
+    <br>
+<p>The id of the user that will transfer the amount. This value can be obtained on the entity users. Payer and payee of a transfer cannot be the same. Users of type SHOPKEEPER cannot make transfers, only receive them. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>payee</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="payee"                data-endpoint="POSTapi-transfers"
+               value="2"
+               data-component="body">
+    <br>
+<p>The id of the user that will receive the amount. This value can be obtained on the entity users. Payee and payer of a transfer cannot be the same. The value and <code>payer</code> must be different. Example: <code>2</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>value</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="value"                data-endpoint="POSTapi-transfers"
+               value="200.5"
+               data-component="body">
+    <br>
+<p>The amount to be transferred between users. Example: <code>200.5</code></p>
+        </div>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>The identifier of the transfer.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>payer</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>The identifier of the payer.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>The name of the payer.</p>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>wallet</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>The identifier of the wallet of the payer.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>balance</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+<br>
+<p>The current balance of the wallet of the payer.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>created_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>The date and time in which the payer was created.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>updated_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>The date and time in which the payer was last updated.</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>payee</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>The identifier of the payee.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>The name of the payee.</p>
+                    </div>
+                                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>wallet</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>The identifier of the wallet of the payee.</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>balance</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+<br>
+<p>The current balance of the wallet of the payee.</p>
+                    </div>
+                                    </details>
+        </div>
+                                                                    <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>created_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>The date and time in which the payee was created.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>updated_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>The date and time in which the payee was last updated.</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>amount</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+<br>
+<p>The amount that was transferred.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>The identifier of the current status of the transfer.</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>The name of the current status of the transfer.</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>created_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>The date and time in which the transfer was authorized.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>updated_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>The date and time in which the transfer was last updated.</p>
         </div>
                     <h1 id="user-types">User Types</h1>
 
@@ -1517,7 +2042,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/17" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/18" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -1525,7 +2050,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/17';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/18';
 $response = $client-&gt;get(
     $url,
     [
@@ -1542,7 +2067,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/17"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/18"
 );
 
 const headers = {
@@ -1561,7 +2086,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/17'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/18'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -1701,10 +2226,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-user-types--id-"
-               value="17"
+               value="18"
                data-component="url">
     <br>
-<p>The identifier of the user type. Example: <code>17</code></p>
+<p>The identifier of the user type. Example: <code>18</code></p>
             </div>
                     </form>
 
@@ -2211,7 +2736,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/8" \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/4" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -2228,7 +2753,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/8';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/4';
 $response = $client-&gt;patch(
     $url,
     [
@@ -2253,7 +2778,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/8"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/4"
 );
 
 const headers = {
@@ -2282,7 +2807,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/8'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/4'
 payload = {
     "user_type_id": 1,
     "name": "John Doe",
@@ -2470,10 +2995,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-users--id-"
-               value="8"
+               value="4"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>8</code></p>
+<p>The identifier of the user. Example: <code>4</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -2677,7 +3202,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/9" \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/13" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2685,7 +3210,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/9';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/13';
 $response = $client-&gt;delete(
     $url,
     [
@@ -2702,7 +3227,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/9"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/13"
 );
 
 const headers = {
@@ -2721,7 +3246,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/9'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/13'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -2858,10 +3383,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-users--id-"
-               value="9"
+               value="13"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>9</code></p>
+<p>The identifier of the user. Example: <code>13</code></p>
             </div>
                     </form>
 
@@ -3220,7 +3745,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/users/6" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/users/10" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3228,7 +3753,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/6';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/10';
 $response = $client-&gt;get(
     $url,
     [
@@ -3245,7 +3770,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/6"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/10"
 );
 
 const headers = {
@@ -3264,7 +3789,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/6'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/10'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -3420,10 +3945,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-users--id-"
-               value="6"
+               value="10"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>6</code></p>
+<p>The identifier of the user. Example: <code>10</code></p>
             </div>
                     </form>
 
