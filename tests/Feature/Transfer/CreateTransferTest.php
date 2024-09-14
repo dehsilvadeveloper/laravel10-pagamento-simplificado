@@ -479,7 +479,25 @@ class CreateTransferTest extends TestCase
     {
         Event::fake();
 
-        $this->assertTrue(true);
+        Sanctum::actingAs(ApiUser::factory()->create(), ['*']);
+
+        $data = [
+            'payer' => 1,
+            'payee' => 2,
+            'value' => 20.50
+        ];
+
+        $this->transferAuthorizationServiceMock->shouldReceive('authorize')->once()->andReturn(false);
+
+        $response = $this->postJson(route('transfer.create'), $data);
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertJsonStructure([
+            'message'
+        ]);
+        $response->assertJson([
+            'message' => 'The transfer was not authorized.'
+        ]);
     }
 
     /**
