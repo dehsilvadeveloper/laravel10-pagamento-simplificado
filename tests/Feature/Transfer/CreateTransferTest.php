@@ -247,11 +247,30 @@ class CreateTransferTest extends TestCase
     /**
      * @group transfer
      */
-    public function test_fail_with_payer_shopkeeper(): void // tipo não pode ser shopkeeper!!!
+    public function test_fail_with_payer_shopkeeper(): void
     {
         Event::fake();
 
-        $this->assertTrue(true);
+        Sanctum::actingAs(ApiUser::factory()->create(), ['*']);
+
+        $payer = User::find(3);
+        $payee = User::find(2);
+
+        $data = [
+            'payer' => $payer->id,
+            'payee' => $payee->id,
+            'value' => 20.50
+        ];
+
+        $response = $this->postJson(route('transfer.create'), $data);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonStructure([
+            'message'
+        ]);
+        $response->assertJson([
+            'message' => 'The payer of a transfer cannot be of type shopkeeper.'
+        ]);
     }
 
     /**
