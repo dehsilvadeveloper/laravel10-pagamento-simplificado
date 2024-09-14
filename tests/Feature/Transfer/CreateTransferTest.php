@@ -220,7 +220,28 @@ class CreateTransferTest extends TestCase
     {
         Event::fake();
 
-        $this->assertTrue(true);
+        Sanctum::actingAs(ApiUser::factory()->create(), ['*']);
+
+        $data = [
+            'payer' => 999,
+            'payee' => 2,
+            'value' => 20.50
+        ];
+
+        $response = $this->postJson(route('transfer.create'), $data);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'payer'
+            ]
+        ]);
+        $response->assertJson([
+            'errors' => [
+                'payer' => ['The selected payer is invalid.']
+            ]
+        ]);
     }
 
     /**
