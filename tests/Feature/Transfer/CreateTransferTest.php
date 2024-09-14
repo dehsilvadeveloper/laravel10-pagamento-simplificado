@@ -191,7 +191,26 @@ class CreateTransferTest extends TestCase
     {
         Event::fake();
 
-        $this->assertTrue(true);
+        Sanctum::actingAs(ApiUser::factory()->create(), ['*']);
+
+        $response = $this->postJson(route('transfer.create'), []);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'payer',
+                'payee',
+                'value'
+            ]
+        ]);
+        $response->assertJson([
+            'errors' => [
+                'payer' => ['The payer field is required.'],
+                'payee' => ['The payee field is required.'],
+                'value' => ['The value field is required.']
+            ]
+        ]);
     }
 
     /**
