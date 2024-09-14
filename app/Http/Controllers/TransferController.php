@@ -122,11 +122,11 @@ class TransferController extends Controller
      * }
      * 
      * @response status=422 scenario="invalid payer error" {
-     *      "message": "The payer is not valid."
+     *      "message": "The payer of a transfer cannot be of type shopkeeper."
      * }
      * 
      * @response status=422 scenario="insufficient funds error" {
-     *      "message": "There is no sufficient funds for this operation."
+     *      "message": "The payer does not have sufficient funds in his wallet for this operation."
      * }
      *
      * @response status=500 scenario="unexpected error" {

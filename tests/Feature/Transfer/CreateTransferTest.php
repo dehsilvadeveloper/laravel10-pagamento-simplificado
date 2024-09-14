@@ -302,6 +302,12 @@ class CreateTransferTest extends TestCase
         $response = $this->postJson(route('transfer.create'), $data);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonStructure([
+            'message'
+        ]);
+        $response->assertJson([
+            'message' => 'The payer does not have sufficient funds in his wallet for this operation.'
+        ]);
     }
 
     /**
@@ -311,7 +317,28 @@ class CreateTransferTest extends TestCase
     {
         Event::fake();
 
-        $this->assertTrue(true);
+        Sanctum::actingAs(ApiUser::factory()->create(), ['*']);
+
+        $data = [
+            'payer' => 1,
+            'payee' => 999,
+            'value' => 20.50
+        ];
+
+        $response = $this->postJson(route('transfer.create'), $data);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'payee'
+            ]
+        ]);
+        $response->assertJson([
+            'errors' => [
+                'payee' => ['The selected payee is invalid.']
+            ]
+        ]);
     }
 
     /**
