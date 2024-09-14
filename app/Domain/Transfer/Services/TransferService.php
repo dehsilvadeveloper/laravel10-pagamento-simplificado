@@ -40,9 +40,7 @@ class TransferService implements TransferServiceInterface
 
             $this->updateTransferAuthorizationDate($transfer);
 
-            $processedTransfer = $this->executeTransfer($transfer);
-
-            return $processedTransfer;
+            return $this->executeTransfer($transfer);
         } catch (UnauthorizedTransferException $exception) {
             Log::error(
                 '[TransferService] The transfer was not authorized.',
@@ -116,6 +114,8 @@ class TransferService implements TransferServiceInterface
             $processedTransfer = $this->transferRepository->updateStatus($transfer->id, TransferStatusEnum::COMPLETED);
 
             DB::commit();
+
+            // TODO: Incluir evento de notificação para PAYEE. Exemplo: event(new TransferReceived($user));
 
             return $processedTransfer;
         } catch (Throwable $exception) {
