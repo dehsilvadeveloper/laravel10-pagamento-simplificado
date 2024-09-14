@@ -12,7 +12,9 @@ use App\Domain\ApiUser\Models\ApiUser;
 use App\Domain\Transfer\Enums\TransferStatusEnum;
 use App\Domain\Transfer\Models\Transfer;
 use App\Domain\TransferAuthorization\Services\Interfaces\TransferAuthorizerServiceInterface;
+use App\Domain\User\Enums\UserTypeEnum;
 use App\Domain\User\Models\User;
+use App\Domain\Wallet\Models\Wallet;
 use Database\Seeders\DocumentTypeSeeder;
 use Database\Seeders\TransferStatusSeeder;
 use Database\Seeders\UserSeeder;
@@ -280,7 +282,26 @@ class CreateTransferTest extends TestCase
     {
         Event::fake();
 
-        $this->assertTrue(true);
+        Sanctum::actingAs(ApiUser::factory()->create(), ['*']);
+
+        $payer = User::factory()->create([
+            'user_type_id' => UserTypeEnum::COMMON->value
+        ]);
+        Wallet::factory()->for($payer)->create([
+            'balance' => 1.20
+        ]);
+
+        $payee = User::find(2);
+
+        $data = [
+            'payer' => $payer->id,
+            'payee' => $payee->id,
+            'value' => 20.50
+        ];
+
+        $response = $this->postJson(route('transfer.create'), $data);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**
