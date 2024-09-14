@@ -3,6 +3,7 @@
 namespace Tests\Feature\Transfer;
 
 use Tests\TestCase;
+use Exception;
 use Mockery;
 use Mockery\MockInterface;
 use Laravel\Sanctum\Sanctum;
@@ -10,11 +11,11 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use App\Domain\ApiUser\Models\ApiUser;
 use App\Domain\Transfer\Enums\TransferStatusEnum;
-use App\Domain\Transfer\Models\Transfer;
 use App\Domain\TransferAuthorization\Services\Interfaces\TransferAuthorizerServiceInterface;
 use App\Domain\User\Enums\UserTypeEnum;
 use App\Domain\User\Models\User;
 use App\Domain\Wallet\Models\Wallet;
+use App\Domain\Wallet\Repositories\WalletRepositoryInterface;
 use Database\Seeders\DocumentTypeSeeder;
 use Database\Seeders\TransferStatusSeeder;
 use Database\Seeders\UserSeeder;
@@ -503,10 +504,46 @@ class CreateTransferTest extends TestCase
     /**
      * @group transfer
      */
-    public function test_fail_if_a_exception_occurs(): void // checar se wallets estão retornando aos valores iniciais!!!
+    public function test_fail_if_a_exception_occurs(): void
     {
         Event::fake();
 
-        $this->assertTrue(true);
+        Sanctum::actingAs(ApiUser::factory()->create(), ['*']);
+
+        /** @var MockInterface|WalletRepositoryInterface $walletRepositoryMock */
+        $walletRepositoryMock = Mockery::mock(WalletRepositoryInterface::class);
+        $this->app->instance(WalletRepositoryInterface::class, $walletRepositoryMock);
+
+        $payer = User::find(1);
+        $payee = User::find(2);
+
+        $payerStarterWalletBalance = $payer->wallet->balance;
+        $payeeStarterWalletBalance = $payee->wallet->balance;
+
+        $data = [
+            'payer' => $payer->id,
+            'payee' => $payee->id,
+            'value' => 20.50
+        ];
+
+        $this->transferAuthorizationServiceMock->shouldReceive('authorize')->once()->andReturn(true);
+
+        $walletRepositoryMock->shouldReceive('decrementById')->once();
+        $walletRepositoryMock->shouldReceive('incrementById')
+            ->once()
+            ->andThrow(new Exception('Fake Database error'));
+
+        $response = $this->postJson(route('transfer.create'), $data);
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertJsonStructure([
+            'message'
+        ]);
+        $response->assertJson([
+            'message' => 'The transfer between the users has failed.'
+        ]);
+
+        $this->assertEquals($payerStarterWalletBalance, $payer->wallet->fresh()->balance);
+        $this->assertEquals($payeeStarterWalletBalance, $payee->wallet->fresh()->balance);
     }
 }
