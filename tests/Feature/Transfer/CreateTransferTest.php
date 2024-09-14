@@ -446,7 +446,30 @@ class CreateTransferTest extends TestCase
     {
         Event::fake();
 
-        $this->assertTrue(true);
+        Sanctum::actingAs(ApiUser::factory()->create(), ['*']);
+
+        $data = [
+            'payer' => 1,
+            'payee' => 2,
+            'value' => -10.50
+        ];
+
+        $response = $this->postJson(route('transfer.create'), $data);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'value'
+            ]
+        ]);
+        $response->assertJson([
+            'errors' => [
+                'value' => [
+                    'The value field must be greater than 0.'
+                ]
+            ]
+        ]);
     }
 
     /**
