@@ -156,7 +156,7 @@ endpoints:
         status: 422
         content: |-
           {
-               "message": "The payer is not valid."
+               "message": "The payer of a transfer cannot be of type shopkeeper."
           }
         headers: []
         description: 'invalid payer error'
@@ -165,7 +165,7 @@ endpoints:
         status: 422
         content: |-
           {
-               "message": "There is no sufficient funds for this operation."
+               "message": "The payer does not have sufficient funds in his wallet for this operation."
           }
         headers: []
         description: 'insufficient funds error'
@@ -345,7 +345,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer gac6EfZ186hk4vD53eVbPda'
+      - 'Bearer avVhadPfcbg1k45Z3668eDE'
     controller: null
     method: null
     route: null

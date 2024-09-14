@@ -88,7 +88,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer cbf1h6EDgvd8a5ZVka4e36P'
+      - 'Bearer vaVb6fPDe8a65cgdkhE143Z'
     controller: null
     method: null
     route: null
@@ -117,13 +117,13 @@ endpoints:
         name: id
         description: 'The identifier of the document type.'
         required: true
-        example: 12
+        example: 5
         type: integer
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: 12
+      id: 5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -191,7 +191,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer hEbf5vgead4D6cPkZ36V81a'
+      - 'Bearer V5a6cfdPDZ6kh48egvE1b3a'
     controller: null
     method: null
     route: null

@@ -158,7 +158,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: September 11, 2024</li>
+        <li>Last updated: September 14, 2024</li>
     </ul>
 </div>
 
@@ -899,7 +899,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/12" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/5" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -907,7 +907,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/12';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/5';
 $response = $client-&gt;get(
     $url,
     [
@@ -924,7 +924,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/12"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/5"
 );
 
 const headers = {
@@ -943,7 +943,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/12'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/document-types/5'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -1083,10 +1083,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-document-types--id-"
-               value="12"
+               value="5"
                data-component="url">
     <br>
-<p>The identifier of the document type. Example: <code>12</code></p>
+<p>The identifier of the document type. Example: <code>5</code></p>
             </div>
                     </form>
 
@@ -1497,7 +1497,7 @@ response.json()</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;The payer is not valid.&quot;
+    &quot;message&quot;: &quot;The payer of a transfer cannot be of type shopkeeper.&quot;
 }</code>
  </pre>
             <blockquote>
@@ -1506,7 +1506,7 @@ response.json()</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;There is no sufficient funds for this operation.&quot;
+    &quot;message&quot;: &quot;The payer does not have sufficient funds in his wallet for this operation.&quot;
 }</code>
  </pre>
             <blockquote>
@@ -2042,7 +2042,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/18" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/20" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2050,7 +2050,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/18';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/20';
 $response = $client-&gt;get(
     $url,
     [
@@ -2067,7 +2067,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/18"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/20"
 );
 
 const headers = {
@@ -2086,7 +2086,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/18'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/20'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -2226,10 +2226,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-user-types--id-"
-               value="18"
+               value="20"
                data-component="url">
     <br>
-<p>The identifier of the user type. Example: <code>18</code></p>
+<p>The identifier of the user type. Example: <code>20</code></p>
             </div>
                     </form>
 
@@ -2736,7 +2736,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/4" \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/9" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -2753,7 +2753,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/4';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/9';
 $response = $client-&gt;patch(
     $url,
     [
@@ -2778,7 +2778,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/4"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/9"
 );
 
 const headers = {
@@ -2807,7 +2807,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/4'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/9'
 payload = {
     "user_type_id": 1,
     "name": "John Doe",
@@ -2995,10 +2995,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-users--id-"
-               value="4"
+               value="9"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>4</code></p>
+<p>The identifier of the user. Example: <code>9</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -3202,7 +3202,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/13" \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/16" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3210,7 +3210,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/13';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/16';
 $response = $client-&gt;delete(
     $url,
     [
@@ -3227,7 +3227,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/13"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/16"
 );
 
 const headers = {
@@ -3246,7 +3246,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/13'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/16'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -3383,10 +3383,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-users--id-"
-               value="13"
+               value="16"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>13</code></p>
+<p>The identifier of the user. Example: <code>16</code></p>
             </div>
                     </form>
 
@@ -3745,7 +3745,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/users/10" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/users/14" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3753,7 +3753,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/10';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/14';
 $response = $client-&gt;get(
     $url,
     [
@@ -3770,7 +3770,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/10"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/14"
 );
 
 const headers = {
@@ -3789,7 +3789,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/10'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/14'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -3945,10 +3945,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-users--id-"
-               value="10"
+               value="14"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>10</code></p>
+<p>The identifier of the user. Example: <code>14</code></p>
             </div>
                     </form>
 

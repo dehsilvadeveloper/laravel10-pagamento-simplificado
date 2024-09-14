@@ -88,7 +88,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer VcDPZ6dbhae3f4E5a8g1kv6'
+      - 'Bearer P5d4ageh6kEvZ6f31c8aDVb'
     controller: null
     method: null
     route: null
@@ -117,13 +117,13 @@ endpoints:
         name: id
         description: 'The identifier of the user type.'
         required: true
-        example: 18
+        example: 20
         type: integer
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: 18
+      id: 20
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -191,7 +191,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer 61Z58VEdacDPfkvbg43ah6e'
+      - 'Bearer d8EVZcabk5PD34egh6af6v1'
     controller: null
     method: null
     route: null
