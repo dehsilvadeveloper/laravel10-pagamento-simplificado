@@ -376,4 +376,34 @@ class CreateUserRequestTest extends TestCase
             $validator->errors()->get('starter_balance')
         );
     }
+
+    /**
+     * @group requests
+     * @group user
+     */
+    public function test_fail_with_starter_balance_with_negative_value(): void
+    {
+        $data = [
+            'user_type_id' => UserTypeEnum::COMMON->value,
+            'document_type_id' => DocumentTypeEnum::CPF->value,
+            'document_number' => fake()->cpf(false),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => fake()->password(12),
+            'starter_balance' => -20
+        ];
+
+        $request = (new CreateUserRequest())->replace($data);
+        $validator = Validator::make($data, $request->rules(), $request->messages());
+
+        $this->assertTrue($validator->fails());
+        $this->assertCount(1, $validator->errors());
+        $this->assertTrue($validator->errors()->has('starter_balance'));
+        $this->assertEquals(
+            [
+                'The starter balance field must be greater than 0.'
+            ],
+            $validator->errors()->get('starter_balance')
+        );
+    }
 }

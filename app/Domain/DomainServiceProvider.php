@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Domain\ApiUser\Providers\ApiUserServiceProvider;
 use App\Domain\Auth\Providers\AuthServiceProvider;
 use App\Domain\DocumentType\Providers\DocumentTypeServiceProvider;
+use App\Domain\Transfer\Providers\TransferServiceProvider;
 use App\Domain\TransferAuthorization\Providers\TransferAuthorizationServiceProvider;
 use App\Domain\User\Providers\UserServiceProvider;
 
@@ -23,6 +24,7 @@ class DomainServiceProvider extends ServiceProvider
         $this->app->register(DocumentTypeServiceProvider::class);
         $this->app->register(UserServiceProvider::class);
         $this->app->register(TransferAuthorizationServiceProvider::class);
+        $this->app->register(TransferServiceProvider::class);
     }
 
     /**

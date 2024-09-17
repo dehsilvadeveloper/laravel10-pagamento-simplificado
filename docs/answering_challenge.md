@@ -32,7 +32,7 @@ Após a ação de criação de usuário, a aplicação dispara notificações co
 
 Caso não deseje lidar com a criação de usuários, a aplicação fornece alguns usuários padrão para sua conveniência. São fornecidos 2 usuários do tipo **comum** (John Doe e Jane Doe) e 2 usuários do tipo **lojista** (Pokemon Company e Stark Industries), sendo as informações destes obtidas pelo endpoint de listagem de usuários.
 
-```
+```json
 GET {{baseUrl}}/users
 Accept: {{accept}}
 Content-Type: {{contentType}}
@@ -49,6 +49,35 @@ EXTERNAL_AUTHORIZATION_SERVICE_URL=http://nginx:80/api/mocks/external-authorizat
 ```
 
 Lembre-se de deixar apenas uma versão da variável *EXTERNAL_AUTHORIZATION_SERVICE_URL* ativa, mantendo a outra comentada com o símbolo `#` em precedência.
+
+As respostas de solicitação de autorização (seja usando a url fornecida pelo desafio ou usando mock do serviço externo) são persistidas na entidade `transfer_authorization_responses`. Num cenário real, armazenar estas informações fornece material para solicitar suporte junto ao serviço externo em casos de erros inesperados.
+
+Com os usuários a serem envolvidos definidos, é o momento de executar transferências. Para isso você deverá utilizar o seguinte endpoint.
+
+```json
+POST {{baseUrl}}/transfers
+Accept: {{accept}}
+Content-Type: {{contentType}}
+Authorization: Bearer {{accessToken}}
+
+{
+  "value": 10.50,
+  "payer": 1,
+  "payee": 2
+}
+```
+
+Com relação ao corpo da requisição temos as seguintes informações.
+
+- "value": a quantia a ser transferida. Espera-se um valor numérico.
+- "payer": ou "pagador", a pessoa que vai **enviar** uma quantia em dinheiro para um outro usuário. Aqui precisamos do ID de usuário desta pessoa.
+- "payee": ou "recebedor", a pessoa que vai **receber** uma quantia em dinheiro de outro usuário. Aqui precisamos do ID de usuário desta pessoa.
+
+As regras de negócio informadas na descrição do desafio foram implantadas na forma de validação dos dados recebidos. Requisições barradas por validação não geram persistência de informações na entidade `transfers`.
+
+Se a transferência for um sucesso serão retornadas informações da mesma obtidas do banco de dados, como detalhes básicos do pagador e do recebedor (incluindo o saldo atual de sua carteira), montante envolvido, data de autorização e status da transferência. Você poderá, caso ache necessário, consultar estas informações diretamente no banco de dados se referindo as tabelas `users`, `wallets`, `transfer_auhtorization_responses` e `transfers`.
+
+Se a transferência falhar você poderá consultar o arquivo de log do dia atual para obter mais informações. Mensagens de logs para erros foram incluídas nas etapas do fluxo de transferência para fornecer observabilidade sobre possíveis problemas. Mesmo com a falha, ainda serão persistadas informações sobre a tentativa de transferência na entidade `transfers`.
 
 ### Segurança
 

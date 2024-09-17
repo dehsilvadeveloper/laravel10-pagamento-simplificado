@@ -13,6 +13,7 @@ use Illuminate\Notifications\Notifiable;
 use Database\Factories\UserFactory;
 use App\Domain\DocumentType\Models\DocumentType;
 use App\Domain\Notification\Models\Notification;
+use App\Domain\Transfer\Models\Transfer;
 use App\Domain\Wallet\Models\Wallet;
 
 class User extends Model
@@ -84,5 +85,15 @@ class User extends Model
     public function wallet(): HasOne
     {
         return $this->hasOne(Wallet::class);
+    }
+
+    public function transfersAsPayer(): HasMany
+    {
+        return $this->hasMany(Transfer::class, 'payer_id');
+    }
+
+    public function transfersAsPayee(): HasMany
+    {
+        return $this->hasMany(Transfer::class, 'payee_id');
     }
 }

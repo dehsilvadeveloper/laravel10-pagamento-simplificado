@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
 /**
- * @group Mock External Authorizer
+ * @group Mocked External Authorizer
  *
  * Endpoints for simulations related to external authorization of transfers
  */

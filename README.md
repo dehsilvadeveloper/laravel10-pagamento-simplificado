@@ -11,6 +11,8 @@
 
 # Desafio Pagamento Simplificado (Versão Laravel 10)
 
+<span style="color: red; font-weight: bold;">EM CONSTRUÇÃO</span>
+
 ## Descrição do desafio
 
 O objetivo deste desafio é construir uma API RESTFul para efetuar pagamentos simples. Nela deve ser possível realizar transferências de dinheiro entre usuários. Temos 2 tipos de usuários: os *comuns* e os *lojistas*, sendo que ambos possuem carteira com dinheiro e realizam transferências entre eles.
@@ -95,8 +97,8 @@ Lembre-se de respeitar as regras de negócio do desafio.
 
 * [Resolvendo o desafio](./docs/answering_challenge.md)
 * [Como começar](./docs/getting_started.md)
-* [Instruções para containers Docker](./docs/docker_containers_instructions.md)
 * [Utilizando a API](./docs/using_api.md)
+* [Instruções para containers Docker](./docs/docker_containers_instructions.md)
 * [Estrutura do banco de dados](./docs/database_structure.md)
 
 <!-- Badge Shields -->

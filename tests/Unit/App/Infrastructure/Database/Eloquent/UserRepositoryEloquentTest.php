@@ -5,6 +5,7 @@ namespace Tests\Unit\App\Infrastructure\Database\Eloquent;
 use Tests\TestCase;
 use InvalidArgumentException;
 use Mockery;
+use Mockery\MockInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
@@ -74,6 +75,7 @@ class UserRepositoryEloquentTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You did not provide any data to create the record.');
 
+        /** @var MockInterface|CreateUserDto $dtoMock */
         $dtoMock = Mockery::mock(CreateUserDto::class);
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 
@@ -136,6 +138,7 @@ class UserRepositoryEloquentTest extends TestCase
 
         $existingRecord = User::factory()->create();
 
+        /** @var MockInterface|UpdateUserDto $dtoMock */
         $dtoMock = Mockery::mock(UpdateUserDto::class);
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 

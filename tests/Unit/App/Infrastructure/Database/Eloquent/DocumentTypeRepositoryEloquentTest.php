@@ -5,6 +5,7 @@ namespace Tests\Unit\App\Infrastructure\Database\Eloquent;
 use Tests\TestCase;
 use InvalidArgumentException;
 use Mockery;
+use Mockery\MockInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Domain\DocumentType\DataTransferObjects\CreateDocumentTypeDto;
 use App\Domain\DocumentType\DataTransferObjects\UpdateDocumentTypeDto;
@@ -59,6 +60,7 @@ class DocumentTypeRepositoryEloquentTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You did not provide any data to create the record.');
 
+        /** @var MockInterface|CreateDocumentTypeDto $dtoMock */
         $dtoMock = Mockery::mock(CreateDocumentTypeDto::class);
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 
@@ -104,6 +106,7 @@ class DocumentTypeRepositoryEloquentTest extends TestCase
             'name' => fake()->name()
         ]);
 
+        /** @var MockInterface|UpdateDocumentTypeDto $dtoMock */
         $dtoMock = Mockery::mock(UpdateDocumentTypeDto::class);
         $dtoMock->shouldReceive('toArray')->andReturn([]);
 
