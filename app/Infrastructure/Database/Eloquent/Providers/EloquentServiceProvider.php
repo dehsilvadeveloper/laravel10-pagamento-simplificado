@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Domain\ApiUser\Repositories\ApiUserRepositoryInterface;
 use App\Domain\DocumentType\Repositories\DocumentTypeRepositoryInterface;
 use App\Domain\Notification\Repositories\NotificationRepositoryInterface;
+use App\Domain\Transfer\Repositories\TransferRepositoryInterface;
 use App\Domain\TransferAuthorization\Repositories\TransferAuthorizationResponseRepositoryInterface;
 use App\Domain\User\Repositories\UserRepositoryInterface;
 use App\Domain\User\Repositories\UserTypeRepositoryInterface;
@@ -14,6 +15,7 @@ use App\Infrastructure\Database\Eloquent\ApiUserRepositoryEloquent;
 use App\Infrastructure\Database\Eloquent\BaseRepositoryEloquent;
 use App\Infrastructure\Database\Eloquent\DocumentTypeRepositoryEloquent;
 use App\Infrastructure\Database\Eloquent\NotificationRepositoryEloquent;
+use App\Infrastructure\Database\Eloquent\TransferRepositoryEloquent;
 use App\Infrastructure\Database\Eloquent\TransferAuthorizationResponseRepositoryEloquent;
 use App\Infrastructure\Database\Eloquent\UserRepositoryEloquent;
 use App\Infrastructure\Database\Eloquent\UserTypeRepositoryEloquent;
@@ -36,6 +38,7 @@ class EloquentServiceProvider extends ServiceProvider
         $this->bindNotificationRepositoryClasses();
         $this->bindWalletRepositoryClasses();
         $this->bindTransferAuthorizationRepositoryClasses();
+        $this->bindTransferRepositoryClasses();
     }
 
     /**
@@ -115,6 +118,19 @@ class EloquentServiceProvider extends ServiceProvider
      */
     private function bindTransferAuthorizationRepositoryClasses(): void
     {
-        $this->app->bind(TransferAuthorizationResponseRepositoryInterface::class, TransferAuthorizationResponseRepositoryEloquent::class);
+        $this->app->bind(
+            TransferAuthorizationResponseRepositoryInterface::class,
+            TransferAuthorizationResponseRepositoryEloquent::class
+        );
+    }
+
+    /**
+     * Bind repository classes for domain Transfer
+     *
+     * @return void
+     */
+    private function bindTransferRepositoryClasses(): void
+    {
+        $this->app->bind(TransferRepositoryInterface::class, TransferRepositoryEloquent::class);
     }
 }

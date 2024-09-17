@@ -95,6 +95,15 @@ E então, para listar todas as chaves presentes neste database, você pode usar 
 KEYS *
 ```
 
+##### Conectando programas ao Redis dockerizado
+
+Para conectar programas como o **Redis Insight** ao banco de dados **Redis**, você pode utilizar as seguintes configurações:
+
+```
+hostname: 127.0.0.1
+port: 6379
+```
+
 ### Reiniciando containers
 
 Para reiniciar containers, você pode utilizar o seguinte comando:

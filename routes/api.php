@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\MockExternalAuthorizationController;
+use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
 
@@ -35,9 +36,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}', [DocumentTypeController::class, 'show'])->name('show');
     });
 
-    Route::prefix('/user-types')->name('user-type.')->group(function () {
-        Route::get('/', [UserTypeController::class, 'index'])->name('index');
-        Route::get('/{id}', [UserTypeController::class, 'show'])->name('show');
+    Route::prefix('/transfers')->name('transfer.')->group(function () {
+        Route::post('/', [TransferController::class, 'create'])->name('create');
     });
 
     Route::prefix('/users')->name('user.')->group(function () {
@@ -46,6 +46,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [UserController::class, 'delete'])->name('delete');
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/{id}', [UserController::class, 'show'])->name('show');
+    });
+
+    Route::prefix('/user-types')->name('user-type.')->group(function () {
+        Route::get('/', [UserTypeController::class, 'index'])->name('index');
+        Route::get('/{id}', [UserTypeController::class, 'show'])->name('show');
     });
 });
 

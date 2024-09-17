@@ -4,7 +4,7 @@ namespace App\Domain\Common\ValueObjects;
 
 use App\Domain\Common\Enums\HttpMethodEnum;
 
-final class HttpRequestObject
+class HttpRequestObject
 {
     private string $endpoint;
     private HttpMethodEnum $method;
