@@ -3,6 +3,8 @@
 namespace App\Infrastructure\Integration\ExtNotifier\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Infrastructure\Integration\ExtNotifier\Services\ExtNotifierRequestService;
+use App\Infrastructure\Integration\ExtNotifier\Services\Interfaces\ExtNotifierRequestServiceInterface;
 
 class ExtNotifierServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,6 @@ class ExtNotifierServiceProvider extends ServiceProvider
      */
     private function bindServiceClasses(): void
     {
-        // TODO: Include binds for service classes here
+        $this->app->bind(ExtNotifierRequestServiceInterface::class, ExtNotifierRequestService::class);
     }
 }
