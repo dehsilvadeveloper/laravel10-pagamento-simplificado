@@ -45,6 +45,8 @@ class ExtNotifierNotificationService implements ExtNotifierNotificationServiceIn
                     'received_dto_data' => $dto->toArray() ?? null
                 ]
             );
+
+            throw $exception;
         }
     }
 
