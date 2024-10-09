@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Channels\ExtNotifierChannel;
+use App\Channels\SmsChannel;
+use App\Infrastructure\Integration\ExtNotifier\Services\Interfaces\ExtNotifierNotificationServiceInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Notification;
-use App\Channels\SmsChannel;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +33,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Notification::extend('sms', function ($app) {
             return new SmsChannel();
+        });
+
+        Notification::extend('ext_notifier', function ($app) {
+            return new ExtNotifierChannel($app->make(ExtNotifierNotificationServiceInterface::class));
         });
     }
 }
