@@ -11,16 +11,18 @@ use Illuminate\Support\Facades\Log;
 use App\Domain\Common\Enums\HttpMethodEnum;
 use App\Domain\Common\Exceptions\EmptyRequestException;
 use App\Domain\Common\ValueObjects\HttpRequestObject;
+use App\Infrastructure\Integration\ExtNotifier\DataTransferObjects\SendNotificationDto;
+use App\Infrastructure\Integration\ExtNotifier\Services\Interfaces\ExtNotifierNotificationServiceInterface;
 use App\Infrastructure\Integration\ExtNotifier\Services\Interfaces\ExtNotifierRequestServiceInterface;
 
-class ExtNotifierNotificationService
+class ExtNotifierNotificationService implements ExtNotifierNotificationServiceInterface
 {
     public function __construct(
         private ExtNotifierRequestServiceInterface $extNotifierRequestService
     ) {
     }
 
-    public function notify($dto): ClientResponse
+    public function notify(SendNotificationDto $dto): ClientResponse
     {
         try {
             $data = $dto->toArray();
