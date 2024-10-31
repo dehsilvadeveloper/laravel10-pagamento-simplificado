@@ -84,5 +84,7 @@ class SendUserCreatedNotificationsTest extends TestCase
 
         $listener = new SendUserCreatedNotifications();
         $result = $listener->failed($eventMock, $fakeException);
+
+        $this->assertTrue(empty($result));
     }
 }

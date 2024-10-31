@@ -28,6 +28,13 @@ class SendTransferReceivedNotificationsTest extends TestCase
         $this->seed(UserTypeSeeder::class);
     }
 
+    protected function tearDown(): void
+    {
+        Mockery::close();
+
+        parent::tearDown();
+    }
+
     /**
      * @group listeners
      * @group transfer
@@ -86,5 +93,7 @@ class SendTransferReceivedNotificationsTest extends TestCase
 
         $listener = new SendTransferReceivedNotifications();
         $result = $listener->failed($eventMock, $fakeException);
+
+        $this->assertTrue(empty($result));
     }
 }
