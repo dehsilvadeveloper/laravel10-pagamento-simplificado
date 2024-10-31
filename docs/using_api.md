@@ -37,9 +37,7 @@ docker-compose exec main php artisan queue:work --queue=notifications
 
 Este comando vai deixar a aplicação em estado de espera, ou seja, aguardando que ações sejam colocadas na fila para serem executadas. Caso já existam ações armazenadas, elas serão devidamente processadas.
 
-Se você deseja interromper o estado de espera da aplicação, basta utilizar a seguinte combinação de teclas no terminal:
-
-`ctrl + c`
+Se você deseja interromper o estado de espera da aplicação, basta utilizar a seguinte combinação de teclas no terminal: `ctrl + c` .
 
 ### Rodando testes
 

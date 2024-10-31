@@ -22,13 +22,36 @@ Foi desenhado um diagrama de fluxo para a aplicação usando a ferramenta [Draw.
 
 Visando evitar problemas de divergência de ambientes em diferentes máquinas, todo o código da aplicação foi incluído em containers criados com a ferramenta **Docker**.
 
+### Disparo de notificações usando Filas / Queues
+
+Alguns disparos de notificações da aplicação são *assíncronos*, ou seja, não são executados no momento da requisição e ficam em espera numa fila de execução (*queue*). As notificações assíncronas são as seguintes:
+
+- Disparo de notificação de boas-vindas (após criação de usuário);
+- Disparo de notificação de transferência recebida (após um usuário receber uma nova transferência);
+
+Estas ações de disparo de notificações são armazenadas no **Redis** e ficam aguardando disponibilidade da aplicação para executá-las. Para efetivar um disparo é necessário rodar os seguintes comandos no terminal:
+
+```
+// Para entrar no container
+docker-compose exec -it main bash
+
+// Para processar itens que estão na fila
+php artisan queue:work --queue=notifications
+```
+
+Com isso a aplicação ficará em estado de espera, ou seja, aguardando que ações sejam colocadas na fila para serem executadas. Caso já existam ações armazenadas, elas serão devidamente processadas. Se você deseja interromper o estado de espera da aplicação, basta utilizar a seguinte combinação de teclas no terminal: `ctrl + c` .
+
+As notificações são disparadas por diferentes canais, mas seu comportamento é modificado para apenas simular os envios visto que não estamos em ambiente de produção. Os envios simulados registram informações em logs e também na entidade `notifications` do banco de dados.
+
 ### Explicação da API
+
+#### Sobre os usuários
 
 Um dos pontos de atenção levantados na descrição do desafio é a necessidade de se validar os dados necessários para criação de usuários. São requeridos os campos `Nome Completo`, `Número do Documento (CPF/CNPJ)`, `E-mail` e `Senha`, sendo que `Número do Documento (CPF/CNPJ)` e `E-mail` devem ser únicos. Apesar de não ser obrigatório, foi decidido criar uma estrutura para gerenciamento de usuários, permitindo ações de criação, atualização, remoção, visualização e listagem. A ação de remoção usa a abordagem do *soft delete*, ou seja, os usuários não são removidos de verdade do banco de dados, apenas sinalizados como removidos, o que ajuda a manter a consistência das informações de transferências (transferências não vão estar vinculadas a usuários que não existem no banco de dados).
 
 Outro ponto com relação aos usuários foi a implementação das entidades `user_types` e `document_types`. O objetivo destas entidades é organizar informações de tipos e permitir que mais itens sejam adicionados futuramente. Por padrão a aplicação conta com os tipos de usuário `comum` e `lojista` e com os tipos de documento `cnpj` e `cpf`, sendo estes dados obtidos da descrição do desafio. Para facilitar a identificação dos tipos internamente no código, também foram incluídas classes enum (*DocumentTypeEnum* e *UserTypeEnum*).
 
-Após a ação de criação de usuário, a aplicação dispara notificações com uma mensagem de boas-vindas. As notificações são disparadas por dois canais diferentes (`email` e `sms`), mas seu comportamento é modificado para apenas simular os envios visto que não estamos em ambiente de produção. Os envios simulados registram informações em logs e também na entidade `notifications` do banco de dados. Estão notificações envolvem filas de execução (*queues*), então você deve se referir ao tópico **Filas / Queues** na seguinte [página](using_api.md) para obter mais detalhes.
+Após a ação de criação de usuário, a aplicação dispara uma notificação com uma mensagem de boas-vindas. O disparo desta notificação faz uso de filas de execução (*queues*), então você deve se referir ao tópico **Disparo de notificações usando Filas / Queues** desta documentação para saber como efetivar os disparos.
 
 Caso não deseje lidar com a criação de usuários, a aplicação fornece alguns usuários padrão para sua conveniência. São fornecidos 2 usuários do tipo **comum** (John Doe e Jane Doe) e 2 usuários do tipo **lojista** (Pokemon Company e Stark Industries), sendo as informações destes obtidas pelo endpoint de listagem de usuários.
 
@@ -39,9 +62,15 @@ Content-Type: {{contentType}}
 Authorization: Bearer {{accessToken}}
 ```
 
+#### Sobre as carteiras de usuários
+
 Atrelado a entidade `users` nós temos a entidade `wallets`, que são as carteiras que armazenam os valores monetários disponíveis para cada usuário. São estes valores que são utilizados nas transferências. Nesta aplicação um usuário pode possuir apenas uma carteira.
 
-Antes de concretizar uma transferência se faz necessário efetuar uma `autorização` da mesma utilizando um **serviço de autorização externo**, ou seja, um serviço de terceiros. Para o caso deste desafio foi dado o nome de **ExtAutho** para o serviço de autorização externo e a aplicação conta com classes de integração para o correto consumo/utilização do mesmo. O desafio fornece uma url para o autorizador externo, sendo que esta retorna aleatoriamente uma resposta positiva ou negativa para a autorização. Em alguns momentos durante o desenvolvimento desta aplicação a url fornecida apresentou instabilidade, então foi decidido criar uma rota interna da aplicação para simular o mesmo comportamento do serviço externo (ou seja, um *mock* do serviço externo). Desta forma podemos alternar entre as duas urls conforme necessário, sem deixar que a aplicação fique desprovida de um autorizador de transferências. A url do serviço de autorização de transferências fica disponível na variável de ambiente `EXTERNAL_AUTHORIZATION_SERVICE_URL` presente no arquivo `.env`, conforme exemplificado a seguir.
+#### Sobre o serviço de autorização externo
+
+Antes de concretizar uma transferência se faz necessário efetuar uma `autorização` da mesma utilizando um **serviço de autorização externo**, ou seja, um serviço de terceiros. Para o caso deste desafio foi dado o nome fictício de **ExtAutho** para o serviço de autorização externo e a aplicação conta com classes de integração para o correto consumo/utilização do mesmo. O desafio fornece uma url para o autorizador externo, sendo que esta retorna aleatoriamente uma resposta positiva ou negativa para a autorização. Nenhum parâmetro para ser enviado na requisição foi especificado, então foram utilizadas algumas informações da transferência. 
+
+Em alguns momentos durante o desenvolvimento desta aplicação, a url fornecida apresentou instabilidade, então foi decidido criar uma rota interna da aplicação para simular o mesmo comportamento do serviço externo (ou seja, um *mock* do serviço externo). Desta forma podemos alternar entre as duas urls conforme necessário, sem deixar que a aplicação fique desprovida de um autorizador de transferências. A url do serviço de autorização de transferências fica disponível na variável de ambiente `EXTERNAL_AUTHORIZATION_SERVICE_URL` presente no arquivo `.env`, conforme exemplificado a seguir.
 
 ```
 EXTERNAL_AUTHORIZATION_SERVICE_URL=http://nginx:80/api/mocks/external-authorization/authorize # Esta é a versão "mockada"
@@ -52,7 +81,24 @@ Lembre-se de deixar apenas uma versão da variável *EXTERNAL_AUTHORIZATION_SERV
 
 As respostas de solicitação de autorização (seja usando a url fornecida pelo desafio ou usando mock do serviço externo) são persistidas na entidade `transfer_authorization_responses`. Num cenário real, armazenar estas informações fornece material para solicitar suporte junto ao serviço externo em casos de erros inesperados.
 
-Com os usuários a serem envolvidos definidos, é o momento de executar transferências. Para isso você deverá utilizar o seguinte endpoint.
+#### Sobre o serviço de notificação externo
+
+Após a concretização de uma transferência se faz necessário notificar o usuário recebedor (*payee*) que um novo montante foi recebido em sua carteira. Para isso é feito o disparo de uma `notificação` utilizando um **serviço de notificação externo**, ou seja, um serviço de terceiros. Para o caso deste desafio foi dado o nome fictício de **ExtNotifier** para o serviço de notificação externo e a aplicação conta com classes de integração para o correto consumo/utilização do mesmo. O desafio fornece uma url para o notificador externo, sendo que esta retorna aleatoriamente uma resposta positiva ou negativa para o envio. Nenhum parâmetro para ser enviado na requisição foi especificado, então foi decidido enviar uma mensagem simples informando da transferência recebida. 
+
+Em alguns momentos durante o desenvolvimento desta aplicação, a url fornecida apresentou instabilidade, então foi decidido criar uma rota interna da aplicação para simular o mesmo comportamento do serviço externo (ou seja, um *mock* do serviço externo). Desta forma podemos alternar entre as duas urls conforme necessário, sem deixar que a aplicação fique desprovida de um notificador. A url do serviço de notificação fica disponível na variável de ambiente `EXTERNAL_NOTIFICATION_SERVICE_URL` presente no arquivo `.env`, conforme exemplificado a seguir.
+
+```
+EXTERNAL_NOTIFICATION_SERVICE_URL=http://nginx:80/api/mocks/external-notification/notify # Esta é a versão "mockada"
+#EXTERNAL_NOTIFICATION_SERVICE_URL=https://util.devi.tools/api/v1/notify # Esta é a url providenciada pelo desafio
+```
+
+Lembre-se de deixar apenas uma versão da variável *EXTERNAL_NOTIFICATION_SERVICE_URL* ativa, mantendo a outra comentada com o símbolo `#` em precedência.
+
+Informações das notificações disparadas são persistidas na entidade `notifications`.
+
+#### Sobre a criação de uma transferência
+
+Com os usuários a serem envolvidos definidos e as variaveis de ambiente relacionadas a serviços externos devidamente configuradas, é o momento de executar transferências. Para isso você deverá utilizar o seguinte endpoint.
 
 ```json
 POST {{baseUrl}}/transfers
@@ -75,9 +121,11 @@ Com relação ao corpo da requisição temos as seguintes informações.
 
 As regras de negócio informadas na descrição do desafio foram implantadas na forma de validação dos dados recebidos. Requisições barradas por validação não geram persistência de informações na entidade `transfers`.
 
-Se a transferência for um sucesso serão retornadas informações da mesma obtidas do banco de dados, como detalhes básicos do pagador e do recebedor (incluindo o saldo atual de sua carteira), montante envolvido, data de autorização e status da transferência. Você poderá, caso ache necessário, consultar estas informações diretamente no banco de dados se referindo as tabelas `users`, `wallets`, `transfer_auhtorization_responses` e `transfers`.
-
 Se a transferência falhar você poderá consultar o arquivo de log do dia atual para obter mais informações. Mensagens de logs para erros foram incluídas nas etapas do fluxo de transferência para fornecer observabilidade sobre possíveis problemas. Mesmo com a falha, ainda serão persistadas informações sobre a tentativa de transferência na entidade `transfers`.
+
+Se a transferência for um sucesso serão retornadas informações da mesma obtidas do banco de dados, como detalhes básicos do pagador e do recebedor (incluindo o saldo atual de sua carteira), montante envolvido, data de autorização e status da transferência. Você poderá, caso ache necessário, consultar estas informações diretamente no banco de dados se referindo as tabelas `users`, `wallets`, `transfer_auhtorization_responses` e `transfers`. 
+
+Após uma transferência bem-sucedida, a aplicação dispara uma notificação informando o usuário recebedor que um novo montante foi recebido. O disparo desta notificação faz uso de filas de execução (*queues*), então você deve se referir ao tópico **Disparo de notificações usando Filas / Queues** desta documentação para saber como efetivar os disparos.
 
 ### Segurança
 

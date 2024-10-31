@@ -1,0 +1,83 @@
+name: 'Mocked External Notifier'
+description: |-
+
+  Endpoints for simulations related to sending external notifications
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/mocks/external-notification/notify
+    metadata:
+      groupName: 'Mocked External Notifier'
+      groupDescription: |-
+
+        Endpoints for simulations related to sending external notifications
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Simulate sending notification'
+      description: 'This endpoint simulates the possible responses for the external notifier ExtNotifier.'
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+               "status": "success",
+               "data": [
+                   {
+                       "sent": true
+                   }
+               ]
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 403
+        content: |-
+          {
+               "status": "fail",
+               "data": [
+                   {
+                       "sent": false
+                   }
+               ]
+          }
+        headers: []
+        description: forbidden
+        custom: []
+    responseFields:
+      status:
+        name: status
+        description: 'The status of the response. Can be "success"or "fail".'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      data.sent:
+        name: data.sent
+        description: 'The response of the sending process. Can be true or false.'
+        required: false
+        example: null
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
