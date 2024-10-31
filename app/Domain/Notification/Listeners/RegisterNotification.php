@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use App\Domain\Common\ValueObjects\SentSmsMessageObject;
 use App\Domain\Notification\DataTransferObjects\CreateNotificationDto;
 use App\Domain\Notification\Repositories\NotificationRepositoryInterface;
+use App\Infrastructure\Integration\ExtNotifier\ValueObjects\SentExtNotifierMessageObject;
 
 class RegisterNotification
 {
@@ -61,7 +62,8 @@ class RegisterNotification
                 'data' => [
                     'notification_recipient' => $event->notifiable ?? null,
                     'notification_type' => get_class($event->notification) ?? null,
-                    'notification_channel' => $event->channel ?? null
+                    'notification_channel' => $event->channel ?? null,
+                    'notification' => $event->notification ?? null
                 ],
                 'stack_trace' => $exception->getTrace()
             ]
@@ -73,14 +75,13 @@ class RegisterNotification
      */
     protected function getResponseSummary($response): string
     {
-        if ($response instanceof SentMessage) {
-            return 'Notification Mail sent successfully.';
-        }
-
-        if ($response instanceof SentSmsMessageObject) {
-            return 'Notification SMS sent to ' . $response->getPhoneNumber() . ' successfully.';
-        }
-
-        return 'Notification sent successfully.';
+        return match(true) {
+            $response instanceof SentMessage => 'Notification Mail sent successfully.',
+            $response instanceof SentSmsMessageObject => 
+                'Notification SMS sent to ' . $response->getPhoneNumber() . ' successfully.',
+            $response instanceof SentExtNotifierMessageObject => 
+                'Ext Notifier notification sent to ' . $response->getRecipient() . ' successfully.',
+            default => 'Notification sent successfully.'
+        };
     }
 }

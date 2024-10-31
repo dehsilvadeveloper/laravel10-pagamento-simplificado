@@ -106,6 +106,16 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-mocked-external-notifier" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="mocked-external-notifier">
+                    <a href="#mocked-external-notifier">Mocked External Notifier</a>
+                </li>
+                                    <ul id="tocify-subheader-mocked-external-notifier" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="mocked-external-notifier-POSTapi-mocks-external-notification-notify">
+                                <a href="#mocked-external-notifier-POSTapi-mocks-external-notification-notify">Simulate sending notification</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-transfers" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="transfers">
                     <a href="#transfers">Transfers</a>
@@ -158,7 +168,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: September 14, 2024</li>
+        <li>Last updated: October 31, 2024</li>
     </ul>
 </div>
 
@@ -1303,6 +1313,203 @@ You can check the Dev Tools console for debugging information.</code></pre>
                     </div>
                                     </details>
         </div>
+                    <h1 id="mocked-external-notifier">Mocked External Notifier</h1>
+
+    <p>Endpoints for simulations related to sending external notifications</p>
+
+                                <h2 id="mocked-external-notifier-POSTapi-mocks-external-notification-notify">Simulate sending notification</h2>
+
+<p>
+</p>
+
+<p>This endpoint simulates the possible responses for the external notifier ExtNotifier.</p>
+
+<span id="example-requests-POSTapi-mocks-external-notification-notify">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/mocks/external-notification/notify" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/mocks/external-notification/notify';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/mocks/external-notification/notify"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/mocks/external-notification/notify'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-mocks-external-notification-notify">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;status&quot;: &quot;success&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;sent&quot;: true
+        }
+    ]
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403, forbidden):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;status&quot;: &quot;fail&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;sent&quot;: false
+        }
+    ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-mocks-external-notification-notify" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-mocks-external-notification-notify"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-mocks-external-notification-notify"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-mocks-external-notification-notify" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-mocks-external-notification-notify">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-mocks-external-notification-notify" data-method="POST"
+      data-path="api/mocks/external-notification/notify"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-mocks-external-notification-notify', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-mocks-external-notification-notify"
+                    onclick="tryItOut('POSTapi-mocks-external-notification-notify');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-mocks-external-notification-notify"
+                    onclick="cancelTryOut('POSTapi-mocks-external-notification-notify');" hidden>Cancel
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-mocks-external-notification-notify"
+                    data-initial-text="Send Request"
+                    data-loading-text="Sending..."
+                    hidden>Send Request
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/mocks/external-notification/notify</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-mocks-external-notification-notify"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-mocks-external-notification-notify"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>The status of the response. Can be &quot;success&quot;or &quot;fail&quot;.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>sent</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+<br>
+<p>The response of the sending process. Can be true or false.</p>
+                    </div>
+                                    </details>
+        </div>
                     <h1 id="transfers">Transfers</h1>
 
     <p>Endpoints for managing transfers</p>
@@ -2042,7 +2249,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/20" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/2" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -2050,7 +2257,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/20';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/2';
 $response = $client-&gt;get(
     $url,
     [
@@ -2067,7 +2274,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/20"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/2"
 );
 
 const headers = {
@@ -2086,7 +2293,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/20'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/user-types/2'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -2226,10 +2433,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-user-types--id-"
-               value="20"
+               value="2"
                data-component="url">
     <br>
-<p>The identifier of the user type. Example: <code>20</code></p>
+<p>The identifier of the user type. Example: <code>2</code></p>
             </div>
                     </form>
 
@@ -2736,7 +2943,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/9" \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/16" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -2753,7 +2960,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/9';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/16';
 $response = $client-&gt;patch(
     $url,
     [
@@ -2778,7 +2985,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/9"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/16"
 );
 
 const headers = {
@@ -2807,7 +3014,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/9'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/16'
 payload = {
     "user_type_id": 1,
     "name": "John Doe",
@@ -2995,10 +3202,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PATCHapi-users--id-"
-               value="9"
+               value="16"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>9</code></p>
+<p>The identifier of the user. Example: <code>16</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -3202,7 +3409,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/16" \
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/15" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3210,7 +3417,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/16';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/15';
 $response = $client-&gt;delete(
     $url,
     [
@@ -3227,7 +3434,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/16"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/15"
 );
 
 const headers = {
@@ -3246,7 +3453,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/16'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/15'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -3383,10 +3590,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-users--id-"
-               value="16"
+               value="15"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>16</code></p>
+<p>The identifier of the user. Example: <code>15</code></p>
             </div>
                     </form>
 
@@ -3745,7 +3952,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/users/14" \
+    --get "{{config("app.url")}}:{{config("app.external_port")}}/api/users/8" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3753,7 +3960,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/14';
+$url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/8';
 $response = $client-&gt;get(
     $url,
     [
@@ -3770,7 +3977,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/14"
+    "{{config("app.url")}}:{{config("app.external_port")}}/api/users/8"
 );
 
 const headers = {
@@ -3789,7 +3996,7 @@ fetch(url, {
     <pre><code class="language-python">import requests
 import json
 
-url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/14'
+url = '{{config("app.url")}}:{{config("app.external_port")}}/api/users/8'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -3945,10 +4152,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-users--id-"
-               value="14"
+               value="8"
                data-component="url">
     <br>
-<p>The identifier of the user. Example: <code>14</code></p>
+<p>The identifier of the user. Example: <code>8</code></p>
             </div>
                     </form>
 

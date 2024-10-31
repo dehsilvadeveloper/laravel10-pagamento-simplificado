@@ -76,6 +76,20 @@ GET {{baseUrl}}/mocks/external-authorization/authorize
 
 ########################################
 #
+#  EXTERNAL NOTIFICATION
+#
+########################################
+
+### Notify (with third party service)
+
+POST https://util.devi.tools/api/v1/notify
+
+### Notify (with local mocked service)
+
+POST {{baseUrl}}/mocks/external-notification/notify
+
+########################################
+#
 #  TRANSFERS
 #
 ########################################
