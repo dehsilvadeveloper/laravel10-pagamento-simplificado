@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\MockExternalAuthorizationController;
+use App\Http\Controllers\MockExternalNotifierController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
@@ -81,4 +82,9 @@ Route::prefix('/mocks')->name('mocks')->group(function () {
         '/external-authorization/authorize',
         [MockExternalAuthorizationController::class, 'simulateAuthorize']
     )->name('authorization.authorize');
+
+    Route::post(
+        '/external-notification/notify',
+        [MockExternalNotifierController::class, 'simulateNotify']
+    )->name('notification.notify');
 });
