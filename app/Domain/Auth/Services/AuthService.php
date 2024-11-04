@@ -3,7 +3,6 @@
 namespace App\Domain\Auth\Services;
 
 use Throwable;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use App\Domain\Auth\DataTransferObjects\ApiLoginDto;
