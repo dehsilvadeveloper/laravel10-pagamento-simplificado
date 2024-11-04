@@ -20,7 +20,7 @@ class TransferParamsObject
     public function __construct(
         int $payerId,
         int $payeeId,
-        float $amount 
+        float $amount
     ) {
         $this->userRepository = app(UserRepositoryInterface::class);
 

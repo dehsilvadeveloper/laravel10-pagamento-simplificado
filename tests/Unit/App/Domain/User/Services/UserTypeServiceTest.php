@@ -61,9 +61,9 @@ class UserTypeServiceTest extends TestCase
         Log::shouldReceive('error')
             ->withArgs(function ($message, $context) {
                 return strpos(
-                        $message,
-                        '[UserTypeService] Error while trying to find a user type with the id provided.'
-                    ) !== false
+                    $message,
+                    '[UserTypeService] Error while trying to find a user type with the id provided.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 

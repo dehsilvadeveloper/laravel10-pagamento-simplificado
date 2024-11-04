@@ -184,7 +184,7 @@ class ApiUserRepositoryEloquentTest extends TestCase
         $generatedRecords = ApiUser::factory()->count($recordsCount)->create();
         $sortedGeneratedRecords = $generatedRecords->sortByDesc('id');
         $sortedGeneratedRecords = $sortedGeneratedRecords->values();
-        $generatedRecordsAsArray = $sortedGeneratedRecords->toArray(); 
+        $generatedRecordsAsArray = $sortedGeneratedRecords->toArray();
 
         $records = $this->repository->getAll();
         $recordsAsArray = $records->toArray();

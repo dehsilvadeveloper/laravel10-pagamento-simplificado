@@ -61,7 +61,7 @@ class UserFactory extends Factory
      */
     private function generateDocumentNumber(DocumentTypeEnum $documentType): string
     {
-        return match($documentType) {
+        return match ($documentType) {
             DocumentTypeEnum::CPF => fake()->cpf(false),
             DocumentTypeEnum::CNPJ => fake()->cnpj(false),
             default => fake()->unique()->numerify('##############')
@@ -76,7 +76,7 @@ class UserFactory extends Factory
      */
     private function generateDocumentType(UserTypeEnum $userType): DocumentTypeEnum
     {
-        return match($userType) {
+        return match ($userType) {
             UserTypeEnum::COMMON => fake()->randomElement([DocumentTypeEnum::CPF]),
             UserTypeEnum::SHOPKEEPER => fake()->randomElement([DocumentTypeEnum::CNPJ]),
             default => fake()->randomElement([DocumentTypeEnum::CPF, DocumentTypeEnum::CNPJ])
@@ -91,7 +91,7 @@ class UserFactory extends Factory
      */
     private function generateName(UserTypeEnum $userType): string
     {
-        return match($userType) {
+        return match ($userType) {
             UserTypeEnum::COMMON => fake()->name(),
             UserTypeEnum::SHOPKEEPER => fake()->company(),
             default => fake()->name()

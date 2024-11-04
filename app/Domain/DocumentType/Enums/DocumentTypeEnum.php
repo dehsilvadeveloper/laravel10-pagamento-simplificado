@@ -9,7 +9,7 @@ enum DocumentTypeEnum: int
 
     public function name(): string
     {
-        return match($this) {
+        return match ($this) {
             self::CNPJ => config('document_types.default.0.name'),
             self::CPF => config('document_types.default.1.name'),
         };

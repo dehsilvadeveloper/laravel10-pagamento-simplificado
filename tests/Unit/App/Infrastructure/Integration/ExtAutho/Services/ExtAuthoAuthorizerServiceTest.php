@@ -92,7 +92,7 @@ class ExtAuthoAuthorizerServiceTest extends TestCase
                 })
             )
             ->andReturn($fakeTransferAuthorizationResponseRecord);
-        
+
         $dto = AuthorizeTransferDto::from([
             'transfer_id' => 1,
             'payer_id' => 5,
@@ -141,7 +141,7 @@ class ExtAuthoAuthorizerServiceTest extends TestCase
                 })
             )
             ->andReturn($fakeTransferAuthorizationResponseRecord);
-        
+
         $dto = AuthorizeTransferDto::from([
             'transfer_id' => 1,
             'payer_id' => 5,

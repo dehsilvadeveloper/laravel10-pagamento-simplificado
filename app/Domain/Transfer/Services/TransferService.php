@@ -78,13 +78,15 @@ class TransferService implements TransferServiceInterface
     private function registerTransfer(TransferParamsObject $params): Transfer
     {
         return $this->transferRepository->create(
-            CreateTransferDto::from([
-                'payer_id' => $params->getPayerId(),
-                'payee_id' => $params->getPayeeId(),
-                'amount' => $params->getAmount(),
-                'transfer_status_id' => TransferStatusEnum::PENDING
-            ]
-        ));
+            CreateTransferDto::from(
+                [
+                    'payer_id' => $params->getPayerId(),
+                    'payee_id' => $params->getPayeeId(),
+                    'amount' => $params->getAmount(),
+                    'transfer_status_id' => TransferStatusEnum::PENDING
+                ]
+            )
+        );
     }
 
     private function authorizeTransfer(Transfer $transfer): bool

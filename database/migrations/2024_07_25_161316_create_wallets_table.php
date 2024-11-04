@@ -21,8 +21,8 @@ return new class extends Migration
             $table->decimal('balance', 10, 2)->default(0);
 
             $table->foreign('user_id')
-                  ->references('id')
-                  ->on('users');
+                ->references('id')
+                ->on('users');
         });
     }
 

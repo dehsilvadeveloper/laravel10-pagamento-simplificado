@@ -36,11 +36,13 @@ class UserService implements UserServiceInterface
             $user = $this->userRepository->create($userDto);
 
             $this->walletRepository->create(
-                CreateWalletDto::from([
-                    'user_id' => $user->id,
-                    'balance' => $starterBalance
-                ]
-            ));
+                CreateWalletDto::from(
+                    [
+                        'user_id' => $user->id,
+                        'balance' => $starterBalance
+                    ]
+                )
+            );
 
             DB::commit();
 

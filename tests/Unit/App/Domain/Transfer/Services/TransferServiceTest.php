@@ -85,14 +85,14 @@ class TransferServiceTest extends TestCase
         $this->transferRepositoryMock->shouldReceive('create')->once()->andReturn($transfer);
         $this->transferRepositoryMock->shouldReceive('updateAuthorizationDate')
             ->once()
-            ->andReturnUsing(function() use ($transfer, $authorizationDate) {
+            ->andReturnUsing(function () use ($transfer, $authorizationDate) {
                 $transfer->authorized_at = $authorizationDate;
                 return $transfer;
             });
         $this->transferRepositoryMock->shouldReceive('updateStatus')
             ->once()
             ->with($transfer->id, TransferStatusEnum::COMPLETED)
-            ->andReturnUsing(function() use ($transfer) {
+            ->andReturnUsing(function () use ($transfer) {
                 $transfer->transfer_status_id = TransferStatusEnum::COMPLETED->value;
                 return $transfer;
             });
@@ -138,7 +138,7 @@ class TransferServiceTest extends TestCase
         $this->transferRepositoryMock->shouldReceive('updateStatus')
             ->once()
             ->with($transfer->id, TransferStatusEnum::UNAUTHORIZED)
-            ->andReturnUsing(function() use ($transfer) {
+            ->andReturnUsing(function () use ($transfer) {
                 $transfer->transfer_status_id = TransferStatusEnum::UNAUTHORIZED->value;
                 return $transfer;
             });
@@ -169,14 +169,14 @@ class TransferServiceTest extends TestCase
         $this->transferRepositoryMock->shouldReceive('create')->once()->andReturn($transfer);
         $this->transferRepositoryMock->shouldReceive('updateAuthorizationDate')
             ->once()
-            ->andReturnUsing(function() use ($transfer, $authorizationDate) {
+            ->andReturnUsing(function () use ($transfer, $authorizationDate) {
                 $transfer->authorized_at = $authorizationDate;
                 return $transfer;
             });
         $this->transferRepositoryMock->shouldReceive('updateStatus')
             ->once()
             ->with($transfer->id, TransferStatusEnum::ERROR)
-            ->andReturnUsing(function() use ($transfer) {
+            ->andReturnUsing(function () use ($transfer) {
                 $transfer->transfer_status_id = TransferStatusEnum::ERROR->value;
                 return $transfer;
             });
@@ -192,9 +192,9 @@ class TransferServiceTest extends TestCase
         Log::shouldReceive('error')
             ->withArgs(function ($message, $context) {
                 return strpos(
-                        $message,
-                        '[TransferService] Failed to execute the transfer between the users as requested.'
-                    ) !== false
+                    $message,
+                    '[TransferService] Failed to execute the transfer between the users as requested.'
+                ) !== false
                     && strpos($context['error_message'], 'Fake Database error') !== false;
             });
 

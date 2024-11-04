@@ -25,16 +25,16 @@ return new class extends Migration
             $table->timestamp('authorized_at')->nullable();
 
             $table->foreign('payer_id')
-                  ->references('id')
-                  ->on('users');
+                ->references('id')
+                ->on('users');
 
             $table->foreign('payee_id')
-                  ->references('id')
-                  ->on('users');
+                ->references('id')
+                ->on('users');
 
             $table->foreign('transfer_status_id')
-                  ->references('id')
-                  ->on('transfer_statuses');
+                ->references('id')
+                ->on('transfer_statuses');
         });
     }
 

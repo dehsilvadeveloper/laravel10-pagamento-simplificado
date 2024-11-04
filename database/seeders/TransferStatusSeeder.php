@@ -34,7 +34,7 @@ class TransferStatusSeeder extends Seeder
                     $transferStatus
                 );
             }
-    
+
             DB::commit();
 
             $this->command->info('Table transfer_statuses seeded.');

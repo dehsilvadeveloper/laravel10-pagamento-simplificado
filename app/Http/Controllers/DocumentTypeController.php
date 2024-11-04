@@ -8,7 +8,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use App\Domain\DocumentType\Exceptions\DocumentTypeNotFoundException;
 use App\Domain\DocumentType\Services\Interfaces\DocumentTypeServiceInterface;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\DocumentTypeCollection;
 use App\Http\Resources\DocumentTypeResource;
 use App\Traits\Http\ApiResponse;
@@ -86,35 +85,35 @@ class DocumentTypeController extends Controller
 
     /**
      * Get a single document type
-     * 
+     *
      * This endpoint allows you to return a single document type from the database.
-     * 
+     *
      * @urlParam id integer required The identifier of the document type.
-     * 
+     *
      * @responseField id integer The identifier of the document type.
      * @responseField name string The name of the document type.
-     * 
+     *
      * @response status=200 scenario=success {
      *      "data": {
      *          "id": 2,
      *          "name": "cpf"
      *      }
      * }
-     * 
+     *
      * @response status=401 scenario="unauthenticated" {
      *      "message": "Unauthenticated."
      * }
-     * 
+     *
      * @response status=404 scenario="Document type not found" {
      *      "message": "The document type could not be found."
      * }
-     * 
+     *
      * @response status=500 scenario="unexpected error" {
      *      "message": "Internal Server Error."
      * }
-     * 
+     *
      * @authenticated
-     * 
+     *
      */
     public function show(string $id): JsonResponse
     {

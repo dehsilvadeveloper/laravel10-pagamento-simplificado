@@ -11,7 +11,6 @@ use App\Domain\User\DataTransferObjects\CreateUserDto;
 use App\Domain\User\DataTransferObjects\UpdateUserDto;
 use App\Domain\User\Exceptions\UserNotFoundException;
 use App\Domain\User\Services\Interfaces\UserServiceInterface;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserCollection;
@@ -35,7 +34,7 @@ class UserController extends Controller
      * Create user
      *
      * This endpoint allows you to create a new user.
-     * 
+     *
      * @responseField id integer The identifier of the user.
      * @responseField name string The name of the user.
      * @responseField user_type.id integer The identifier of the type of user.
@@ -48,7 +47,7 @@ class UserController extends Controller
      * @responseField wallet.balance float The current balance of the wallet of the user.
      * @responseField created_at string The date and time in which the user was created.
      * @responseField updated_at string The date and time in which the user was last updated.
-     * 
+     *
      * @response status=201 scenario=success {
      *      "message": "User created with success.",
      *      "data": {
@@ -76,7 +75,7 @@ class UserController extends Controller
      * @response status=401 scenario="unauthenticated" {
      *      "message": "Unauthenticated."
      * }
-     * 
+     *
      * @response status=422 scenario="validation error" {
      *      "message": "The user type id field is required. (and 5 more errors)",
      *      "errors": {
@@ -109,7 +108,7 @@ class UserController extends Controller
      * }
      *
      * @authenticated
-     * 
+     *
      */
     public function create(CreateUserRequest $request): JsonResponse
     {
@@ -147,9 +146,9 @@ class UserController extends Controller
      * Update user
      *
      * This endpoint allows you to update a user.
-     * 
+     *
      * @urlParam id integer required The identifier of the user.
-     * 
+     *
      * @responseField id integer The identifier of the user.
      * @responseField name string The name of the user.
      * @responseField user_type.id integer The identifier of the type of user.
@@ -162,7 +161,7 @@ class UserController extends Controller
      * @responseField wallet.balance float The current balance of the wallet of the user.
      * @responseField created_at string The date and time in which the user was created.
      * @responseField updated_at string The date and time in which the user was last updated.
-     * 
+     *
      * @response status=200 scenario=success {
      *      "message": "User updated with success.",
      *      "data": {
@@ -190,15 +189,15 @@ class UserController extends Controller
      * @response status=401 scenario="unauthenticated" {
      *      "message": "Unauthenticated."
      * }
-     * 
+     *
      * @response status=404 scenario="User not found" {
      *      "message": "The user could not be found."
      * }
-     * 
+     *
      * @response status=422 scenario="validation error" {
      *      "message": "You cannot process a resource without provide data."
      * }
-     * 
+     *
      * @response status=422 scenario="validation error" {
      *      "message": "The email field must be a valid email address.",
      *      "errors": {
@@ -213,7 +212,7 @@ class UserController extends Controller
      * }
      *
      * @authenticated
-     * 
+     *
      */
     public function update(string $id, UpdateUserRequest $request): JsonResponse
     {
@@ -263,9 +262,9 @@ class UserController extends Controller
      * Delete user
      *
      * This endpoint allows you to delete a user. This API uses a soft delete approach, so the user will still exists in the database, but will be marked as deleted.
-     * 
+     *
      * @urlParam id integer required The identifier of the user.
-     * 
+     *
      * @response status=200 scenario=success {
      *      "message": "User deleted with success."
      * }
@@ -273,7 +272,7 @@ class UserController extends Controller
      * @response status=401 scenario="unauthenticated" {
      *      "message": "Unauthenticated."
      * }
-     * 
+     *
      * @response status=404 scenario="User not found" {
      *      "message": "The user could not be found."
      * }
@@ -283,7 +282,7 @@ class UserController extends Controller
      * }
      *
      * @authenticated
-     * 
+     *
      */
     public function delete(string $id): JsonResponse
     {
@@ -325,9 +324,9 @@ class UserController extends Controller
      * Get a single user
      *
      * This endpoint allows you to return a single user from the database.
-     * 
+     *
      * @urlParam id integer required The identifier of the user.
-     * 
+     *
      * @responseField id integer The identifier of the user.
      * @responseField name string The name of the user.
      * @responseField user_type.id integer The identifier of the type of user.
@@ -340,7 +339,7 @@ class UserController extends Controller
      * @responseField wallet.balance float The current balance of the wallet of the user.
      * @responseField created_at string The date and time in which the user was created.
      * @responseField updated_at string The date and time in which the user was last updated.
-     * 
+     *
      * @response status=200 scenario=success {
      *      "data": {
      *          "id": 17,
@@ -367,7 +366,7 @@ class UserController extends Controller
      * @response status=401 scenario="unauthenticated" {
      *      "message": "Unauthenticated."
      * }
-     * 
+     *
      * @response status=404 scenario="User not found" {
      *      "message": "The user could not be found."
      * }
@@ -377,7 +376,7 @@ class UserController extends Controller
      * }
      *
      * @authenticated
-     * 
+     *
      */
     public function show(string $id): JsonResponse
     {

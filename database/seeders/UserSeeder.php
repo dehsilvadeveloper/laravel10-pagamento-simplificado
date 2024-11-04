@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Exception;
 use Throwable;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -40,7 +39,7 @@ class UserSeeder extends Seeder
 
                 unset($user);
             }
-    
+
             DB::commit();
 
             $this->command->info('Table users and table wallets seeded.');

@@ -34,7 +34,7 @@ class DocumentTypeSeeder extends Seeder
                     $documentType
                 );
             }
-    
+
             DB::commit();
 
             $this->command->info('Table document_types seeded.');

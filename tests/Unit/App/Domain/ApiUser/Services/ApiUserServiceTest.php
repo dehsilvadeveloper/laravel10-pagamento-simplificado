@@ -62,9 +62,9 @@ class ApiUserServiceTest extends TestCase
         Log::shouldReceive('error')
             ->withArgs(function ($message, $context) {
                 return strpos(
-                        $message,
-                        '[ApiUserService] Error while trying to find a api user with the id provided.'
-                    ) !== false
+                    $message,
+                    '[ApiUserService] Error while trying to find a api user with the id provided.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 
@@ -111,9 +111,9 @@ class ApiUserServiceTest extends TestCase
         Log::shouldReceive('error')
             ->withArgs(function ($message, $context) {
                 return strpos(
-                        $message,
-                        '[ApiUserService] Error while trying to find a api user with the email provided.'
-                    ) !== false
+                    $message,
+                    '[ApiUserService] Error while trying to find a api user with the email provided.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 

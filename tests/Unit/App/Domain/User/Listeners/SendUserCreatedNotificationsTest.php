@@ -46,13 +46,13 @@ class SendUserCreatedNotificationsTest extends TestCase
     public function test_it_send_notifications(): void
     {
         Notification::fake();
- 
+
         $user = User::factory()->create();
 
         $event = new UserCreated($user);
         $listener = new SendUserCreatedNotifications();
         $listener->handle($event);
- 
+
         Notification::assertSentTo($user, WelcomeNotification::class);
     }
 
@@ -72,11 +72,11 @@ class SendUserCreatedNotificationsTest extends TestCase
 
         Log::shouldReceive('error')
             ->once()
-            ->withArgs(function ($message, $context) use($eventMock) {
+            ->withArgs(function ($message, $context) use ($eventMock) {
                 return strpos(
-                        $message,
-                        '[SendUserCreatedNotifications] Failed to send notifications through the event UserCreated.'
-                    ) !== false
+                    $message,
+                    '[SendUserCreatedNotifications] Failed to send notifications through the event UserCreated.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false
                     && $context['data']['event'] === get_class($eventMock)
                     && $context['data']['user'] === $eventMock->user;

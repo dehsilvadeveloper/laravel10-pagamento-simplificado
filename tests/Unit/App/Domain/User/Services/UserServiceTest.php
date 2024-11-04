@@ -44,7 +44,7 @@ class UserServiceTest extends TestCase
         $this->userRepositoryMock = Mockery::mock(UserRepositoryInterface::class);
         $this->walletRepositoryMock = Mockery::mock(WalletRepositoryInterface::class);
         $this->service = app(
-            UserService::class, 
+            UserService::class,
             [
                 'userRepository' => $this->userRepositoryMock,
                 'walletRepository' => $this->walletRepositoryMock
@@ -89,7 +89,7 @@ class UserServiceTest extends TestCase
             ->once()
             ->with(
                 // Para evitar problemas com identidade de objeto, "mockamos" o DTO dentro do with()
-                // Caso contrário um DTO gerado pelo teste unitário 
+                // Caso contrário um DTO gerado pelo teste unitário
                 // e o DTO gerado dentro do service não serão considerados idênticos
                 Mockery::on(function ($arg) {
                     return $arg instanceof CreateWalletDto;
@@ -135,9 +135,9 @@ class UserServiceTest extends TestCase
         Log::shouldReceive('error')
             ->withArgs(function ($message, $context) {
                 return strpos(
-                        $message,
-                        '[UserService] Failed to create user with the data provided.'
-                    ) !== false
+                    $message,
+                    '[UserService] Failed to create user with the data provided.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 
@@ -224,9 +224,9 @@ class UserServiceTest extends TestCase
         Log::shouldReceive('error')
             ->withArgs(function ($message, $context) {
                 return strpos(
-                        $message,
-                        '[UserService] Failed to update user with the data provided.'
-                    ) !== false
+                    $message,
+                    '[UserService] Failed to update user with the data provided.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 
@@ -288,9 +288,9 @@ class UserServiceTest extends TestCase
         Log::shouldReceive('error')
             ->withArgs(function ($message, $context) {
                 return strpos(
-                        $message,
-                        '[UserService] Failed to delete the user.'
-                    ) !== false
+                    $message,
+                    '[UserService] Failed to delete the user.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 
@@ -341,9 +341,9 @@ class UserServiceTest extends TestCase
         Log::shouldReceive('error')
             ->withArgs(function ($message, $context) {
                 return strpos(
-                        $message,
-                        '[UserService] Error while trying to find a user with the id provided.'
-                    ) !== false
+                    $message,
+                    '[UserService] Error while trying to find a user with the id provided.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 
@@ -393,9 +393,9 @@ class UserServiceTest extends TestCase
         Log::shouldReceive('error')
             ->withArgs(function ($message, $context) {
                 return strpos(
-                        $message,
-                        '[UserService] Error while trying to find a user with the email provided.'
-                    ) !== false
+                    $message,
+                    '[UserService] Error while trying to find a user with the email provided.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 

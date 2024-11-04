@@ -34,7 +34,7 @@ class UserTypeSeeder extends Seeder
                     $userType
                 );
             }
-    
+
             DB::commit();
 
             $this->command->info('Table user_types seeded.');
