@@ -2,13 +2,8 @@
 
 namespace Tests\Unit\App\Domain\Transfer\Services;
 
-use Tests\TestCase;
-use Exception;
-use Mockery;
-use Mockery\MockInterface;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Domain\Transfer\Enums\TransferStatusEnum;
+use App\Domain\Transfer\Events\TransferReceived;
 use App\Domain\Transfer\Exceptions\TransferFailedException;
 use App\Domain\Transfer\Exceptions\UnauthorizedTransferException;
 use App\Domain\Transfer\Models\Transfer;
@@ -20,6 +15,14 @@ use App\Domain\User\Enums\UserTypeEnum;
 use App\Domain\User\Models\User;
 use App\Domain\Wallet\Models\Wallet;
 use App\Domain\Wallet\Repositories\WalletRepositoryInterface;
+use Database\Seeders\TransferStatusSeeder;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
+use Mockery;
+use Mockery\MockInterface;
+use Tests\TestCase;
 
 class TransferServiceTest extends TestCase
 {
@@ -38,6 +41,8 @@ class TransferServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->seed(TransferStatusSeeder::class);
 
         $this->transferAuthorizationServiceMock = Mockery::mock(TransferAuthorizerServiceInterface::class);
         $this->transferRepositoryMock = Mockery::mock(TransferRepositoryInterface::class);
@@ -65,6 +70,8 @@ class TransferServiceTest extends TestCase
      */
     public function test_can_transfer(): void
     {
+        Event::fake();
+
         $amountToBeTransferred = 50.00;
         $authorizationDate = '2024-04-05 10:15:05';
 
@@ -73,23 +80,21 @@ class TransferServiceTest extends TestCase
         $transferParamsObjectMock = $this->generateTransferParamsObject($payer, $payee, $amountToBeTransferred);
         $transfer = $this->generateFakeTransfer($payer, $payee, $amountToBeTransferred);
 
-        $updatedTransfer = $transfer->replicate();
-
         $this->transferAuthorizationServiceMock->shouldReceive('authorize')->once()->andReturn(true);
 
         $this->transferRepositoryMock->shouldReceive('create')->once()->andReturn($transfer);
         $this->transferRepositoryMock->shouldReceive('updateAuthorizationDate')
             ->once()
-            ->andReturnUsing(function() use ($updatedTransfer, $authorizationDate) {
-                $updatedTransfer->authorized_at = $authorizationDate;
-                return $updatedTransfer;
+            ->andReturnUsing(function() use ($transfer, $authorizationDate) {
+                $transfer->authorized_at = $authorizationDate;
+                return $transfer;
             });
         $this->transferRepositoryMock->shouldReceive('updateStatus')
             ->once()
             ->with($transfer->id, TransferStatusEnum::COMPLETED)
-            ->andReturnUsing(function() use ($updatedTransfer) {
-                $updatedTransfer->transfer_status_id = TransferStatusEnum::COMPLETED->value;
-                return $updatedTransfer;
+            ->andReturnUsing(function() use ($transfer) {
+                $transfer->transfer_status_id = TransferStatusEnum::COMPLETED->value;
+                return $transfer;
             });
 
         $this->walletRepositoryMock->shouldReceive('decrementById')->once();
@@ -99,6 +104,8 @@ class TransferServiceTest extends TestCase
         DB::shouldReceive('commit')->once();
 
         $result = $this->service->transfer($transferParamsObjectMock);
+
+        Event::assertDispatched(TransferReceived::class);
 
         $this->assertInstanceOf(Transfer::class, $result);
         $this->assertEquals($payer->id, $result->payer_id);
@@ -114,6 +121,8 @@ class TransferServiceTest extends TestCase
      */
     public function test_cannot_transfer_if_authorizer_denies(): void
     {
+        Event::fake();
+
         $this->expectException(UnauthorizedTransferException::class);
 
         $amountToBeTransferred = 50.00;
@@ -123,17 +132,15 @@ class TransferServiceTest extends TestCase
         $transferParamsObjectMock = $this->generateTransferParamsObject($payer, $payee, $amountToBeTransferred);
         $transfer = $this->generateFakeTransfer($payer, $payee, $amountToBeTransferred);
 
-        $updatedTransfer = $transfer->replicate();
-
         $this->transferAuthorizationServiceMock->shouldReceive('authorize')->once()->andReturn(false);
 
         $this->transferRepositoryMock->shouldReceive('create')->once()->andReturn($transfer);
         $this->transferRepositoryMock->shouldReceive('updateStatus')
             ->once()
             ->with($transfer->id, TransferStatusEnum::UNAUTHORIZED)
-            ->andReturnUsing(function() use ($updatedTransfer) {
-                $updatedTransfer->transfer_status_id = TransferStatusEnum::UNAUTHORIZED->value;
-                return $updatedTransfer;
+            ->andReturnUsing(function() use ($transfer) {
+                $transfer->transfer_status_id = TransferStatusEnum::UNAUTHORIZED->value;
+                return $transfer;
             });
 
         $this->service->transfer($transferParamsObjectMock);
@@ -145,6 +152,8 @@ class TransferServiceTest extends TestCase
      */
     public function test_undo_wallet_changes_if_exception_occurs(): void
     {
+        Event::fake();
+
         $this->expectException(TransferFailedException::class);
 
         $amountToBeTransferred = 50.00;
@@ -155,23 +164,21 @@ class TransferServiceTest extends TestCase
         $transferParamsObjectMock = $this->generateTransferParamsObject($payer, $payee, $amountToBeTransferred);
         $transfer = $this->generateFakeTransfer($payer, $payee, $amountToBeTransferred);
 
-        $updatedTransfer = $transfer->replicate();
-
         $this->transferAuthorizationServiceMock->shouldReceive('authorize')->once()->andReturn(true);
 
         $this->transferRepositoryMock->shouldReceive('create')->once()->andReturn($transfer);
         $this->transferRepositoryMock->shouldReceive('updateAuthorizationDate')
             ->once()
-            ->andReturnUsing(function() use ($updatedTransfer, $authorizationDate) {
-                $updatedTransfer->authorized_at = $authorizationDate;
-                return $updatedTransfer;
+            ->andReturnUsing(function() use ($transfer, $authorizationDate) {
+                $transfer->authorized_at = $authorizationDate;
+                return $transfer;
             });
         $this->transferRepositoryMock->shouldReceive('updateStatus')
             ->once()
             ->with($transfer->id, TransferStatusEnum::ERROR)
-            ->andReturnUsing(function() use ($updatedTransfer) {
-                $updatedTransfer->transfer_status_id = TransferStatusEnum::ERROR->value;
-                return $updatedTransfer;
+            ->andReturnUsing(function() use ($transfer) {
+                $transfer->transfer_status_id = TransferStatusEnum::ERROR->value;
+                return $transfer;
             });
 
         $this->walletRepositoryMock->shouldReceive('decrementById')->once();

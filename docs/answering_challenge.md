@@ -41,7 +41,7 @@ php artisan queue:work --queue=notifications
 
 Com isso a aplicação ficará em estado de espera, ou seja, aguardando que ações sejam colocadas na fila para serem executadas. Caso já existam ações armazenadas, elas serão devidamente processadas. Se você deseja interromper o estado de espera da aplicação, basta utilizar a seguinte combinação de teclas no terminal: `ctrl + c` .
 
-As notificações são disparadas por diferentes canais, mas seu comportamento é modificado para apenas simular os envios visto que não estamos em ambiente de produção. Os envios simulados registram informações em logs e também na entidade `notifications` do banco de dados.
+As notificações são disparadas por diferentes canais, mas **seu comportamento é modificado para apenas simular os envios** visto que não estamos em ambiente de produção. Os envios simulados registram informações em **logs** e também na entidade `notifications` do banco de dados.
 
 ### Explicação da API
 

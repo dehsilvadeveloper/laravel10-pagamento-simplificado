@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Domain\Transfer\DataTransferObjects\CreateTransferDto;
 use App\Domain\Transfer\Enums\TransferStatusEnum;
+use App\Domain\Transfer\Events\TransferReceived;
 use App\Domain\Transfer\Exceptions\TransferFailedException;
 use App\Domain\Transfer\Exceptions\UnauthorizedTransferException;
 use App\Domain\Transfer\Models\Transfer;
@@ -115,7 +116,7 @@ class TransferService implements TransferServiceInterface
 
             DB::commit();
 
-            // TODO: Incluir evento de notificação para PAYEE. Exemplo: event(new TransferReceived($user));
+            event(new TransferReceived($processedTransfer));
 
             return $processedTransfer;
         } catch (Throwable $exception) {
