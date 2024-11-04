@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use App\Domain\ApiUser\Models\ApiUser;
 use App\Domain\Transfer\Enums\TransferStatusEnum;
+use App\Domain\Transfer\Events\TransferReceived;
 use App\Domain\TransferAuthorization\Services\Interfaces\TransferAuthorizerServiceInterface;
 use App\Domain\User\Enums\UserTypeEnum;
 use App\Domain\User\Models\User;
@@ -59,20 +60,21 @@ class CreateTransferTest extends TestCase
         $payer = User::find(1);
         $payee = User::find(2);
 
-        $payerExpectedWalletBalance = $payer->wallet->balance - 20.50;
-        $payeeExpectedWalletBalance = $payee->wallet->balance + 20.50;
+        $transferAmount = 20.50;
+        $payerExpectedWalletBalance = $payer->wallet->balance - $transferAmount;
+        $payeeExpectedWalletBalance = $payee->wallet->balance + $transferAmount;
 
         $data = [
             'payer' => $payer->id,
             'payee' => $payee->id,
-            'value' => 20.50
+            'value' => $transferAmount
         ];
 
         $this->transferAuthorizationServiceMock->shouldReceive('authorize')->once()->andReturn(true);
 
         $response = $this->postJson(route('transfer.create'), $data);
 
-        // TODO: Testar evento de notificação para PAYEE. Exemplo: Event::assertDispatched(TransferReceived::class);
+        Event::assertDispatched(TransferReceived::class);
 
         $response->assertStatus(Response::HTTP_CREATED);
         $response->assertJsonStructure([
@@ -129,20 +131,21 @@ class CreateTransferTest extends TestCase
         $payer = User::find(1);
         $payee = User::find(3);
 
-        $payerExpectedWalletBalance = $payer->wallet->balance - 100;
-        $payeeExpectedWalletBalance = $payee->wallet->balance + 100;
+        $transferAmount = 100;
+        $payerExpectedWalletBalance = $payer->wallet->balance - $transferAmount;
+        $payeeExpectedWalletBalance = $payee->wallet->balance + $transferAmount;
 
         $data = [
             'payer' => $payer->id,
             'payee' => $payee->id,
-            'value' => 100
+            'value' => $transferAmount
         ];
 
         $this->transferAuthorizationServiceMock->shouldReceive('authorize')->once()->andReturn(true);
 
         $response = $this->postJson(route('transfer.create'), $data);
 
-        // TODO: Testar evento de notificação para PAYEE. Exemplo: Event::assertDispatched(TransferReceived::class);
+        Event::assertDispatched(TransferReceived::class);
 
         $response->assertStatus(Response::HTTP_CREATED);
         $response->assertJsonStructure([
