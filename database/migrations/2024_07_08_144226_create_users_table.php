@@ -27,12 +27,12 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('user_type_id')
-                  ->references('id')
-                  ->on('user_types');
+                ->references('id')
+                ->on('user_types');
 
             $table->foreign('document_type_id')
-                  ->references('id')
-                  ->on('document_types');
+                ->references('id')
+                ->on('document_types');
         });
     }
 

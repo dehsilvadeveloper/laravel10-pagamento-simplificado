@@ -2,7 +2,6 @@
 
 namespace App\Infrastructure\Database\Eloquent;
 
-use App\Infrastructure\Database\Eloquent\BaseRepositoryEloquent;
 use App\Domain\DocumentType\Models\DocumentType;
 use App\Domain\DocumentType\Repositories\DocumentTypeRepositoryInterface;
 

@@ -11,7 +11,6 @@ use App\Domain\Auth\DataTransferObjects\ApiLoginDto;
 use App\Domain\Auth\Exceptions\IncorrectPasswordException;
 use App\Domain\Auth\Exceptions\IncorrectEmailException;
 use App\Domain\Auth\Services\Interfaces\AuthServiceInterface;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ApiLoginRequest;
 use App\Http\Resources\AuthenticatedApiUserResource;
 use App\Traits\Http\ApiResponse;
@@ -53,7 +52,7 @@ class AuthController extends Controller
      * @response status=400 scenario="password incorrect" {
      *      "message": "The password provided for this API user is incorrect."
      * }
-     * 
+     *
      * @response status=422 scenario="validation error" {
      *      "message": "The email field is required. (and 1 more error)",
      *      "errors": {
@@ -134,7 +133,7 @@ class AuthController extends Controller
      *          "updated_at": "2024-04-02T20:06:26.000000Z"
      *      }
      * }
-     * 
+     *
      * @response status=401 scenario="unauthenticated" {
      *      "message": "Unauthenticated."
      * }

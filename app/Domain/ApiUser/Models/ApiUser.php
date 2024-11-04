@@ -12,7 +12,9 @@ use Database\Factories\ApiUserFactory;
 
 class ApiUser extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     protected $table = 'api_users';
     protected $primaryKey = 'id';

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -30,7 +29,7 @@ class MockExternalNotifierController extends Controller
      *          }
      *      ]
      * }
-     * 
+     *
      * @response status=403 scenario=forbidden {
      *      "status": "fail",
      *      "data": [

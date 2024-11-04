@@ -110,11 +110,11 @@ class RegisterNotificationTest extends TestCase
 
         Log::shouldReceive('error')
             ->once()
-            ->withArgs(function ($message, $context) use($eventMock) {
+            ->withArgs(function ($message, $context) use ($eventMock) {
                 return strpos(
-                        $message,
-                        '[RegisterNotification] There was an error while trying to register a notification as sent.'
-                    ) !== false
+                    $message,
+                    '[RegisterNotification] There was an error while trying to register a notification as sent.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false
                     && $context['data']['notification_recipient'] === $eventMock->notifiable
                     && $context['data']['notification_type'] === get_class($eventMock->notification)

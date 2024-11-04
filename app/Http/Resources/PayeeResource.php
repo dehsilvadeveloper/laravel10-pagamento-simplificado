@@ -17,7 +17,7 @@ class PayeeResource extends JsonResource
             'wallet' => new WalletResource($this->wallet),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
-            'deleted_at' => $this->when(!empty($this->deleted_at), function() {
+            'deleted_at' => $this->when(!empty($this->deleted_at), function () {
                 return $this->deleted_at->format('Y-m-d H:i:s');
             })
         ];

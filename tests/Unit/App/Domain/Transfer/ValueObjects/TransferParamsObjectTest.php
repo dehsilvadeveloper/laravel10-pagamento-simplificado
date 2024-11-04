@@ -114,7 +114,7 @@ class TransferParamsObjectTest extends TestCase
         $walletRecord = Wallet::factory()->for($payerRecord)->make([
             'balance' => 20.50
         ]);
-        
+
         $payerRecord->setRelation('wallet', $walletRecord);
 
         $this->userRepositoryMock->shouldReceive('firstById')->andReturn($payerRecord);

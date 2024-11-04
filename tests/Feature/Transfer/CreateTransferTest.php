@@ -388,7 +388,7 @@ class CreateTransferTest extends TestCase
         $data = [
             'payer' => 1,
             'payee' => 2,
-            'value' => "abc"
+            'value' => 'abc'
         ];
 
         $response = $this->postJson(route('transfer.create'), $data);

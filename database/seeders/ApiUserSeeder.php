@@ -34,7 +34,7 @@ class ApiUserSeeder extends Seeder
                     $apiUser
                 );
             }
-    
+
             DB::commit();
 
             $this->command->info('Table api_users seeded.');

@@ -53,7 +53,7 @@ class ExtNotifierNotificationServiceTest extends TestCase
     {
         $dto = SendNotificationDto::from([
             'recipient' => 'teste@teste.com',
-            'message'=> 'Você recebeu uma nova mensagem privada.'
+            'message' => 'Você recebeu uma nova mensagem privada.'
         ]);
 
         $responseMock = Mockery::mock(ClientResponse::class);
@@ -96,7 +96,7 @@ class ExtNotifierNotificationServiceTest extends TestCase
 
         $dto = SendNotificationDto::from([
             'recipient' => 'teste@teste.com',
-            'message'=> 'Você recebeu uma nova mensagem privada.'
+            'message' => 'Você recebeu uma nova mensagem privada.'
         ]);
 
         $this->extNotifierRequestServiceMock
@@ -117,7 +117,7 @@ class ExtNotifierNotificationServiceTest extends TestCase
 
         $dto = SendNotificationDto::from([
             'recipient' => 'teste@teste.com',
-            'message'=> 'Você recebeu uma nova mensagem privada.'
+            'message' => 'Você recebeu uma nova mensagem privada.'
         ]);
 
         $this->extNotifierRequestServiceMock
@@ -148,7 +148,7 @@ class ExtNotifierNotificationServiceTest extends TestCase
 
         $dto = SendNotificationDto::from([
             'recipient' => 'teste@teste.com',
-            'message'=> 'Você recebeu uma nova mensagem privada.'
+            'message' => 'Você recebeu uma nova mensagem privada.'
         ]);
 
         $this->extNotifierRequestServiceMock

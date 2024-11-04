@@ -71,10 +71,10 @@ class ExtAuthoAuthorizerService implements TransferAuthorizerServiceInterface
             ],
             timeout: 3
         );
-    
+
         $response = $this->extAuthoRequestService->sendRequest($request);
         $response->throwUnlessStatus(Response::HTTP_FORBIDDEN);
-    
+
         return $response;
     }
 

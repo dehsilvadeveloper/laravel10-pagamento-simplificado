@@ -8,7 +8,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use App\Domain\User\Exceptions\UserTypeNotFoundException;
 use App\Domain\User\Services\Interfaces\UserTypeServiceInterface;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\UserTypeCollection;
 use App\Http\Resources\UserTypeResource;
 use App\Traits\Http\ApiResponse;
@@ -86,35 +85,35 @@ class UserTypeController extends Controller
 
     /**
      * Get a single user type
-     * 
+     *
      * This endpoint allows you to return a single user type from the database.
-     * 
+     *
      * @urlParam id integer required The identifier of the user type.
-     * 
+     *
      * @responseField id integer The identifier of the user type.
      * @responseField name string The name of the user type.
-     * 
+     *
      * @response status=200 scenario=success {
      *      "data": {
      *          "id": 2,
      *          "name": "comum"
      *      }
      * }
-     * 
+     *
      * @response status=401 scenario="unauthenticated" {
      *      "message": "Unauthenticated."
      * }
-     * 
+     *
      * @response status=404 scenario="User type not found" {
      *      "message": "The user type could not be found."
      * }
-     * 
+     *
      * @response status=500 scenario="unexpected error" {
      *      "message": "Internal Server Error."
      * }
-     * 
+     *
      * @authenticated
-     * 
+     *
      */
     public function show(string $id): JsonResponse
     {

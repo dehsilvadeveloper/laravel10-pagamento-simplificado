@@ -61,9 +61,9 @@ class DocumentTypeServiceTest extends TestCase
         Log::shouldReceive('error')
             ->withArgs(function ($message, $context) {
                 return strpos(
-                        $message,
-                        '[DocumentTypeService] Error while trying to find a document type with the id provided.'
-                    ) !== false
+                    $message,
+                    '[DocumentTypeService] Error while trying to find a document type with the id provided.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false;
             });
 

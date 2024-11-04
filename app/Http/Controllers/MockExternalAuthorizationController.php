@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
 
 /**
  * @group Mocked External Authorizer
@@ -29,7 +28,7 @@ class MockExternalAuthorizationController extends Controller
      *          }
      *      ]
      * }
-     * 
+     *
      * @response status=403 scenario=forbidden {
      *      "status": "fail",
      *      "data": [

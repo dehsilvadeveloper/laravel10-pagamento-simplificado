@@ -55,13 +55,13 @@ class SendTransferReceivedNotificationsTest extends TestCase
     public function test_it_send_notifications(): void
     {
         Notification::fake();
- 
+
         $transfer = Transfer::factory()->create();
 
         $event = new TransferReceived($transfer);
         $listener = new SendTransferReceivedNotifications();
         $listener->handle($event);
- 
+
         Notification::assertSentTo($transfer->payee, TransferReceivedNotification::class);
     }
 
@@ -81,11 +81,11 @@ class SendTransferReceivedNotificationsTest extends TestCase
 
         Log::shouldReceive('error')
             ->once()
-            ->withArgs(function ($message, $context) use($eventMock) {
+            ->withArgs(function ($message, $context) use ($eventMock) {
                 return strpos(
-                        $message,
-                        '[SendTransferReceivedNotifications] Failed to send notifications through the event TransferReceived.'
-                    ) !== false
+                    $message,
+                    '[SendTransferReceivedNotifications] Failed to send notifications through the event TransferReceived.'
+                ) !== false
                     && strpos($context['error_message'], 'Houston, we have a problem.') !== false
                     && $context['data']['event'] === get_class($eventMock)
                     && $context['data']['transfer'] === $eventMock->transfer;

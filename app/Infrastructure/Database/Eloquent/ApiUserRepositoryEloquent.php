@@ -2,7 +2,6 @@
 
 namespace App\Infrastructure\Database\Eloquent;
 
-use App\Infrastructure\Database\Eloquent\BaseRepositoryEloquent;
 use App\Domain\ApiUser\Models\ApiUser;
 use App\Domain\ApiUser\Repositories\ApiUserRepositoryInterface;
 

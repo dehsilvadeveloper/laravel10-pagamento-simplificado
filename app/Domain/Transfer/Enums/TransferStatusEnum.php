@@ -11,7 +11,7 @@ enum TransferStatusEnum: int
 
     public function name(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => config('transfer_statuses.default.0.name'),
             self::COMPLETED => config('transfer_statuses.default.1.name'),
             self::UNAUTHORIZED => config('transfer_statuses.default.2.name'),

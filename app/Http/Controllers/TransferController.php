@@ -13,7 +13,6 @@ use App\Domain\Transfer\Exceptions\TransferFailedException;
 use App\Domain\Transfer\Exceptions\UnauthorizedTransferException;
 use App\Domain\Transfer\Services\Interfaces\TransferServiceInterface;
 use App\Domain\Transfer\ValueObjects\TransferParamsObject;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateTransferRequest;
 use App\Http\Resources\TransferResource;
 use App\Traits\Http\ApiResponse;
@@ -35,7 +34,7 @@ class TransferController extends Controller
      * Create a transfer
      *
      * This endpoint allows you to create a new transfer.
-     * 
+     *
      * @responseField id integer The identifier of the transfer.
      * @responseField payer.id integer The identifier of the payer.
      * @responseField payer.name string The name of the payer.
@@ -55,7 +54,7 @@ class TransferController extends Controller
      * @responseField created_at string The date and time in which the transfer was created.
      * @responseField updated_at string The date and time in which the transfer was last updated.
      * @responseField created_at string The date and time in which the transfer was authorized.
-     * 
+     *
      * @response status=201 scenario=success {
      *      "message": "Transfer made with success.",
      *      "data": {
@@ -90,7 +89,7 @@ class TransferController extends Controller
      *          "authorized_at": "2024-07-11 14:46:45"
      *      }
      * }
-     * 
+     *
      * @response status=400 scenario="transfer general fail" {
      *      "message": "The transfer between the users has failed."
      * }
@@ -98,11 +97,11 @@ class TransferController extends Controller
      * @response status=401 scenario="unauthenticated" {
      *      "message": "Unauthenticated."
      * }
-     * 
+     *
      * @response status=403 scenario="transfer unauthorized error" {
      *      "message": "The transfer was not authorized."
      * }
-     * 
+     *
      * @response status=422 scenario="validation error" {
      *      "message": "The payer field is required. (and 2 more errors)",
      *      "errors": {
@@ -120,11 +119,11 @@ class TransferController extends Controller
      *          ]
      *      }
      * }
-     * 
+     *
      * @response status=422 scenario="invalid payer error" {
      *      "message": "The payer of a transfer cannot be of type shopkeeper."
      * }
-     * 
+     *
      * @response status=422 scenario="insufficient funds error" {
      *      "message": "The payer does not have sufficient funds in his wallet for this operation."
      * }
@@ -134,7 +133,7 @@ class TransferController extends Controller
      * }
      *
      * @authenticated
-     * 
+     *
      */
     public function create(CreateTransferRequest $request): JsonResponse
     {

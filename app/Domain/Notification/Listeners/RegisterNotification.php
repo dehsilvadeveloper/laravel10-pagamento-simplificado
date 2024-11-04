@@ -75,11 +75,11 @@ class RegisterNotification
      */
     protected function getResponseSummary($response): string
     {
-        return match(true) {
+        return match (true) {
             $response instanceof SentMessage => 'Notification Mail sent successfully.',
-            $response instanceof SentSmsMessageObject => 
+            $response instanceof SentSmsMessageObject =>
                 'Notification SMS sent to ' . $response->getPhoneNumber() . ' successfully.',
-            $response instanceof SentExtNotifierMessageObject => 
+            $response instanceof SentExtNotifierMessageObject =>
                 'Ext Notifier notification sent to ' . $response->getRecipient() . ' successfully.',
             default => 'Notification sent successfully.'
         };

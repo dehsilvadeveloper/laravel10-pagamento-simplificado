@@ -22,8 +22,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('transfer_id')
-                  ->references('id')
-                  ->on('transfers');
+                ->references('id')
+                ->on('transfers');
         });
     }
 

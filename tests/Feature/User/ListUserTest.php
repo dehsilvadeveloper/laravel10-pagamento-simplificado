@@ -35,7 +35,7 @@ class ListUserTest extends TestCase
         User::factory()
             ->count($recordsCount)
             ->create()
-            ->each(function(User $user) {
+            ->each(function (User $user) {
                 Wallet::factory()->create(['user_id' => $user->id]);
             });
 

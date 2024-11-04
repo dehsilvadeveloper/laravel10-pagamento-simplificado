@@ -61,16 +61,16 @@ class ExtNotifierNotificationService implements ExtNotifierNotificationServiceIn
             ],
             timeout: 3
         );
-    
+
         $response = $this->extNotifierRequestService->sendRequest($request);
         $response->throw();
-    
+
         return $response;
     }
 
     private function getErrorSummary(Throwable $exception): string
     {
-        return match(get_class($exception)) {
+        return match (get_class($exception)) {
             EmptyRequestException::class => $exception->getMessage(),
             ConnectionException::class => 'The notifier returned an error.',
             RequestException::class => 'The notifier returned an error.',
